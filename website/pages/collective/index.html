@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Collectif | EVEROS</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Styles spécifiques à la page du collectif */
+        .collective-hero {
+            height: 60vh;
+            min-height: 400px;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-light);
+        }
+        
+        .collective-hero-content {
+            max-width: 800px;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .collective-hero-content h1 {
+            font-size: 4.8rem;
+            color: var(--text-light);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .collective-hero-content p {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .collective-intro {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--spacing-xl) var(--spacing-md);
+            text-align: center;
+        }
+        
+        .collective-intro p {
+            font-size: 2rem;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .collective-intro .highlight {
+            color: var(--accent-gold);
+            font-family: var(--font-display);
+            font-weight: bold;
+        }
+        
+        .collective-members {
+            background-color: var(--primary-light);
+            padding: var(--spacing-xl) 0;
+        }
+        
+        .members-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .member-card {
+            background-color: var(--primary-medium);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .member-img-container {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .member-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        
+        .member-card:hover .member-img {
+            transform: scale(1.05);
+        }
+        
+        .deity-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            color: var(--text-light);
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .member-card:hover .deity-badge {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+        
+        .member-info {
+            padding: var(--spacing-md);
+            color: var(--text-light);
+        }
+        
+        .member-name {
+            font-size: 2.4rem;
+            margin-bottom: var(--spacing-xs);
+            color: var(--accent-gold);
+            font-family: var(--font-display);
+        }
+        
+        .member-role {
+            font-size: 1.6rem;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-medium);
+            font-style: italic;
+        }
+        
+        .member-bio {
+            font-size: 1.6rem;
+            line-height: 1.5;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .member-social {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .member-social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+        
+        .member-social-icon:hover {
+            background-color: var(--accent-gold);
+            color: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+        
+        .member-deity-name {
+            margin-top: var(--spacing-sm);
+            color: var(--accent-gold);
+            font-size: 1.6rem;
+            font-family: var(--font-display);
+        }
+        
+        .collective-history {
+            padding: var(--spacing-xl) 0;
+            background-color: var(--primary-dark);
+        }
+        
+        .history-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .history-title {
+            font-size: 3.6rem;
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            color: var(--accent-gold);
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15px;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                rgba(255, 215, 0, 0.8) 0%, 
+                rgba(255, 215, 0, 0.2) 100%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--accent-gold);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .timeline-date {
+            font-size: 2rem;
+            color: var(--accent-gold);
+            margin-bottom: var(--spacing-xs);
+            font-family: var(--font-display);
+        }
+        
+        .timeline-event {
+            font-size: 2.4rem;
+            color: var(--text-light);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .timeline-description {
+            font-size: 1.6rem;
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+        
+        .collective-vision {
+            padding: var(--spacing-xl) 0;
+            background-color: var(--primary-medium);
+        }
+        
+        .vision-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .vision-title {
+            font-size: 3.6rem;
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            color: var(--accent-gold);
+        }
+        
+        .vision-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+        }
+        
+        .vision-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: var(--spacing-md);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .vision-card-icon {
+            font-size: 3.6rem;
+            color: var(--accent-gold);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .vision-card-title {
+            font-size: 2.4rem;
+            color: var(--text-light);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .vision-card-text {
+            font-size: 1.6rem;
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+        
+        .join-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
+                        url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+            background-size: cover;
+            padding: var(--spacing-xl) 0;
+            text-align: center;
+        }
+        
+        .join-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .join-title {
+            font-size: 3.6rem;
+            color: var(--accent-gold);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .join-text {
+            font-size: 1.8rem;
+            color: var(--text-light);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.6;
+        }
+        
+        .join-form {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .form-group {
+            margin-bottom: var(--spacing-sm);
+            text-align: left;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 1.6rem;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+        
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: var(--primary-dark);
+            border: 1px solid var(--primary-light);
+            border-radius: 4px;
+            color: var(--text-light);
+            font-size: 1.6rem;
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-button {
+            background: linear-gradient(45deg, var(--accent-gold), #e6c06e);
+            color: var(--primary-dark);
+            border: none;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: var(--spacing-sm);
+            font-family: var(--font-display);
+            font-weight: bold;
+        }
+        
+        .form-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        @media screen and (max-width: 768px) {
+            .collective-hero-content h1 {
+                font-size: 3.6rem;
+            }
+            
+            .collective-hero-content p {
+                font-size: 1.8rem;
+            }
+            
+            .collective-intro p {
+                font-size: 1.8rem;
+            }
+            
+            .members-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .vision-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline {
+                padding-left: 30px;
+            }
+            
+            .timeline-item::before {
+                left: -30px;
+                width: 20px;
+                height: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="main-nav scrolled">
+            <div class="nav-container">
+                <div class="logo-container">
+                    <a href="../../index.html" class="logo">EVEROS</a>
+                </div>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../universe/index.html" class="nav-link">Explorer</a>
+                        <div class="dropdown-content">
+                            <a href="../universe/overview.html">Vue d'ensemble</a>
+                            <a href="../universe/maps.html">Cartes</a>
+                            <a href="../universe/cosmology.html">Cosmologie</a>
+                        </div>
+                    </li>
+                    <li><a href="../deities/index.html" class="nav-link">Divinités & Royaumes</a>
+                        <div class="dropdown-content">
+                            <a href="../deities/obsidienne.html">Obsidienne</a>
+                            <a href="../deities/mantha.html">Mantha</a>
+                            <a href="../deities/labir.html">Labir</a>
+                            <a href="../deities/hisangarde.html">Hisangarde</a>
+                            <a href="../deities/eromnia.html">Eromnia</a>
+                            <a href="../deities/light.html">Light</a>
+                            <a href="../deities/elzeryn.html">Elzeryn</a>
+                        </div>
+                    </li>
+                    <li><a href="../chronicles/index.html" class="nav-link">Chroniques</a>
+                        <div class="dropdown-content">
+                            <a href="../chronicles/stories.html">Histoires</a>
+                            <a href="../chronicles/characters.html">Personnages</a>
+                            <a href="../chronicles/history.html">Histoire</a>
+                        </div>
+                    </li>
+                    <li><a href="../game-systems/index.html" class="nav-link">Systèmes de Jeu</a>
+                        <div class="dropdown-content">
+                            <a href="../game-systems/rpg-rules.html">Règles JDR</a>
+                            <a href="../game-systems/game-concepts.html">Concepts de Jeu</a>
+                        </div>
+                    </li>
+                    <li><a href="../gallery/index.html" class="nav-link">Galerie</a></li>
+                    <li><a href="index.html" class="nav-link active">Le Collectif</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="collective-hero">
+        <div class="collective-hero-content">
+            <h1>Le Collectif Everos</h1>
+            <p>[Description du collectif]</p>
+        </div>
+    </div>
+
+    <section class="collective-intro">
+        <p>Le <span class="highlight">Collectif Everos</span> [Premier paragraphe de description du collectif]</p>
+        <p>[Second paragraphe de description du collectif]</p>
+    </section>
+
+    <section class="collective-members">
+        <div class="members-container">
+            <div class="members-grid">
+                <!-- Membre 1 - Obsidienne -->
+                <div class="member-card">
+                    <div class="member-img-container">
+                        <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Alexandre" class="member-img">
+                        <div class="deity-badge">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">[Prénom membre 1]</h3>
+                        <p class="member-role">[Rôle membre 1]</p>
+                        <p class="member-bio">[Biographie membre 1]</p>
+                        <p class="member-deity-name">Divinité : [Nom divinité], [Description courte]</p>
+                        <div class="member-social">
+                            <a href="#" class="member-social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="member-social-icon"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="member-social-icon"><i class="fab fa-discord"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Membre 2 - Mantha -->
+                <div class="member-card">
+                    <div class="member-img-container">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Sophie" class="member-img">
+                        <div class="deity-badge">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">[Prénom membre 2]</h3>
+                        <p class="member-role">[Rôle membre 2]</p>
+                        <p class="member-bio">[Biographie membre 2]</p>
+                        <p class="member-deity-name">Divinité : [Nom divinité], [Description courte]</p>
+                        <div class="member-social">
+                            <a href="#" class="member-social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="member-social-icon"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="member-social-icon"><i class="fab fa-goodreads"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Membre 3 - Labir -->
+                <div class="member-card">
+                    <div class="member-img-container">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Thomas" class="member-img">
+                        <div class="deity-badge">
+                            <i class="fas fa-book"></i>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">[Prénom membre 3]</h3>
+                        <p class="member-role">[Rôle membre 3]</p>
+                        <p class="member-bio">[Biographie membre 3]</p>
+                        <p class="member-deity-name">Divinité : [Nom divinité], [Description courte]</p>
+                        <div class="member-social">
+                            <a href="#" class="member-social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="member-social-icon"><i class="fab fa-youtube"></i></a>
+                            <a href="#" class="member-social-icon"><i class="fab fa-discord"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Membre 4 - Hisangarde -->
+                <div class="member-card">
+                    <div class="member-img-container">
+                        <img src="https://images.unsplash.com/photo-1639747280804-dd2d6b3d88ac?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Marc" class="member-img">
+                        <div class="deity-badge">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">[Prénom membre 4]</h3>
+                        <p class="member-role">[Rôle membre 4]</p>
+                        <p class="member-bio">[Biographie membre 4]</p>
+                        <p class="member-deity-name">Divinité : [Nom divinité], [Description courte]</p>
+                        <div class="member-social">
+                            <a href="#" class="member-social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="member-social-icon"><i class="fab fa-twitch"></i></a>
+                            <a href="#" class="member-social-icon"><i class="fab fa-discord"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Membre 5 - Eromnia -->
+                <div class="member-card">
+                    <div class="member-img-container">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Julie" class="member-img">
+                        <div class="deity-badge">
+                            <i class="fas fa-water"></i>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">[Prénom membre 5]</h3>
+                        <p class="member-role">[Rôle membre 5]</p>
+                        <p class="member-bio">[Biographie membre 5]</p>
+                        <p class="member-deity-name">Divinité : [Nom divinité], [Description courte]</p>
+                        <div class="member-social">
+                            <a href="#" class="member-social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="member-social-icon"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="member-social-icon"><i class="fab fa-artstation"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Membre 6 - Light -->
+                <div class="member-card">
+                    <div class="member-img-container">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Nicolas" class="member-img">
+                        <div class="deity-badge">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">[Prénom membre 6]</h3>
+                        <p class="member-role">[Rôle membre 6]</p>
+                        <p class="member-bio">[Biographie membre 6]</p>
+                        <p class="member-deity-name">Divinité : [Nom divinité], [Description courte]</p>
+                        <div class="member-social">
+                            <a href="#" class="member-social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="member-social-icon"><i class="fab fa-soundcloud"></i></a>
+                            <a href="#" class="member-social-icon"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Membre 7 - Elzeryn -->
+                <div class="member-card">
+                    <div class="member-img-container">
+                        <img src="https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Aurélie" class="member-img">
+                        <div class="deity-badge">
+                            <i class="fas fa-snowflake"></i>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">[Prénom membre 7]</h3>
+                        <p class="member-role">[Rôle membre 7]</p>
+                        <p class="member-bio">[Biographie membre 7]</p>
+                        <p class="member-deity-name">Divinité : [Nom divinité], [Description courte]</p>
+                        <div class="member-social">
+                            <a href="#" class="member-social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="member-social-icon"><i class="fab fa-github"></i></a>
+                            <a href="#" class="member-social-icon"><i class="fab fa-discord"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="collective-history">
+        <div class="history-container">
+            <h2 class="history-title">[Titre histoire]</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">[Année 1]</div>
+                    <h3 class="timeline-event">[Événement 1]</h3>
+                    <p class="timeline-description">[Description événement 1]</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">[Année 2]</div>
+                    <h3 class="timeline-event">[Événement 2]</h3>
+                    <p class="timeline-description">[Description événement 2]</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">[Année 3]</div>
+                    <h3 class="timeline-event">[Événement 3]</h3>
+                    <p class="timeline-description">[Description événement 3]</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">[Année 4]</div>
+                    <h3 class="timeline-event">[Événement 4]</h3>
+                    <p class="timeline-description">[Description événement 4]</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">[Année 5]</div>
+                    <h3 class="timeline-event">[Événement 5]</h3>
+                    <p class="timeline-description">[Description événement 5]</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">[Année 6]</div>
+                    <h3 class="timeline-event">[Événement 6]</h3>
+                    <p class="timeline-description">[Description événement 6]</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="collective-vision">
+        <div class="vision-container">
+            <h2 class="vision-title">[Titre vision]</h2>
+            <div class="vision-cards">
+                <div class="vision-card">
+                    <div class="vision-card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="vision-card-title">[Titre valeur 1]</h3>
+                    <p class="vision-card-text">[Description valeur 1]</p>
+                </div>
+                
+                <div class="vision-card">
+                    <div class="vision-card-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3 class="vision-card-title">[Titre valeur 2]</h3>
+                    <p class="vision-card-text">[Description valeur 2]</p>
+                </div>
+                
+                <div class="vision-card">
+                    <div class="vision-card-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3 class="vision-card-title">[Titre valeur 3]</h3>
+                    <p class="vision-card-text">[Description valeur 3]</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="join-section">
+        <div class="join-container">
+            <h2 class="join-title">[Titre rejoindre]</h2>
+            <p class="join-text">[Description rejoindre]</p>
+            <div class="join-form">
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Votre nom</label>
+                        <input type="text" id="name" name="name" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Votre email</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="interest" class="form-label">Votre domaine d'intérêt</label>
+                        <select id="interest" name="interest" class="form-input">
+                            <option value="writing">Écriture</option>
+                            <option value="art">Illustration</option>
+                            <option value="gamedesign">Game Design</option>
+                            <option value="music">Musique</option>
+                            <option value="development">Développement</option>
+                            <option value="community">Animation de Communauté</option>
+                            <option value="other">Autre</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message" class="form-label">Votre message</label>
+                        <textarea id="message" name="message" class="form-textarea" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="form-button">Envoyer votre message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul class="footer-links">
+                    <li><a href="../universe/index.html">Explorer</a></li>
+                    <li><a href="../deities/index.html">Divinités & Royaumes</a></li>
+                    <li><a href="../chronicles/index.html">Chroniques</a></li>
+                    <li><a href="../game-systems/index.html">Systèmes de Jeu</a></li>
+                    <li><a href="../gallery/index.html">Galerie</a></li>
+                    <li><a href="index.html">Le Collectif</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Suivez-nous</h3>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> contact@everos-universe.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© [Année] Everos Universe - Tous droits réservés</p>
+            <p>[Texte créateur]</p>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animation pour les cartes des membres au scroll
+            const memberCards = document.querySelectorAll('.member-card');
+            
+            function isElementInViewport(el) {
+                const rect = el.getBoundingClientRect();
+                return (
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) + 100 &&
+                    rect.bottom >= 0
+                );
+            }
+            
+            function animateVisibleCards() {
+                memberCards.forEach((card, index) => {
+                    if (isElementInViewport(card) && !card.classList.contains('animated')) {
+                        setTimeout(() => {
+                            card.classList.add('animated');
+                            card.style.animation = 'fadeInUp 0.6s ease forwards';
+                        }, index * 150);
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', animateVisibleCards);
+            animateVisibleCards();
+            
+            // Animation pour les items de la timeline au scroll
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            function animateVisibleTimelineItems() {
+                timelineItems.forEach((item, index) => {
+                    if (isElementInViewport(item) && !item.classList.contains('animated')) {
+                        setTimeout(() => {
+                            item.classList.add('animated');
+                            item.style.animation = 'fadeInLeft 0.6s ease forwards';
+                        }, index * 300);
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', animateVisibleTimelineItems);
+            animateVisibleTimelineItems();
+            
+            // Animation pour les cartes de vision au scroll
+            const visionCards = document.querySelectorAll('.vision-card');
+            
+            function animateVisibleVisionCards() {
+                visionCards.forEach((card, index) => {
+                    if (isElementInViewport(card) && !card.classList.contains('animated')) {
+                        setTimeout(() => {
+                            card.classList.add('animated');
+                            card.style.animation = 'fadeInUp 0.6s ease forwards';
+                        }, index * 200);
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', animateVisibleVisionCards);
+            animateVisibleVisionCards();
+            
+            // Gestion du formulaire de contact
+            const contactForm = document.getElementById('contact-form');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Ici, vous ajouteriez la logique pour envoyer le formulaire
+                    // Pour cette démo, nous allons simplement simuler un envoi réussi
+                    
+                    const formButton = this.querySelector('.form-button');
+                    const originalText = formButton.textContent;
+                    
+                    formButton.textContent = "Envoi en cours...";
+                    formButton.disabled = true;
+                    
+                    setTimeout(() => {
+                        // Réinitialiser le formulaire
+                        this.reset();
+                        
+                        // Afficher un message de succès
+                        const successMessage = document.createElement('div');
+                        successMessage.className = 'form-success';
+                        successMessage.style.color = 'var(--accent-gold)';
+                        successMessage.style.marginTop = 'var(--spacing-sm)';
+                        successMessage.style.fontSize = '1.6rem';
+                        successMessage.style.textAlign = 'center';
+                        successMessage.textContent = "Merci ! Votre message a été envoyé avec succès.";
+                        
+                        this.appendChild(successMessage);
+                        
+                        // Restaurer le bouton
+                        formButton.textContent = originalText;
+                        formButton.disabled = false;
+                        
+                        // Faire disparaître le message après quelques secondes
+                        setTimeout(() => {
+                            successMessage.style.opacity = '0';
+                            setTimeout(() => {
+                                successMessage.remove();
+                            }, 500);
+                        }, 5000);
+                    }, 1500);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

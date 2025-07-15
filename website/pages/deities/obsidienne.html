@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obsidienne - Divinité des Terres Volcaniques | EVEROS</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Palette spécifique pour Obsidienne */
+        :root {
+            --deity-primary: #1a0f14;
+            --deity-secondary: #4b1d28;
+            --deity-accent: #c62f35;
+            --deity-text: #f8f0e8;
+            --deity-light: #d9534f;
+        }
+        
+        body {
+            background-color: var(--deity-primary);
+            background-image: url('https://www.transparenttextures.com/patterns/black-felt.png');
+            color: var(--deity-text);
+        }
+        
+        .deity-header {
+            height: 80vh;
+            min-height: 600px;
+            position: relative;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        
+        .deity-header-content {
+            margin-left: 10%;
+            max-width: 600px;
+        }
+        
+        .deity-title {
+            font-size: 6rem;
+            margin-bottom: var(--spacing-xs);
+            color: var(--deity-text);
+        }
+        
+        .deity-subtitle {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-sm);
+            font-family: var(--font-body);
+            font-style: italic;
+        }
+        
+        .deity-script {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            letter-spacing: 0.2em;
+            margin-bottom: var(--spacing-md);
+            color: var(--deity-accent);
+        }
+        
+        .deity-symbols {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        .deity-symbol {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--deity-accent);
+        }
+        
+        .main-content {
+            background-color: var(--deity-primary);
+            color: var(--deity-text);
+        }
+        
+        .continent-section {
+            padding: var(--spacing-lg) 0;
+        }
+        
+        .continent-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .section-title {
+            color: var(--deity-accent);
+            border-bottom: 1px solid var(--deity-accent);
+            padding-bottom: var(--spacing-sm);
+        }
+        
+        .section-title::after {
+            background-color: var(--deity-accent);
+        }
+        
+        .continent-map {
+            margin: var(--spacing-md) 0;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .continent-map img {
+            width: 100%;
+            display: block;
+        }
+        
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, var(--deity-primary), transparent 70%);
+        }
+        
+        .map-marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--deity-accent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        
+        .map-marker:hover {
+            transform: translate(-50%, -50%) scale(1.2);
+            box-shadow: 0 0 10px var(--deity-accent);
+        }
+        
+        .map-marker::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--deity-accent) transparent transparent transparent;
+        }
+        
+        .map-tooltip {
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            min-width: 150px;
+            background-color: var(--deity-secondary);
+            padding: var(--spacing-xs);
+            border-radius: 4px;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 3;
+        }
+        
+        .map-marker:hover .map-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+        
+        .geography-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .geography-card {
+            background-color: var(--deity-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .geography-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .geography-card-content {
+            padding: var(--spacing-sm);
+        }
+        
+        .geography-card h3 {
+            color: var(--deity-text);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .lore-section {
+            padding: var(--spacing-lg) 0;
+            background-color: var(--deity-secondary);
+        }
+        
+        .lore-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .lore-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--deity-accent);
+        }
+        
+        .lore-tab {
+            padding: var(--spacing-sm) var(--spacing-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--deity-text);
+            opacity: 0.7;
+        }
+        
+        .lore-tab.active {
+            opacity: 1;
+            border-bottom: 3px solid var(--deity-accent);
+            margin-bottom: -2px;
+        }
+        
+        .lore-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .lore-content.active {
+            display: block;
+        }
+        
+        .lore-content p {
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.8;
+        }
+        
+        .lore-quote {
+            font-style: italic;
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            border-left: 3px solid var(--deity-accent);
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .lore-quote cite {
+            display: block;
+            margin-top: var(--spacing-sm);
+            font-style: normal;
+            font-weight: bold;
+            text-align: right;
+        }
+        
+        .characters-section {
+            padding: var(--spacing-lg) 0;
+        }
+        
+        .characters-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .character-card {
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: var(--deity-secondary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .character-portrait {
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .character-portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .character-card:hover .character-portrait img {
+            transform: scale(1.05);
+        }
+        
+        .character-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: var(--spacing-sm);
+            color: var(--deity-text);
+        }
+        
+        .character-name {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-xs);
+            color: var(--deity-text);
+        }
+        
+        .character-title {
+            font-style: italic;
+            font-size: 1.4rem;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .character-content {
+            padding: var(--spacing-sm);
+        }
+        
+        .character-description {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .sidebar-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--deity-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            color: var(--deity-text);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-icon:hover {
+            background-color: var(--deity-accent);
+            transform: scale(1.1);
+        }
+        
+        .sidebar-tooltip {
+            position: absolute;
+            right: 70px;
+            background-color: var(--deity-primary);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 4px;
+            font-size: 1.4rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-icon:hover .sidebar-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .deity-title {
+                font-size: 4rem;
+            }
+            
+            .deity-header-content {
+                margin-left: 5%;
+            }
+            
+            .geography-grid,
+            .characters-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+                transform: none;
+                flex-direction: row;
+                justify-content: center;
+                padding: var(--spacing-md) 0;
+            }
+            
+            .sidebar-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 2rem;
+            }
+            
+            .sidebar-tooltip {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="main-nav scrolled">
+            <div class="nav-container">
+                <div class="logo-container">
+                    <a href="../../index.html" class="logo">EVEROS</a>
+                </div>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../universe/index.html" class="nav-link">Explorer</a>
+                        <div class="dropdown-content">
+                            <a href="../universe/overview.html">Vue d'ensemble</a>
+                            <a href="../universe/maps.html">Cartes</a>
+                            <a href="../universe/cosmology.html">Cosmologie</a>
+                        </div>
+                    </li>
+                    <li><a href="index.html" class="nav-link active">Divinités & Royaumes</a>
+                        <div class="dropdown-content">
+                            <a href="obsidienne.html" class="active">Obsidienne</a>
+                            <a href="mantha.html">Mantha</a>
+                            <a href="labir.html">Labir</a>
+                            <a href="hisangarde.html">Hisangarde</a>
+                            <a href="eromnia.html">Eromnia</a>
+                            <a href="light.html">Light</a>
+                            <a href="elzeryn.html">Elzeryn</a>
+                        </div>
+                    </li>
+                    <li><a href="../chronicles/index.html" class="nav-link">Chroniques</a>
+                        <div class="dropdown-content">
+                            <a href="../chronicles/stories.html">Histoires</a>
+                            <a href="../chronicles/characters.html">Personnages</a>
+                            <a href="../chronicles/history.html">Histoire</a>
+                        </div>
+                    </li>
+                    <li><a href="../game-systems/index.html" class="nav-link">Systèmes de Jeu</a>
+                        <div class="dropdown-content">
+                            <a href="../game-systems/rpg-rules.html">Règles JDR</a>
+                            <a href="../game-systems/game-concepts.html">Concepts de Jeu</a>
+                        </div>
+                    </li>
+                    <li><a href="../gallery/index.html" class="nav-link">Galerie</a></li>
+                    <li><a href="../collective/index.html" class="nav-link">Le Collectif</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="deity-header">
+        <div class="deity-header-content">
+            <h1 class="deity-title">Obsidienne</h1>
+            <div class="deity-script">Urganis</div>
+            <h2 class="deity-subtitle">Divinité de la terre et de l'effort</h2>
+            <div class="deity-symbols">
+                <div class="deity-symbol"><i class="fas fa-fire"></i></div>
+                <div class="deity-symbol"><i class="fas fa-mountain"></i></div>
+                <div class="deity-symbol"><i class="fas fa-hammer"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <aside class="sidebar">
+            <a href="#continent" class="sidebar-icon">
+                <i class="fas fa-map"></i>
+                <span class="sidebar-tooltip">Continent</span>
+            </a>
+            <a href="#lore" class="sidebar-icon">
+                <i class="fas fa-book"></i>
+                <span class="sidebar-tooltip">Lore Divin</span>
+            </a>
+            <a href="#characters" class="sidebar-icon">
+                <i class="fas fa-users"></i>
+                <span class="sidebar-tooltip">Personnages</span>
+            </a>
+            <a href="index.html" class="sidebar-icon">
+                <i class="fas fa-cloud"></i>
+                <span class="sidebar-tooltip">Autres Divinités</span>
+            </a>
+        </aside>
+
+        <section id="continent" class="continent-section">
+            <div class="continent-container">
+                <h2 class="section-title">[Nom du continent]</h2>
+                <p class="section-description">[Description du continent]</p>
+                
+                <div class="continent-map">
+                    <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Carte d'Urganis">
+                    <div class="map-overlay"></div>
+                    
+                    <!-- Points d'intérêt sur la carte -->
+                    <div class="map-marker" style="top: 30%; left: 40%;">
+                        <div class="map-tooltip">
+                            <h4>[Nom lieu 1]</h4>
+                            <p>[Description lieu 1]</p>
+                        </div>
+                    </div>
+                    
+                    <div class="map-marker" style="top: 50%; left: 20%;">
+                        <div class="map-tooltip">
+                            <h4>[Nom lieu 2]</h4>
+                            <p>[Description lieu 2]</p>
+                        </div>
+                    </div>
+                    
+                    <div class="map-marker" style="top: 70%; left: 60%;">
+                        <div class="map-tooltip">
+                            <h4>[Nom lieu 3]</h4>
+                            <p>[Description lieu 3]</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="geography-grid">
+                    <div class="geography-card">
+                        <img src="https://images.unsplash.com/photo-1554232682-b9ef9c92f8de?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Kaelmar">
+                        <div class="geography-card-content">
+                            <h3>Je ne sais pas quoi mettre, prout</h3>
+                            <p>Je ne sais pas quoi mettre.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="geography-card">
+                        <img src="https://images.unsplash.com/photo-1621682372775-533449e550ed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Monts Ardents">
+                        <div class="geography-card-content">
+                            <h3>[Nom région]</h3>
+                            <p>[Description détaillée région]</p>
+                        </div>
+                    </div>
+                    
+                    <div class="geography-card">
+                        <img src="https://images.unsplash.com/photo-1533756972958-d6f38a9761e3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Désert de Cendre">
+                        <div class="geography-card-content">
+                            <h3>Je ne sais pas quoi metre, prout</h3>
+                            <p>je ne sais pas quoi mettre.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cultures-section">
+                    
+                    <h3 class="subsection-title">La population</h3>
+                    <p>flemme de remplir maintenant</p>
+                    
+                    <h4>Organisation Sociale</h4>
+                    <p>flemme de remplir maintenant</p>
+                    
+                    <h4>Croyances et Traditions</h4>
+                    <p>flemme de remplir maintenant</p>
+                    
+                    <div class="lore-quote">
+                        <p>"Ici une citation stylé du lore"</p>
+                        <cite>— Ici le mec qui l'a dit</cite>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="lore" class="lore-section">
+            <div class="lore-container">
+                <h2 class="section-title">Lore Divin</h2>
+                
+                <div class="lore-tabs">
+                    <div class="lore-tab active" data-tab="origins">Origines</div>
+                    <div class="lore-tab" data-tab="powers">Pouvoirs</div>
+                    <div class="lore-tab" data-tab="relationships">Relations</div>
+                    <div class="lore-tab" data-tab="worship">Culte</div>
+                </div>
+                
+                <div class="lore-content active" id="origins">
+                    <h3>L'Émergence de la Déesse</h3>
+                    <p>du blabla</p>
+                    
+                    <h4>La Creation des differentes especes</h4>
+                    <p>encore du blabla</p>
+                    
+                    <div class="lore-quote">
+                        <p>"blabla"</p>
+                        <cite>— ouistiti</cite>
+                    </div>
+                    
+                    <h4>La Relation avec les Autres Divinités</h4>
+                    <p>blabla</p>
+                </div>
+                
+                <div class="lore-content" id="powers">
+                    <!-- <h3>Le Pouvoir de la Forge</h3>
+                    <p>En tant que divinité liée au feu et à la terre, Obsidienne possède des pouvoirs considérables sur les éléments qui constituent le cœur même d'Everos. Sa maîtrise s'étend à toutes les formes de feu, de la simple flamme aux éruptions volcaniques les plus dévastatrices.</p>
+                    
+                    <h4>Maîtrise Élémentaire</h4>
+                    <ul>
+                        <li><strong>Contrôle du Magma</strong> — Obsidienne peut faire surgir la lave des profondeurs ou l'apaiser à volonté, modelant ainsi le paysage.</li>
+                        
+                        <li><strong>Forge Divine</strong> — Capable de créer des armes et armures d'une puissance inégalée, forgées directement dans le cœur des volcans.</li>
+                        
+                        <li><strong>Vision de Feu</strong> — Peut percevoir le monde à travers toute flamme allumée en son nom, lui permettant d'observer ses fidèles.</li>
+                    </ul>
+                    
+                    <h4>Bénédictions et Don aux Mortels</h4>
+                    <p>Obsidienne est connue pour récompenser ceux qui font preuve de force et de résilience. Ses bénédictions prennent généralement la forme de :</p>
+                    
+                    <ul>
+                        <li><strong>Résistance au Feu</strong> — Accordée aux plus fidèles, permettant de manipuler les métaux en fusion sans protection.</li>
+                        
+                        <li><strong>Inspiration Créatrice</strong> — Don accordé aux forgerons et artisans qui prient avec ferveur, leur permettant de créer des œuvres dépassant leurs propres capacités.</li>
+                        
+                        <li><strong>Armes Marquées</strong> — Armes spéciales portant la signature énergétique d'Obsidienne, capables de conserver la chaleur et de s'enflammer au moment crucial d'un combat.</li>
+                    </ul>
+                    
+                    <div class="lore-quote">
+                        <p>"Le métal se plie sous le marteau mais ne rompt pas. Ainsi doivent être mes fidèles : façonnés par l'épreuve, non détruits par elle."</p>
+                        <cite>— Enseignement d'Obsidienne aux premiers forgerons</cite>
+                    </div>
+                    
+                    <h4>Manifestation Divine</h4>
+                    <p>Lorsqu'elle se manifeste dans le monde mortel, Obsidienne prend l'apparence d'un forgeron colossal à la peau sombre traversée de veines rougeoyantes comme la lave. Ses yeux brillent tel l'acier en fusion, et sa voix résonne comme le métal frappé sur l'enclume. Sa présence provoque invariablement l'activation de tous les volcans environnants.</p> -->
+                </div>
+                
+                <div class="lore-content" id="relationships">
+                    <!-- <h3>Place dans le Panthéon d'Everos</h3>
+                    
+                    <p>En tant que première divinité à émerger, Obsidienne revendique une position privilégiée dans le panthéon d'Everos. Son statut d'aîné est rarement contesté, mais sa nature impétueuse et sa vision intransigeante du monde créent naturellement des tensions avec les autres divinités.</p>
+                    
+                    <h4>Alliances</h4>
+                    <ul>
+                        <li><strong>Hisangarde</strong> — Divinité des montagnes avec qui Obsidienne partage une affinité naturelle pour la pierre et les hauteurs. Ensemble, ils sont considérés comme les gardiens des "Piliers du Monde".</li>
+                        
+                        <li><strong>Light</strong> — Une relation complexe basée sur le respect mutuel. Light apprécie la nature créatrice du feu d'Obsidienne, tandis que cette dernière reconnaît l'importance de l'illumination spirituelle.</li>
+                    </ul>
+                    
+                    <h4>Rivalités</h4>
+                    <ul>
+                        <li><strong>Elzeryn</strong> — Opposition fondamentale entre le feu et la glace. Les frontières entre leurs domaines sont marquées par d'étranges phénomènes climatiques et des zones de conflit permanent.</li>
+                        
+                        <li><strong>Eromnia</strong> — La divinité des océans et Obsidienne maintiennent une distance prudente, leurs éléments étant naturellement antagonistes. Leur rencontre engendre souvent des cataclysmes.</li>
+                    </ul>
+                    
+                    <h4>Position Neutre</h4>
+                    <ul>
+                        <li><strong>Mantha</strong> — Bien que la nature verdoyante de Mantha semble incompatible avec le domaine volcanique d'Obsidienne, les deux divinités reconnaissent le rôle de l'autre dans le cycle de destruction et de renaissance.</li>
+                        
+                        <li><strong>Labir</strong> — Le dieu des déserts et Obsidienne partagent un intérêt pour les environnements extrêmes, mais leurs interactions sont rares et distantes.</li>
+                    </ul>
+                    
+                    <div class="lore-quote">
+                        <p>"Obsidienne fut la première à émerger du chaos primordial, mais sa nature ardente l'empêche parfois de voir au-delà de sa propre lumière. C'est à la fois sa plus grande force et sa plus grande faiblesse."</p>
+                        <cite>— Observation attribuée à Light</cite>
+                    </div> -->
+                </div>
+                
+                <div class="lore-content" id="worship">
+                    <!-- <h3>Le Culte du Feu Éternel</h3>
+                    
+                    <p>Le culte d'Obsidienne est l'un des plus répandus et des plus anciens d'Everos. Centré sur la vénération du feu comme symbole de transformation, il s'articule autour de grandes forges-temples où les fidèles viennent à la fois prier et travailler le métal.</p>
+                    
+                    <h4>Organisation du Culte</h4>
+                    <p>La hiérarchie des prêtres d'Obsidienne suit le processus même de la forge :</p>
+                    
+                    <ul>
+                        <li><strong>Les Apprentis</strong> — Débutants qui apprennent les bases du culte et les techniques élémentaires de forge.</li>
+                        
+                        <li><strong>Les Attiseurs</strong> — Responsables de l'entretien des feux sacrés et de la préparation des matériaux pour les rituels.</li>
+                        
+                        <li><strong>Les Forgerons</strong> — Prêtres confirmés capables de conduire les rituels mineurs et d'enseigner les préceptes d'Obsidienne.</li>
+                        
+                        <li><strong>Les Maîtres de Forge</strong> — Élite du clergé, ils dirigent les temples principaux et sont les seuls à pouvoir forger les artefacts sacrés.</li>
+                        
+                        <li><strong>Le Forgeur Suprême</strong> — Chef spirituel unique du culte, résidant dans le Grand Temple de Kaelmar.</li>
+                    </ul>
+                    
+                    <h4>Temples et Sanctuaires</h4>
+                    <p>Les lieux de culte d'Obsidienne sont toujours centrés autour d'une forge active. Leur architecture utilise abondamment le basalte et l'obsidienne polie, créant des structures imposantes aux reflets noirs brillants. Chaque temple possède au moins :</p>
+                    
+                    <ul>
+                        <li>Une Forge Centrale où brûle un feu allumé par la lave volcanique et qui ne doit jamais s'éteindre</li>
+                        <li>Un Autel de Pierre Noire où sont déposées les offrandes (généralement des métaux précieux ou des armes)</li>
+                        <li>Un Mur des Marteaux où chaque fidèle peut accrocher son propre marteau de forge, symbolisant sa contribution au culte</li>
+                    </ul>
+                    
+                    <h4>Rituels Principaux</h4>
+                    <ul>
+                        <li><strong>La Forge du Serment</strong> — Cérémonie d'initiation où le novice forge son premier objet sacré tout en récitant les vœux au service d'Obsidienne.</li>
+                        
+                        <li><strong>Le Baptême de Métal</strong> — Rite de passage à l'âge adulte où l'initié doit plonger sa main dans un alliage en fusion spécialement préparé. La cicatrice résultante est considérée comme une marque de faveur divine.</li>
+                        
+                        <li><strong>La Nuit des Sept Flammes</strong> — Célébration annuelle commémorant la création d'Urganis par Obsidienne. Sept immenses brasiers sont allumés simultanément au sommet des plus hautes montagnes du continent.</li>
+                    </ul>
+                    
+                    <div class="lore-quote">
+                        <p>"Comme le métal sous le marteau, soyez malléables mais jamais brisés. Que la chaleur vous transforme, que le froid vous trempe, et que votre âme devienne aussi résistante que l'acier forgé d'Obsidienne."</p>
+                        <cite>— Précepte fondamental du culte d'Obsidienne</cite>
+                    </div> -->
+                </div>
+            </div>
+        </section>
+
+        <section id="characters" class="characters-section">
+            <div class="characters-container">
+                <h2 class="section-title">Personnages Notables</h2>
+                <p class="section-description">Héros, champions et figures légendaires liés à Obsidienne et à son continent Urganis.</p>
+                
+                <div class="characters-grid">
+                    <div class="character-card">
+                        <div class="character-portrait">
+                            <img src="https://images.unsplash.com/photo-1566937169390-7be4c63b8a0e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Kaelor">
+                            <div class="character-info">
+                                <h3 class="character-name">Nahia</h3>
+                                <div class="character-title">L'affreuse Sainte</div>
+                            </div>
+                        </div>
+                        <div class="character-content">
+                            <div class="character-description">
+                                <p>D'une enfant rêveuse à une terreur des églises : l'histoire d'une figure éminente du folklore d'Urganis.</p>
+                            </div>
+                            <a href="../chronicles/characters.html#kaelor" class="btn btn-small">Profil Complet</a>
+                        </div>
+                    </div>
+
+                    <div class="character-card">
+                        <div class="character-portrait">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Asherah">
+                            <div class="character-info">
+                                <h3 class="character-name">Lorem Ipsum</h3>
+                                <div class="character-title">Dolor Sit Amet</div>
+                            </div>
+                        </div>
+                        <div class="character-content">
+                            <div class="character-description">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae velit ex. Mauris dapibus risus quis suscipit vulputate.</p>
+                            </div>
+                            <a href="../chronicles/characters.html#asherah" class="btn btn-small">Profil Complet</a>
+                        </div>
+                    </div>
+                    
+                    <div class="character-card">
+                        <div class="character-portrait">
+                            <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Vulkan">
+                            <div class="character-info">
+                                <h3 class="character-name">Vulputate Ipsum</h3>
+                                <div class="character-title">Consectetur Adipiscing</div>
+                            </div>
+                        </div>
+                        <div class="character-content">
+                            <div class="character-description">
+                                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>
+                            </div>
+                            <a href="../chronicles/characters.html#vulkan" class="btn btn-small">Profil Complet</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul class="footer-links">
+                    <li><a href="../universe/index.html">Explorer</a></li>
+                    <li><a href="index.html">Divinités & Royaumes</a></li>
+                    <li><a href="../chronicles/index.html">Chroniques</a></li>
+                    <li><a href="../game-systems/index.html">Systèmes de Jeu</a></li>
+                    <li><a href="../gallery/index.html">Galerie</a></li>
+                    <li><a href="../collective/index.html">Le Collectif</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Suivez-nous</h3>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> contact@everos-universe.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Everos Universe - Tous droits réservés</p>
+            <p>Un univers créé par Le Collectif Everos</p>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gestion des onglets de lore
+            const tabs = document.querySelectorAll('.lore-tab');
+            const contents = document.querySelectorAll('.lore-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Retirer la classe active de tous les onglets et contenus
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+                    
+                    // Ajouter la classe active à l'onglet cliqué
+                    this.classList.add('active');
+                    
+                    // Afficher le contenu correspondant
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Animation pour les éléments de la carte
+            function animateMapMarkers() {
+                const markers = document.querySelectorAll('.map-marker');
+                
+                markers.forEach((marker, index) => {
+                    const delay = index * 200;
+                    
+                    setTimeout(() => {
+                        marker.style.opacity = '0';
+                        marker.style.transform = 'translate(-50%, -50%) scale(0)';
+                        
+                        setTimeout(() => {
+                            marker.style.transition = 'all 0.5s ease';
+                            marker.style.opacity = '1';
+                            marker.style.transform = 'translate(-50%, -50%) scale(1)';
+                        }, 100);
+                    }, delay);
+                });
+            }
+            
+            // Animation au chargement de la page
+            animateMapMarkers();
+            
+            // Animation des sections au défilement
+            function isElementInViewport(el) {
+                const rect = el.getBoundingClientRect();
+                return (
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.bottom >= 0
+                );
+            }
+            
+            function handleScroll() {
+                const sections = document.querySelectorAll('section');
+                
+                sections.forEach(section => {
+                    if (isElementInViewport(section) && !section.classList.contains('animated')) {
+                        section.classList.add('animated');
+                        section.style.animation = 'fadeIn 1s ease forwards';
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', handleScroll);
+            handleScroll(); // Vérifier au chargement
+            
+            // Défilement doux pour les liens d'ancrage
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
