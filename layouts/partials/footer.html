@@ -1,0 +1,32 @@
+<footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>Navigation</h3>
+            <ul class="footer-links">
+                <li><a href="{{ "/pages/universe/" | relURL }}">Explorer</a></li>
+                <li><a href="{{ "/pages/deities/" | relURL }}">Divinités & Royaumes</a></li>
+                <li><a href="{{ "/pages/chronicles/" | relURL }}">Chroniques</a></li>
+                <li><a href="{{ "/pages/game-systems/" | relURL }}">Systèmes de Jeu</a></li>
+                <li><a href="{{ "/pages/gallery/" | relURL }}">Galerie</a></li>
+                <li><a href="{{ "/pages/collective/" | relURL }}">Le Collectif</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Suivez-nous</h3>
+            <div class="social-icons">
+                <a href="{{ .Site.Params.social.discord }}" class="social-icon"><i class="fab fa-discord"></i></a>
+                <a href="{{ .Site.Params.social.twitter }}" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="{{ .Site.Params.social.instagram }}" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="{{ .Site.Params.social.youtube }}" class="social-icon"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3>Contact</h3>
+            <p><i class="fas fa-envelope"></i> {{ .Site.Params.contact_email }}</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 Everos Universe - Tous droits réservés</p>
+        <p>Un univers créé par Le Collectif Everos</p>
+    </div>
+</footer>

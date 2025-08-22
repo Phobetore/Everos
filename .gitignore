@@ -1,0 +1,29 @@
+# Hugo build files
+public/
+.hugo_build.lock
+resources/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+*~
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Node modules (if used for preprocessing)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build artifacts
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+.env.*.local

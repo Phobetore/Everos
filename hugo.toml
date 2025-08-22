@@ -1,0 +1,139 @@
+baseURL = "https://everos-universe.com/"
+languageCode = "fr"
+title = "EVEROS - Un Univers de Royaumes Divins et d'Histoires Infinies"
+
+# Pagination
+[pagination]
+  pagerSize = 12
+
+# Disable unnecessary kinds
+disableKinds = ["taxonomy", "RSS"]
+
+# Permalinks to preserve current URL structure
+[permalinks]
+  deities = "/pages/deities/:slug/"
+  universe = "/pages/universe/:slug/"
+  chronicles = "/pages/chronicles/:slug/"
+  "game-systems" = "/pages/game-systems/:slug/"
+  gallery = "/pages/gallery/"
+  collective = "/pages/collective/:slug/"
+
+# Output formats (HTML only)
+[outputs]
+  home = ["HTML"]
+  page = ["HTML"]
+  section = ["HTML"]
+
+# SEO and robots
+enableRobotsTXT = true
+
+# Minification
+[minify]
+  disableCSS = false
+  disableHTML = false
+  disableJS = false
+  disableJSON = false
+  disableSVG = false
+  disableXML = false
+
+# Markup configuration for French content
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    style = "github"
+    lineNos = false
+
+# Site parameters
+[params]
+  description = "Everos - Un univers de fantasy épique avec des royaumes divins, des histoires captivantes et un riche système de jeu de rôle."
+  author = "Le Collectif Everos"
+  contact_email = "contact@everos-universe.com"
+  
+  # Social media
+  [params.social]
+    discord = "#"
+    twitter = "#"
+    instagram = "#"
+    youtube = "#"
+
+# Menu configuration
+[menu]
+  [[menu.main]]
+    name = "Explorer"
+    url = "/pages/universe/"
+    weight = 10
+    
+    [[menu.main]]
+      parent = "Explorer"
+      name = "Vue d'ensemble"
+      url = "/pages/universe/overview/"
+      weight = 11
+    
+    [[menu.main]]
+      parent = "Explorer"
+      name = "Cartes"
+      url = "/pages/universe/maps/"
+      weight = 12
+      
+    [[menu.main]]
+      parent = "Explorer"
+      name = "Cosmologie"
+      url = "/pages/universe/cosmology/"
+      weight = 13
+
+  [[menu.main]]
+    name = "Divinités & Royaumes"
+    url = "/pages/deities/"
+    weight = 20
+
+  [[menu.main]]
+    name = "Chroniques"
+    url = "/pages/chronicles/"
+    weight = 30
+    
+    [[menu.main]]
+      parent = "Chroniques"
+      name = "Histoires"
+      url = "/pages/chronicles/stories/"
+      weight = 31
+    
+    [[menu.main]]
+      parent = "Chroniques"  
+      name = "Personnages"
+      url = "/pages/chronicles/characters/"
+      weight = 32
+      
+    [[menu.main]]
+      parent = "Chroniques"
+      name = "Histoire"
+      url = "/pages/chronicles/history/"
+      weight = 33
+
+  [[menu.main]]
+    name = "Systèmes de Jeu"
+    url = "/pages/game-systems/"
+    weight = 40
+    
+    [[menu.main]]
+      parent = "Systèmes de Jeu"
+      name = "Règles JDR"
+      url = "/pages/game-systems/rpg-rules/"
+      weight = 41
+    
+    [[menu.main]]
+      parent = "Systèmes de Jeu"
+      name = "Concepts de Jeu"
+      url = "/pages/game-systems/game-concepts/"
+      weight = 42
+
+  [[menu.main]]
+    name = "Galerie"
+    url = "/pages/gallery/"
+    weight = 50
+
+  [[menu.main]]
+    name = "Le Collectif"
+    url = "/pages/collective/"
+    weight = 60

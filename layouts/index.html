@@ -1,0 +1,27 @@
+{{ define "main" }}
+<section class="featured-carousel">
+    <h2 class="section-title">À la Une</h2>
+    {{- partial "carousel.html" . -}}
+</section>
+
+<section class="pantheon-preview">
+    <h2 class="section-title">Le Panthéon Divin</h2>
+    {{- partial "pantheon.html" . -}}
+</section>
+
+<section class="recent-updates">
+    <h2 class="section-title">Dernières Mises à jour</h2>
+    {{- partial "updates.html" . -}}
+</section>
+
+<section class="cta-section">
+    <div class="cta-content">
+        <h2>Prêt à explorer Everos ?</h2>
+        <p>Découvrez les royaumes divins et leurs histoires épiques</p>
+        <div class="cta-buttons">
+            <a href="{{ "/pages/universe/" | relURL }}" class="btn btn-primary">Commencer l'Exploration</a>
+            <a href="{{ "/pages/collective/join/" | relURL }}" class="btn btn-secondary">Rejoindre le Collectif</a>
+        </div>
+    </div>
+</section>
+{{ end }}

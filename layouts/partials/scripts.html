@@ -1,0 +1,16 @@
+<script src="{{ "/js/main.js" | relURL }}"></script>
+{{ if .IsHome }}
+<script src="{{ "/js/carousel.js" | relURL }}"></script>
+<script src="{{ "/js/pantheon.js" | relURL }}"></script>
+{{ end }}
+
+{{ if eq .Section "gallery" }}
+{{/* Gallery-specific scripts will be loaded here */}}
+{{ end }}
+
+{{/* Custom scripts for specific pages */}}
+{{ if .Params.custom_js }}
+<script>
+{{ .Params.custom_js | safeJS }}
+</script>
+{{ end }}

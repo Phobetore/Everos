@@ -1,0 +1,16 @@
+{{ if .IsHome }}
+<header class="main-header">
+    <div class="hero-banner">
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <h1 class="main-title">EVEROS</h1>
+            <p class="tagline">Un Univers de Royaumes Divins et d'Histoires Infinies</p>
+        </div>
+    </div>
+    {{- partial "nav.html" . -}}
+</header>
+{{ else }}
+<header>
+    {{- partial "nav.html" . -}}
+</header>
+{{ end }}

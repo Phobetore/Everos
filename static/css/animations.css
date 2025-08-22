@@ -1,0 +1,211 @@
+/* Animations pour le site Everos */
+
+/* Animation du titre principal */
+@keyframes titleGlow {
+    0% {
+        text-shadow: 0 0 10px rgba(201, 169, 110, 0.5);
+    }
+    50% {
+        text-shadow: 0 0 20px rgba(201, 169, 110, 0.8), 0 0 30px rgba(201, 169, 110, 0.5);
+    }
+    100% {
+        text-shadow: 0 0 10px rgba(201, 169, 110, 0.5);
+    }
+}
+
+.main-title {
+    animation: titleGlow 3s infinite ease-in-out;
+}
+
+/* Animation pour la navigation */
+.main-nav.scrolled {
+    background-color: rgba(14, 22, 33, 0.95);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
+}
+
+/* Animation des boutons */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.btn-primary {
+    animation: pulse 2s infinite;
+}
+
+/* Animation du carousel */
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.carousel-slide.active .slide-info {
+    animation: fadeSlide 0.8s ease-out forwards;
+}
+
+/* Animation du panthéon */
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.pantheon-circle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    border: 1px solid rgba(201, 169, 110, 0.3);
+    border-radius: 50%;
+    animation: rotate 60s linear infinite;
+}
+
+.pantheon-circle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    border: 1px solid rgba(201, 169, 110, 0.2);
+    border-radius: 50%;
+    animation: rotate 120s linear infinite reverse;
+}
+
+/* Animation des icônes de divinités */
+@keyframes iconPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(201, 169, 110, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(201, 169, 110, 0);
+    }
+}
+
+.deity-icon .icon-image {
+    transition: all 0.3s ease;
+}
+
+.deity-icon:hover .icon-image {
+    animation: iconPulse 1.5s infinite;
+}
+
+/* Animation pour les cartes de mise à jour */
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.update-card {
+    opacity: 0;
+}
+
+.update-card.appear {
+    animation: cardAppear 0.8s forwards ease-out;
+}
+
+.update-card:nth-child(1).appear {
+    animation-delay: 0.1s;
+}
+
+.update-card:nth-child(2).appear {
+    animation-delay: 0.3s;
+}
+
+.update-card:nth-child(3).appear {
+    animation-delay: 0.5s;
+}
+
+/* Animation pour les menus déroulants */
+@keyframes dropdownAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) translateX(-50%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) translateX(-50%);
+    }
+}
+
+.nav-menu li:hover .dropdown-content {
+    animation: dropdownAppear 0.3s forwards;
+}
+
+/* Animation de chargement de page */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+body {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    animation-delay: 0.3s;
+}
+
+/* Animation pour le CTA */
+@keyframes bgPan {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.call-to-action {
+    background-size: 200% auto;
+    animation: bgPan 30s infinite linear;
+}
+
+/* Animation des icônes sociales */
+@keyframes socialBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.social-icon:hover {
+    animation: socialBounce 0.8s ease infinite;
+}

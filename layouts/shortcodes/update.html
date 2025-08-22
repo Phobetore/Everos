@@ -1,0 +1,23 @@
+{{/* Update Card Shortcode
+Usage: {{< update type="Nouvelle Divinité" title="Découverte d'Elzeryn" date="2025-01-15" url="/pages/deities/elzeryn/" >}}
+        Content goes here
+        {{< /update >}}
+*/}}
+{{ $type := .Get "type" }}
+{{ $title := .Get "title" }}
+{{ $date := .Get "date" }}
+{{ $url := .Get "url" }}
+
+<div class="update-card">
+    <div class="update-header">
+        <span class="update-type">{{ $type }}</span>
+        <span class="update-date">{{ $date }}</span>
+    </div>
+    <h3 class="update-title">{{ $title }}</h3>
+    <div class="update-description">
+        {{ .Inner | markdownify }}
+    </div>
+    {{ if $url }}
+    <a href="{{ $url | relURL }}" class="update-link">En savoir plus</a>
+    {{ end }}
+</div>

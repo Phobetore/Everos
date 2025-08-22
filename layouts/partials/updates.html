@@ -1,0 +1,15 @@
+<div class="updates-grid">
+    {{ range first 3 .Site.Data.updates }}
+    <div class="update-card">
+        <div class="update-header">
+            <span class="update-type">{{ .type }}</span>
+            <span class="update-date">{{ .date }}</span>
+        </div>
+        <h3 class="update-title">{{ .title }}</h3>
+        <p class="update-description">{{ .description }}</p>
+        {{ if .url }}
+        <a href="{{ .url | relURL }}" class="update-link">En savoir plus</a>
+        {{ end }}
+    </div>
+    {{ end }}
+</div>
