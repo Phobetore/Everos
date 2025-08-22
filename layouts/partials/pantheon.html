@@ -1,0 +1,11 @@
+<div class="pantheon-circle">
+    {{ range .Site.Data.divinites }}
+    <div class="deity-icon {{ .slug }}" data-deity="{{ .slug }}">
+        <div class="icon-image"></div>
+        <div class="deity-tooltip">
+            <h3>{{ .name }}</h3>
+            <p>{{ .short_description }}</p>
+        </div>
+    </div>
+    {{ end }}
+</div>
