@@ -1,0 +1,96 @@
+# Setup Steps pour Everos Hugo
+
+## Installation Locale
+
+### Prérequis
+- Hugo Extended (>= 0.138.0)
+- Git
+- Node.js (optionnel, pour preprocessing)
+
+### Commandes
+```bash
+# Cloner le repository
+git clone [repo-url]
+cd Everos
+
+# Vérifier Hugo
+hugo version
+
+# Build local
+hugo --buildDrafts
+
+# Serveur de développement
+hugo server --buildDrafts --bind 0.0.0.0
+```
+
+## Structure de Développement
+
+### Workflow Typique
+
+1. **Nouveau contenu**
+   ```bash
+   hugo new content/pages/section/page.md
+   ```
+
+2. **Test local**
+   ```bash
+   hugo server -D
+   ```
+
+3. **Build production**
+   ```bash
+   hugo --gc --minify
+   ```
+
+### Ajout de Divinité
+
+1. Ajouter entrée dans `data/divinites.yaml`
+2. Créer page dans `content/pages/deities/nom.md`
+3. Ajouter images dans `static/images/`
+4. Tester navigation et liens
+
+### Ajout de Chronique
+
+1. Créer fichier dans `content/pages/chronicles/`
+2. Ajouter front matter avec `deity: slug` si lié
+3. Utiliser shortcodes pour mise en forme
+
+### Modification CSS
+
+1. Éditer `static/css/style.css`
+2. Tester responsive
+3. Vérifier compatibilité navigateurs
+
+### Ajout de Fonctionnalité JS
+
+1. Créer/modifier fichiers dans `static/js/`
+2. Ajouter conditionnels dans `partials/scripts.html`
+3. Tester interactions
+
+## Déploiement
+
+### Netlify
+- Push sur `main` déclenche build automatique
+- Formulaires configurés automatiquement
+- Headers de sécurité via `netlify.toml`
+
+### GitHub Pages  
+- Workflow `.github/workflows/hugo.yml`
+- Deploy automatique sur `main`
+
+## Maintenance
+
+### Mises à jour Hugo
+1. Mettre à jour `.github/workflows/hugo.yml`
+2. Mettre à jour `netlify.toml`
+3. Tester build local
+
+### Sauvegarde Contenu
+- Contenu versionné dans Git
+- Images dans `static/` versionées
+- Sauvegarder données YAML régulièrement
+
+### Performance
+- Optimiser images avant ajout
+- Minifier CSS/JS pour production
+- Monitorer Lighthouse scores

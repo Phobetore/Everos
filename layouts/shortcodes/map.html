@@ -1,0 +1,48 @@
+{{/* Interactive Map Shortcode
+Usage: {{< map continent="terres-volcaniques" >}}
+*/}}
+{{ $continent := .Get "continent" | default "all" }}
+{{ $mapData := .Site.Data.continents }}
+
+<div class="interactive-map" data-continent="{{ $continent }}">
+    <div class="map-container">
+        {{ if eq $continent "all" }}
+            <div class="world-map">
+                <!-- Full world map -->
+                <svg viewBox="0 0 1000 600" class="map-svg">
+                    {{ range $mapData }}
+                    <g class="continent-group" data-continent="{{ .slug }}">
+                        <path d="{{ .path }}" class="continent-area" fill="{{ .color }}"></path>
+                        <circle cx="{{ .marker.x }}" cy="{{ .marker.y }}" r="5" class="continent-marker"></circle>
+                        <text x="{{ .marker.x }}" y="{{ .marker.y | add 20 }}" class="continent-label">{{ .name }}</text>
+                    </g>
+                    {{ end }}
+                </svg>
+            </div>
+        {{ else }}
+            {{ $currentContinent := where $mapData "slug" $continent | first }}
+            {{ if $currentContinent }}
+            <div class="continent-detail-map">
+                <h3>{{ $currentContinent.name }}</h3>
+                <div class="continent-map-area">
+                    <img src="{{ $currentContinent.detailed_map | relURL }}" alt="Carte de {{ $currentContinent.name }}">
+                </div>
+                <div class="map-info">
+                    <p>{{ $currentContinent.description }}</p>
+                    <ul class="map-features">
+                        {{ range $currentContinent.features }}
+                        <li>{{ . }}</li>
+                        {{ end }}
+                    </ul>
+                </div>
+            </div>
+            {{ end }}
+        {{ end }}
+    </div>
+    
+    <div class="map-controls">
+        <button class="map-zoom-in">+</button>
+        <button class="map-zoom-out">-</button>
+        <button class="map-reset">Reset</button>
+    </div>
+</div>

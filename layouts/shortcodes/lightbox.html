@@ -1,0 +1,26 @@
+{{/* Lightbox Shortcode
+Usage: {{< lightbox src="image.jpg" alt="Description" title="Title" >}}
+*/}}
+{{ $src := .Get "src" }}
+{{ $alt := .Get "alt" | default "" }}
+{{ $title := .Get "title" | default "" }}
+{{ $id := .Get "id" | default (printf "lightbox-%d" (now.Unix)) }}
+
+<div class="lightbox-trigger" data-lightbox="{{ $id }}">
+    <img src="{{ $src | relURL }}" alt="{{ $alt }}" class="lightbox-image-trigger">
+    {{ if $title }}<p class="lightbox-caption">{{ $title }}</p>{{ end }}
+</div>
+
+<div id="{{ $id }}" class="lightbox">
+    <div class="lightbox-overlay">
+        <div class="lightbox-content">
+            <button class="lightbox-close">&times;</button>
+            <img src="{{ $src | relURL }}" alt="{{ $alt }}" class="lightbox-image">
+            {{ if $title }}<div class="lightbox-title">{{ $title }}</div>{{ end }}
+            <div class="lightbox-nav">
+                <button class="lightbox-btn prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="lightbox-btn next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
