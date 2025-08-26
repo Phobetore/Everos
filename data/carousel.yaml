@@ -1,17 +1,17 @@
 - title: "Royaume d'Obsidienne"
   description: "Les terres volcaniques où règne Obsidienne, forgées dans le feu éternel."
-  image: "/images/carousel/obsidienne.jpg"
+  image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
   url: "/pages/deities/obsidienne/"
   active: true
 
 - title: "Forêts de Mantha"
   description: "Les étendues vertes infinies sous la protection de Mantha."
-  image: "/images/carousel/mantha.jpg"
+  image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-1.2.1&auto=format&fit=crop&w=1371&q=80"
   url: "/pages/deities/mantha/"
   active: false
 
 - title: "Royaume de Light"
   description: "Les plaines lumineuses où brille éternellement la lumière divine."
-  image: "/images/carousel/light.jpg"
+  image: "https://images.unsplash.com/photo-1579546929662-711aa81148cf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
   url: "/pages/deities/light/"
   active: false
