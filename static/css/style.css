@@ -12,9 +12,9 @@
     --text-medium: #b8c4d0;
     --text-dark: #2c3e50;
     
-    /* Polices */
-    --font-display: 'Cinzel', serif;
-    --font-body: 'Spectral', serif;
+    /* Polices avec fallbacks */
+    --font-display: 'Cinzel', 'Times New Roman', serif;
+    --font-body: 'Spectral', 'Georgia', serif;
     
     /* Espacements */
     --spacing-xs: 0.5rem;
