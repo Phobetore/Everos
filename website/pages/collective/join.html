@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejoindre le Collectif | EVEROS</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="nav-container">
+                <div class="logo-container">
+                    <a href="../../index.html" class="logo">EVEROS</a>
+                </div>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../universe/index.html" class="nav-link">Explorer</a></li>
+                    <li><a href="../deities/index.html" class="nav-link">Divinités & Royaumes</a></li>
+                    <li><a href="../chronicles/index.html" class="nav-link">Chroniques</a></li>
+                    <li><a href="../game-systems/index.html" class="nav-link">Systèmes de Jeu</a></li>
+                    <li><a href="../gallery/index.html" class="nav-link">Galerie</a></li>
+                    <li><a href="index.html" class="nav-link active">Le Collectif</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="collective-hero">
+        <div class="collective-hero-content">
+            <h1>Rejoindre le Collectif Everos</h1>
+            <p>Participez à la création et à l'expansion de l'univers</p>
+        </div>
+    </div>
+
+    <main>
+        <section class="container">
+            <h2 class="section-title">Devenir Membre du Collectif</h2>
+            <p style="text-align: center; font-size: 1.8rem; margin-bottom: var(--spacing-lg);">
+                Le Collectif Everos est toujours à la recherche de talents passionnés pour enrichir l'univers
+            </p>
+            
+            <div class="join-grid">
+                <div class="join-card">
+                    <div class="join-icon">
+                        <i class="fas fa-pen-nib"></i>
+                    </div>
+                    <h3>Écrivains & Narrateurs</h3>
+                    <p>Contribuez à l'écriture des chroniques, légendes et histoires qui enrichissent l'univers d'Everos.</p>
+                </div>
+
+                <div class="join-card">
+                    <div class="join-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>Artistes & Illustrateurs</h3>
+                    <p>Créez des œuvres visuelles pour donner vie aux continents, personnages et créatures d'Everos.</p>
+                </div>
+
+                <div class="join-card">
+                    <div class="join-icon">
+                        <i class="fas fa-dice-d20"></i>
+                    </div>
+                    <h3>Game Designers</h3>
+                    <p>Participez à l'élaboration des règles de jeu et des mécaniques qui rendent Everos jouable.</p>
+                </div>
+
+                <div class="join-card">
+                    <div class="join-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Développeurs Web</h3>
+                    <p>Aidez à maintenir et améliorer les plateformes numériques et outils du Collectif.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="application-form">
+            <div class="container">
+                <h2 class="section-title">Formulaire de Candidature</h2>
+                <div class="form-container">
+                    <form class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nom">Nom complet</label>
+                                <input type="text" id="nom" name="nom" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="domaine">Domaine d'expertise</label>
+                            <select id="domaine" name="domaine" required>
+                                <option value="">Sélectionnez votre domaine</option>
+                                <option value="ecriture">Écriture & Narration</option>
+                                <option value="art">Art & Illustration</option>
+                                <option value="game-design">Game Design</option>
+                                <option value="web-dev">Développement Web</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="experience">Expérience pertinente</label>
+                            <textarea id="experience" name="experience" rows="4" placeholder="Décrivez votre expérience dans le domaine..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="motivation">Motivation</label>
+                            <textarea id="motivation" name="motivation" rows="4" placeholder="Pourquoi souhaitez-vous rejoindre le Collectif Everos ?"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="portfolio">Lien vers votre portfolio (optionnel)</label>
+                            <input type="url" id="portfolio" name="portfolio" placeholder="https://...">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="disponibilite">Disponibilité</label>
+                            <select id="disponibilite" name="disponibilite" required>
+                                <option value="">Sélectionnez votre disponibilité</option>
+                                <option value="temps-plein">Temps plein</option>
+                                <option value="temps-partiel">Temps partiel</option>
+                                <option value="weekend">Week-ends uniquement</option>
+                                <option value="occasionnel">Participation occasionnelle</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="form-button">Envoyer ma candidature</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="benefits-section">
+            <div class="container">
+                <h2 class="section-title">Avantages des Membres</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <h3><i class="fas fa-users"></i> Communauté Créative</h3>
+                        <p>Rejoignez une communauté passionnée de créateurs partageant la même vision artistique.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <h3><i class="fas fa-trophy"></i> Reconnaissance</h3>
+                        <p>Vos contributions seront créditées et mises en valeur dans les publications officielles.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Apprentissage</h3>
+                        <p>Développez vos compétences aux côtés d'experts dans différents domaines créatifs.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <h3><i class="fas fa-eye"></i> Accès Exclusif</h3>
+                        <p>Accédez en avant-première aux nouveaux contenus et participez aux décisions créatives.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul class="footer-links">
+                    <li><a href="../universe/index.html">Explorer</a></li>
+                    <li><a href="../deities/index.html">Divinités & Royaumes</a></li>
+                    <li><a href="../chronicles/index.html">Chroniques</a></li>
+                    <li><a href="../game-systems/index.html">Systèmes de Jeu</a></li>
+                    <li><a href="../gallery/index.html">Galerie</a></li>
+                    <li><a href="index.html">Le Collectif</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Suivez-nous</h3>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> contact@everos-universe.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Everos Universe - Tous droits réservés</p>
+            <p>Un univers créé par Le Collectif Everos</p>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

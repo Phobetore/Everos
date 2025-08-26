@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue d'Ensemble | EVEROS</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Styles spécifiques à la page vue d'ensemble */
+        .overview-hero {
+            height: 60vh;
+            min-height: 500px;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .overview-hero-content h1 {
+            font-size: 5.5rem;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-light);
+        }
+
+        .overview-hero-content p {
+            font-size: 2.2rem;
+            color: var(--text-medium);
+            max-width: 800px;
+        }
+
+        .creation-timeline {
+            background: var(--primary-dark);
+            color: var(--text-light);
+            padding: var(--spacing-xl) 0;
+        }
+
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--accent-gold);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: var(--spacing-xl);
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            padding: var(--spacing-md);
+            background: var(--primary-medium);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .timeline-content h3 {
+            color: var(--accent-gold);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .world-principles {
+            padding: var(--spacing-lg) 0;
+        }
+
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-md);
+        }
+
+        .principle-card {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .principle-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .principle-icon {
+            font-size: 4rem;
+            color: var(--accent-gold);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .principle-card h3 {
+            color: var(--primary-dark);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .magic-system {
+            background: linear-gradient(135deg, var(--primary-medium), var(--primary-dark));
+            color: var(--text-light);
+            padding: var(--spacing-xl) 0;
+        }
+
+        .magic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .magic-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .magic-card h4 {
+            color: var(--accent-gold);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .quote-section {
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+            padding: var(--spacing-lg) 0;
+            text-align: center;
+        }
+
+        .quote-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .quote-text {
+            font-size: 2.4rem;
+            font-style: italic;
+            margin-bottom: var(--spacing-md);
+            line-height: 1.4;
+        }
+
+        .quote-author {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        @media screen and (max-width: 768px) {
+            .overview-hero-content h1 {
+                font-size: 3.5rem;
+            }
+            
+            .timeline-line {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                flex-direction: row !important;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px;
+            }
+            
+            .timeline-marker {
+                left: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="nav-container">
+                <div class="logo-container">
+                    <a href="../../index.html" class="logo">EVEROS</a>
+                </div>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link active">Explorer</a>
+                        <div class="dropdown-content">
+                            <a href="overview.html" class="active">Vue d'ensemble</a>
+                            <a href="maps.html">Cartes</a>
+                            <a href="cosmology.html">Cosmologie</a>
+                        </div>
+                    </li>
+                    <li><a href="../deities/index.html" class="nav-link">Divinités & Royaumes</a>
+                        <div class="dropdown-content">
+                            <a href="../deities/obsidienne.html">Obsidienne</a>
+                            <a href="../deities/mantha.html">Mantha</a>
+                            <a href="../deities/labir.html">Labir</a>
+                            <a href="../deities/hisangarde.html">Hisangarde</a>
+                            <a href="../deities/eromnia.html">Eromnia</a>
+                            <a href="../deities/light.html">Light</a>
+                            <a href="../deities/elzeryn.html">Elzeryn</a>
+                        </div>
+                    </li>
+                    <li><a href="../chronicles/index.html" class="nav-link">Chroniques</a>
+                        <div class="dropdown-content">
+                            <a href="../chronicles/stories.html">Histoires</a>
+                            <a href="../chronicles/characters.html">Personnages</a>
+                            <a href="../chronicles/history.html">Histoire</a>
+                        </div>
+                    </li>
+                    <li><a href="../game-systems/index.html" class="nav-link">Systèmes de Jeu</a>
+                        <div class="dropdown-content">
+                            <a href="../game-systems/rpg-rules.html">Règles JDR</a>
+                            <a href="../game-systems/game-concepts.html">Concepts de Jeu</a>
+                        </div>
+                    </li>
+                    <li><a href="../gallery/index.html" class="nav-link">Galerie</a></li>
+                    <li><a href="../collective/index.html" class="nav-link">Le Collectif</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="overview-hero">
+        <div class="overview-hero-content">
+            <h1>L'Univers d'Everos</h1>
+            <p>Un monde façonné par sept divinités, où magie et destinée s'entremêlent</p>
+        </div>
+    </div>
+
+    <main>
+        <section class="container">
+            <h2 class="section-title">Qu'est-ce qu'Everos ?</h2>
+            <p style="font-size: 1.8rem; line-height: 1.8; text-align: center; max-width: 900px; margin: 0 auto;">
+                Everos est un univers fantastique où sept divinités ont créé chacune un continent à leur image. 
+                Cet univers complexe mêle magie, mystères anciens et destinées entrelacées, offrant un cadre 
+                riche pour des aventures épiques et des histoires captivantes.
+            </p>
+        </section>
+
+        <section class="creation-timeline">
+            <div class="container">
+                <h2 class="section-title">La Chronologie de la Création</h2>
+                <div class="timeline-container">
+                    <div class="timeline-line"></div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3>L'Éveil Primordial</h3>
+                            <p>Dans le vide cosmique, sept consciences s'éveillent spontanément, chacune portant en elle l'essence d'un élément ou d'un concept fondamental.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3>La Grande Forge</h3>
+                            <p>Les sept divinités unissent leurs pouvoirs pour forger le monde d'Everos, créant la structure fondamentale de l'univers.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3>La Division des Terres</h3>
+                            <p>Chaque divinité façonne son propre continent, imprégnant la terre de son essence et créant des paysages uniques.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3>L'Émergence de la Vie</h3>
+                            <p>Les divinités peuplent leurs domaines de créatures et de peuples reflétant leur nature et leurs valeurs.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3>L'Âge des Héros</h3>
+                            <p>Les mortels développent leurs civilisations et commencent à façonner l'histoire par leurs actions héroïques.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="world-principles">
+            <div class="container">
+                <h2 class="section-title">Principes Fondamentaux</h2>
+                <div class="principles-grid">
+                    <div class="principle-card">
+                        <div class="principle-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h3>Équilibre Divin</h3>
+                        <p>Chaque divinité représente un aspect essentiel de l'existence, créant un équilibre cosmique délicat mais stable.</p>
+                    </div>
+                    
+                    <div class="principle-card">
+                        <div class="principle-icon">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <h3>Magie Intrinsèque</h3>
+                        <p>La magie imprègne chaque parcelle d'Everos, découlant directement de l'essence divine qui a façonné le monde.</p>
+                    </div>
+                    
+                    <div class="principle-card">
+                        <div class="principle-icon">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <h3>Destinées Entrelacées</h3>
+                        <p>Les actions de chaque être vivant résonnent à travers l'univers, tissant une toile complexe de cause et d'effet.</p>
+                    </div>
+                    
+                    <div class="principle-card">
+                        <div class="principle-icon">
+                            <i class="fas fa-infinite"></i>
+                        </div>
+                        <h3>Évolution Perpétuelle</h3>
+                        <p>Everos est un univers vivant qui continue d'évoluer, influencé par les divinités et leurs créations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="magic-system">
+            <div class="container">
+                <h2 class="section-title">Le Système Magique</h2>
+                <p style="text-align: center; font-size: 1.8rem; margin-bottom: var(--spacing-lg);">
+                    La magie d'Everos provient de sept sources divines, chacune offrant des pouvoirs uniques
+                </p>
+                <div class="magic-grid">
+                    <div class="magic-card">
+                        <h4>Magie Élémentaire</h4>
+                        <p>Contrôle des éléments primaires : feu, terre, eau, air, glace, nature et lumière</p>
+                    </div>
+                    <div class="magic-card">
+                        <h4>Magie Divine</h4>
+                        <p>Channeling direct du pouvoir des divinités à travers la prière et la dévotion</p>
+                    </div>
+                    <div class="magic-card">
+                        <h4>Magie Arcanique</h4>
+                        <p>Manipulation des forces magiques brutes à travers l'étude et la compréhension</p>
+                    </div>
+                    <div class="magic-card">
+                        <h4>Magie Naturelle</h4>
+                        <p>Harmonie avec les forces naturelles et les cycles de la vie</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="quote-section">
+            <div class="quote-content">
+                <p class="quote-text">
+                    "Everos n'est pas qu'un monde, c'est un tapisserie vivante tissée par les mains divines, 
+                    où chaque fil raconte une histoire et chaque couleur révèle un mystère."
+                </p>
+                <p class="quote-author">— Chroniques de la Création</p>
+            </div>
+        </section>
+
+        <section class="container">
+            <h2 class="section-title">Explorez Plus en Profondeur</h2>
+            <div class="exploration-grid" style="margin-top: var(--spacing-lg);">
+                <div class="exploration-card">
+                    <div class="exploration-card-content">
+                        <h3><i class="fas fa-map"></i> Cartes & Géographie</h3>
+                        <p>Découvrez les continents divins et leurs caractéristiques uniques</p>
+                        <a href="maps.html" class="btn">Explorer les Cartes</a>
+                    </div>
+                </div>
+
+                <div class="exploration-card">
+                    <div class="exploration-card-content">
+                        <h3><i class="fas fa-atom"></i> Cosmologie</h3>
+                        <p>Plongez dans la structure cosmique et les plans d'existence</p>
+                        <a href="cosmology.html" class="btn">Étudier la Cosmologie</a>
+                    </div>
+                </div>
+
+                <div class="exploration-card">
+                    <div class="exploration-card-content">
+                        <h3><i class="fas fa-crown"></i> Les Divinités</h3>
+                        <p>Rencontrez les sept créateurs d'Everos et leurs domaines</p>
+                        <a href="../deities/index.html" class="btn">Rencontrer les Dieux</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Explorer</a></li>
+                    <li><a href="../deities/index.html">Divinités & Royaumes</a></li>
+                    <li><a href="../chronicles/index.html">Chroniques</a></li>
+                    <li><a href="../game-systems/index.html">Systèmes de Jeu</a></li>
+                    <li><a href="../gallery/index.html">Galerie</a></li>
+                    <li><a href="../collective/index.html">Le Collectif</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Suivez-nous</h3>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> contact@everos-universe.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Everos Universe - Tous droits réservés</p>
+            <p>Un univers créé par Le Collectif Everos</p>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

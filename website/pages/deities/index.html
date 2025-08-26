@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divinités & Royaumes | EVEROS</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Styles spécifiques à la page des divinités */
+        .deities-hero {
+            height: 50vh;
+            min-height: 400px;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-light);
+        }
+        
+        .deities-hero-content {
+            max-width: 800px;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .deities-hero-content h1 {
+            font-size: 4.8rem;
+            color: var(--text-light);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .deities-hero-content p {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .deities-overview {
+            padding: var(--spacing-lg) 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .cosmic-map {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .cosmic-map-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cosmic-map img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .deity-card {
+            margin-bottom: var(--spacing-md);
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .deity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .deity-card-image {
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .deity-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .deity-card:hover .deity-card-image img {
+            transform: scale(1.05);
+        }
+        
+        .deity-card-content {
+            padding: var(--spacing-md);
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .deity-card-content h3 {
+            font-size: 2.4rem;
+            margin-bottom: var(--spacing-sm);
+            color: var(--primary-dark);
+        }
+        
+        .deity-domain {
+            font-style: italic;
+            color: var(--text-medium);
+            margin-bottom: var(--spacing-sm);
+            font-size: 1.6rem;
+        }
+        
+        .deity-description {
+            margin-bottom: var(--spacing-md);
+            flex-grow: 1;
+        }
+        
+        .deity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+            padding: 0 var(--spacing-md);
+        }
+        
+        .deity-relations {
+            padding: var(--spacing-lg) 0;
+            background-color: var(--primary-medium);
+            color: var(--text-light);
+        }
+        
+        .relations-diagram {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: var(--spacing-md);
+            position: relative;
+            min-height: 500px;
+        }
+        
+        .relation-line {
+            position: absolute;
+            height: 2px;
+            background-color: var(--accent-gold);
+            transform-origin: 0 0;
+        }
+        
+        .relation-positive {
+            background-color: var(--accent-blue);
+        }
+        
+        .relation-negative {
+            background-color: var(--accent-red);
+        }
+        
+        .relation-neutral {
+            background-color: var(--accent-gold);
+        }
+        
+        .relation-label {
+            position: absolute;
+            background-color: var(--primary-dark);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 1.2rem;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="main-nav scrolled">
+            <div class="nav-container">
+                <div class="logo-container">
+                    <a href="../../index.html" class="logo">EVEROS</a>
+                </div>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../universe/index.html" class="nav-link">Explorer</a>
+                        <div class="dropdown-content">
+                            <a href="../universe/overview.html">Vue d'ensemble</a>
+                            <a href="../universe/maps.html">Cartes</a>
+                            <a href="../universe/cosmology.html">Cosmologie</a>
+                        </div>
+                    </li>
+                    <li><a href="index.html" class="nav-link active">Divinités & Royaumes</a>
+                        <div class="dropdown-content">
+                            <a href="obsidienne.html">Obsidienne</a>
+                            <a href="mantha.html">Mantha</a>
+                            <a href="labir.html">Labir</a>
+                            <a href="hisangarde.html">Hisangarde</a>
+                            <a href="eromnia.html">Eromnia</a>
+                            <a href="light.html">Light</a>
+                            <a href="elzeryn.html">Elzeryn</a>
+                        </div>
+                    </li>
+                    <li><a href="../chronicles/index.html" class="nav-link">Chroniques</a>
+                        <div class="dropdown-content">
+                            <a href="../chronicles/stories.html">Histoires</a>
+                            <a href="../chronicles/characters.html">Personnages</a>
+                            <a href="../chronicles/history.html">Histoire</a>
+                        </div>
+                    </li>
+                    <li><a href="../game-systems/index.html" class="nav-link">Systèmes de Jeu</a>
+                        <div class="dropdown-content">
+                            <a href="../game-systems/rpg-rules.html">Règles JDR</a>
+                            <a href="../game-systems/game-concepts.html">Concepts de Jeu</a>
+                        </div>
+                    </li>
+                    <li><a href="../gallery/index.html" class="nav-link">Galerie</a></li>
+                    <li><a href="../collective/index.html" class="nav-link">Le Collectif</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="deities-hero">
+            <div class="deities-hero-content">
+                <h1>Divinités & Royaumes</h1>
+                <p>[Description section divinités]</p>
+            </div>
+        </section>
+
+        <section class="deities-overview">
+            <div class="cosmic-map">
+                <h2 class="section-title">La Carte Cosmique</h2>
+                <p class="section-description">[Description carte cosmique]</p>
+                
+                <div class="cosmic-map-container">
+                    <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-1.2.1&auto=format&fit=crop&w=2022&q=80" alt="Carte cosmique d'Everos">
+                </div>
+            </div>
+
+            <div class="pantheon-intro">
+                <h2 class="section-title">Le Panthéon Divin</h2>
+                <p class="section-description">[Description panthéon divin]</p>
+                
+                <div class="deity-grid">
+                    <!-- Obsidienne -->
+                    <div class="deity-card">
+                        <div class="deity-card-image">
+                            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Obsidienne">
+                        </div>
+                        <div class="deity-card-content">
+                            <h3>Obsidienne</h3>
+                            <div class="deity-domain">[Domaine Obsidienne]</div>
+                            <div class="deity-description">
+                                <p>[Description Obsidienne]</p>
+                            </div>
+                            <a href="obsidienne.html" class="btn">Découvrir</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Mantha -->
+                    <div class="deity-card">
+                        <div class="deity-card-image">
+                            <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Mantha">
+                        </div>
+                        <div class="deity-card-content">
+                            <h3>Mantha</h3>
+                            <div class="deity-domain">[Domaine Mantha]</div>
+                            <div class="deity-description">
+                                <p>[Description Mantha]</p>
+                            </div>
+                            <a href="mantha.html" class="btn">Découvrir</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Labir -->
+                    <div class="deity-card">
+                        <div class="deity-card-image">
+                            <img src="https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Labir">
+                        </div>
+                        <div class="deity-card-content">
+                            <h3>Labir</h3>
+                            <div class="deity-domain">[Domaine Labir]</div>
+                            <div class="deity-description">
+                                <p>[Description Labir]</p>
+                            </div>
+                            <a href="labir.html" class="btn">Découvrir</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Hisangarde -->
+                    <div class="deity-card">
+                        <div class="deity-card-image">
+                            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Hisangarde">
+                        </div>
+                        <div class="deity-card-content">
+                            <h3>Hisangarde</h3>
+                            <div class="deity-domain">[Domaine Hisangarde]</div>
+                            <div class="deity-description">
+                                <p>[Description Hisangarde]</p>
+                            </div>
+                            <a href="hisangarde.html" class="btn">Découvrir</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Eromnia -->
+                    <div class="deity-card">
+                        <div class="deity-card-image">
+                            <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Eromnia">
+                        </div>
+                        <div class="deity-card-content">
+                            <h3>Eromnia</h3>
+                            <div class="deity-domain">[Domaine Eromnia]</div>
+                            <div class="deity-description">
+                                <p>[Description Eromnia]</p>
+                            </div>
+                            <a href="eromnia.html" class="btn">Découvrir</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Light -->
+                    <div class="deity-card">
+                        <div class="deity-card-image">
+                            <img src="https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Light">
+                        </div>
+                        <div class="deity-card-content">
+                            <h3>Light</h3>
+                            <div class="deity-domain">[Domaine Light]</div>
+                            <div class="deity-description">
+                                <p>[Description Light]</p>
+                            </div>
+                            <a href="light.html" class="btn">Découvrir</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Elzeryn -->
+                    <div class="deity-card">
+                        <div class="deity-card-image">
+                            <img src="https://images.unsplash.com/photo-1486078695445-0497c2dc4236?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Elzeryn">
+                        </div>
+                        <div class="deity-card-content">
+                            <h3>Elzeryn</h3>
+                            <div class="deity-domain">[Domaine Elzeryn]</div>
+                            <div class="deity-description">
+                                <p>[Description Elzeryn]</p>
+                            </div>
+                            <a href="elzeryn.html" class="btn">Découvrir</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="deity-relations">
+            <h2 class="section-title">Relations Divines</h2>
+            <p class="section-description">[Description relations divines]</p>
+            
+            <div class="relations-diagram">
+                <!-- Les relations seront générées dynamiquement par JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul class="footer-links">
+                    <li><a href="../universe/index.html">Explorer</a></li>
+                    <li><a href="index.html">Divinités & Royaumes</a></li>
+                    <li><a href="../chronicles/index.html">Chroniques</a></li>
+                    <li><a href="../game-systems/index.html">Systèmes de Jeu</a></li>
+                    <li><a href="../gallery/index.html">Galerie</a></li>
+                    <li><a href="../collective/index.html">Le Collectif</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Suivez-nous</h3>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> contact@everos-universe.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© [Année] Everos Universe - Tous droits réservés</p>
+            <p>[Texte créateur]</p>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulation des relations entre divinités
+            const relations = [
+                { from: 'Obsidienne', to: 'Mantha', type: 'negative', description: 'Conflit élémentaire' },
+                { from: 'Obsidienne', to: 'Eromnia', type: 'neutral', description: 'Équilibre tendu' },
+                { from: 'Mantha', to: 'Labir', type: 'negative', description: 'Territoires disputés' },
+                { from: 'Mantha', to: 'Hisangarde', type: 'positive', description: 'Alliance naturelle' },
+                { from: 'Labir', to: 'Light', type: 'positive', description: 'Quête de connaissance' },
+                { from: 'Hisangarde', to: 'Elzeryn', type: 'neutral', description: 'Respect distant' },
+                { from: 'Light', to: 'Eromnia', type: 'positive', description: 'Harmonie cosmique' },
+                { from: 'Elzeryn', to: 'Obsidienne', type: 'negative', description: 'Opposition primordiale' }
+            ];
+            
+            const diagramContainer = document.querySelector('.relations-diagram');
+            
+            // Positions approximatives des divinités en cercle
+            const positions = {
+                'Obsidienne': { x: 150, y: 150 },
+                'Mantha': { x: 350, y: 100 },
+                'Labir': { x: 500, y: 200 },
+                'Hisangarde': { x: 500, y: 400 },
+                'Eromnia': { x: 350, y: 500 },
+                'Light': { x: 150, y: 400 },
+                'Elzeryn': { x: 100, y: 300 }
+            };
+            
+            // Créer des cercles pour représenter les divinités
+            for (const deity in positions) {
+                const deityElement = document.createElement('div');
+                deityElement.classList.add('deity-node');
+                deityElement.style.position = 'absolute';
+                deityElement.style.left = positions[deity].x + 'px';
+                deityElement.style.top = positions[deity].y + 'px';
+                deityElement.style.width = '70px';
+                deityElement.style.height = '70px';
+                deityElement.style.borderRadius = '50%';
+                deityElement.style.backgroundSize = 'cover';
+                deityElement.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
+                deityElement.style.border = '2px solid var(--accent-gold)';
+                deityElement.style.zIndex = '2';
+                
+                // Image de la divinité
+                const deityClass = deity.toLowerCase();
+                deityElement.style.backgroundImage = `url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80')`;
+                
+                // Nom de la divinité
+                const nameElement = document.createElement('div');
+                nameElement.textContent = deity;
+                nameElement.style.position = 'absolute';
+                nameElement.style.width = '100px';
+                nameElement.style.textAlign = 'center';
+                nameElement.style.left = '-15px';
+                nameElement.style.bottom = '-30px';
+                nameElement.style.fontWeight = 'bold';
+                nameElement.style.textShadow = '0 0 5px rgba(0, 0, 0, 0.5)';
+                
+                deityElement.appendChild(nameElement);
+                diagramContainer.appendChild(deityElement);
+            }
+            
+            // Dessiner les lignes de relation
+            relations.forEach(relation => {
+                const fromPos = positions[relation.from];
+                const toPos = positions[relation.to];
+                
+                const dx = toPos.x - fromPos.x;
+                const dy = toPos.y - fromPos.y;
+                const length = Math.sqrt(dx * dx + dy * dy);
+                const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                
+                const lineElement = document.createElement('div');
+                lineElement.classList.add('relation-line');
+                lineElement.classList.add(`relation-${relation.type}`);
+                lineElement.style.width = (length - 70) + 'px';
+                lineElement.style.left = (fromPos.x + 35) + 'px';
+                lineElement.style.top = (fromPos.y + 35) + 'px';
+                lineElement.style.transform = `rotate(${angle}deg)`;
+                lineElement.style.transformOrigin = '0 0';
+                
+                // Label de la relation
+                const labelElement = document.createElement('div');
+                labelElement.classList.add('relation-label');
+                labelElement.textContent = relation.description;
+                
+                // Positionner le label au milieu de la ligne
+                const midX = fromPos.x + dx / 2;
+                const midY = fromPos.y + dy / 2;
+                labelElement.style.left = midX + 'px';
+                labelElement.style.top = midY + 'px';
+                labelElement.style.transform = 'translate(-50%, -50%)';
+                
+                diagramContainer.appendChild(lineElement);
+                diagramContainer.appendChild(labelElement);
+            });
+        });
+    </script>
+</body>
+</html>

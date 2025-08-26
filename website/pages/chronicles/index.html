@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chroniques | EVEROS</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Styles spécifiques à la page des chroniques */
+        .chronicles-hero {
+            height: 50vh;
+            min-height: 400px;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-light);
+        }
+        
+        .chronicles-hero-content {
+            max-width: 800px;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .chronicles-hero-content h1 {
+            font-size: 4.8rem;
+            color: var(--text-light);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .chronicles-hero-content p {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .chronicles-nav {
+            background-color: var(--primary-light);
+            padding: var(--spacing-sm) 0;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+        
+        .chronicles-nav-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .chronicles-nav-item {
+            color: var(--text-light);
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .chronicles-nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+        
+        .chronicles-nav-item:hover::after,
+        .chronicles-nav-item.active::after {
+            width: 100%;
+        }
+        
+        .featured-stories {
+            padding: var(--spacing-lg) 0;
+        }
+        
+        .stories-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .story-card {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: var(--spacing-lg);
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .story-header {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .story-header img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .story-card:hover .story-header img {
+            transform: scale(1.05);
+        }
+        
+        .story-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: var(--spacing-md);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: var(--text-light);
+        }
+        
+        .story-title {
+            font-size: 2.8rem;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .story-meta {
+            display: flex;
+            align-items: center;
+            font-size: 1.4rem;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .story-deity {
+            display: flex;
+            align-items: center;
+            margin-right: var(--spacing-sm);
+        }
+        
+        .deity-icon-small {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 5px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .story-content {
+            padding: var(--spacing-md);
+        }
+        
+        .story-excerpt {
+            margin-bottom: var(--spacing-md);
+            font-size: 1.6rem;
+            line-height: 1.7;
+        }
+        
+        .story-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .story-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .story-tag {
+            background-color: var(--primary-light);
+            color: var(--text-light);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .story-tag:hover {
+            background-color: var(--accent-gold);
+        }
+        
+        .timeline {
+            padding: var(--spacing-lg) 0;
+            background-color: var(--primary-medium);
+            color: var(--text-light);
+        }
+        
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+            position: relative;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background-color: var(--accent-gold);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-entry {
+            position: relative;
+            margin-bottom: var(--spacing-lg);
+            width: 100%;
+            display: flex;
+        }
+        
+        .timeline-entry:nth-child(odd) {
+            justify-content: flex-start;
+        }
+        
+        .timeline-entry:nth-child(even) {
+            justify-content: flex-end;
+        }
+        
+        .timeline-entry-content {
+            width: 45%;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: var(--spacing-sm);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .timeline-entry:nth-child(odd) .timeline-entry-content::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: -15px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: transparent transparent transparent rgba(0, 0, 0, 0.2);
+        }
+        
+        .timeline-entry:nth-child(even) .timeline-entry-content::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: -15px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: transparent rgba(0, 0, 0, 0.2) transparent transparent;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--accent-gold);
+            border-radius: 50%;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+        
+        .timeline-date {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .timeline-title {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .timeline-description {
+            font-size: 1.4rem;
+        }
+        
+        .characters-section {
+            padding: var(--spacing-lg) 0;
+        }
+        
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .character-filter {
+            display: flex;
+            justify-content: center;
+            margin-bottom: var(--spacing-md);
+            flex-wrap: wrap;
+            gap: var(--spacing-xs);
+        }
+        
+        .filter-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary-light);
+            color: var(--primary-light);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background-color: var(--primary-light);
+            color: var(--text-light);
+        }
+        
+        @media screen and (max-width: 768px) {
+            .chronicles-nav-container {
+                flex-wrap: wrap;
+            }
+            
+            .chronicles-nav-item {
+                padding: var(--spacing-xs) var(--spacing-sm);
+                font-size: 1.4rem;
+            }
+            
+            .timeline-line {
+                left: 20px;
+            }
+            
+            .timeline-entry {
+                justify-content: flex-end !important;
+            }
+            
+            .timeline-entry-content {
+                width: calc(100% - 40px);
+            }
+            
+            .timeline-dot {
+                left: 20px;
+            }
+            
+            .timeline-entry:nth-child(odd) .timeline-entry-content::after {
+                content: '';
+                position: absolute;
+                top: 20px;
+                left: -15px;
+                right: auto;
+                border-color: transparent rgba(0, 0, 0, 0.2) transparent transparent;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="main-nav scrolled">
+            <div class="nav-container">
+                <div class="logo-container">
+                    <a href="../../index.html" class="logo">EVEROS</a>
+                </div>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../universe/index.html" class="nav-link">Explorer</a>
+                        <div class="dropdown-content">
+                            <a href="../universe/overview.html">Vue d'ensemble</a>
+                            <a href="../universe/maps.html">Cartes</a>
+                            <a href="../universe/cosmology.html">Cosmologie</a>
+                        </div>
+                    </li>
+                    <li><a href="../deities/index.html" class="nav-link">Divinités & Royaumes</a>
+                        <div class="dropdown-content">
+                            <a href="../deities/obsidienne.html">Obsidienne</a>
+                            <a href="../deities/mantha.html">Mantha</a>
+                            <a href="../deities/labir.html">Labir</a>
+                            <a href="../deities/hisangarde.html">Hisangarde</a>
+                            <a href="../deities/eromnia.html">Eromnia</a>
+                            <a href="../deities/light.html">Light</a>
+                            <a href="../deities/elzeryn.html">Elzeryn</a>
+                        </div>
+                    </li>
+                    <li><a href="index.html" class="nav-link active">Chroniques</a>
+                        <div class="dropdown-content">
+                            <a href="stories.html">Histoires</a>
+                            <a href="characters.html">Personnages</a>
+                            <a href="history.html">Histoire</a>
+                        </div>
+                    </li>
+                    <li><a href="../game-systems/index.html" class="nav-link">Systèmes de Jeu</a>
+                        <div class="dropdown-content">
+                            <a href="../game-systems/rpg-rules.html">Règles JDR</a>
+                            <a href="../game-systems/game-concepts.html">Concepts de Jeu</a>
+                        </div>
+                    </li>
+                    <li><a href="../gallery/index.html" class="nav-link">Galerie</a></li>
+                    <li><a href="../collective/index.html" class="nav-link">Le Collectif</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="chronicles-hero">
+        <div class="chronicles-hero-content">
+            <h1>Chroniques d'Everos</h1>
+            <p>[Description section chroniques]</p>
+        </div>
+    </div>
+
+    <nav class="chronicles-nav">
+        <div class="chronicles-nav-container">
+            <a href="#stories" class="chronicles-nav-item active">Histoires</a>
+            <a href="#characters" class="chronicles-nav-item">Personnages</a>
+            <a href="#timeline" class="chronicles-nav-item">Chronologie</a>
+            <a href="#legends" class="chronicles-nav-item">Légendes</a>
+        </div>
+    </nav>
+
+    <main>
+        <section id="stories" class="featured-stories">
+            <div class="stories-container">
+                <h2 class="section-title">[Titre section histoires]</h2>
+                
+                <div class="story-card">
+                    <div class="story-header">
+                        <img src="https://images.unsplash.com/photo-1601662528567-526cd06f6582?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Les Lames du Destin">
+                        <div class="story-overlay">
+                            <h3 class="story-title">[Titre histoire 1]</h3>
+                            <div class="story-meta">
+                                <div class="story-deity">
+                                    <div class="deity-icon-small" style="background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80');"></div>
+                                    <span>Obsidienne</span>
+                                </div>
+                                <span class="story-date">[Statut histoire • Nombre chapitres]</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="story-content">
+                        <div class="story-excerpt">
+                            <p>[Premier paragraphe résumé histoire 1]</p>
+                            <p>[Second paragraphe résumé histoire 1]</p>
+                        </div>
+                        <div class="story-actions">
+                            <div class="story-tags">
+                                <a href="#" class="story-tag">[Tag 1]</a>
+                                <a href="#" class="story-tag">[Tag 2]</a>
+                                <a href="#" class="story-tag">[Tag 3]</a>
+                            </div>
+                            <a href="stories/lames-destin.html" class="btn">Lire</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="story-card">
+                    <div class="story-header">
+                        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-1.2.1&auto=format&fit=crop&w=1371&q=80" alt="Murmures de la Forêt">
+                        <div class="story-overlay">
+                            <h3 class="story-title">[Titre histoire 2]</h3>
+                            <div class="story-meta">
+                                <div class="story-deity">
+                                    <div class="deity-icon-small" style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80');"></div>
+                                    <span>Mantha</span>
+                                </div>
+                                <span class="story-date">[Statut histoire • Nombre chapitres]</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="story-content">
+                        <div class="story-excerpt">
+                            <p>[Premier paragraphe résumé histoire 2]</p>
+                            <p>[Second paragraphe résumé histoire 2]</p>
+                        </div>
+                        <div class="story-actions">
+                            <div class="story-tags">
+                                <a href="#" class="story-tag">[Tag 1]</a>
+                                <a href="#" class="story-tag">[Tag 2]</a>
+                                <a href="#" class="story-tag">[Tag 3]</a>
+                            </div>
+                            <a href="stories/murmures-foret.html" class="btn">Lire</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="story-card">
+                    <div class="story-header">
+                        <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Profondeurs Abyssales">
+                        <div class="story-overlay">
+                            <h3 class="story-title">Profondeurs Abyssales</h3>
+                            <div class="story-meta">
+                                <div class="story-deity">
+                                    <div class="deity-icon-small" style="background-image: url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80');"></div>
+                                    <span>Eromnia</span>
+                                </div>
+                                <span class="story-date">Nouvelle • 1 chapitre</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="story-content">
+                        <div class="story-excerpt">
+                            <p>Le capitaine Soren n'a jamais cru aux mythes des créatures abyssales jusqu'à ce que son navire soit entraîné dans une tempête surnaturelle. Échoué sur une île inconnue au milieu de l'océan d'Eromnia, il découvre un temple sous-marin où un pacte ancestral entre humains et créatures des profondeurs est sur le point d'être rompu.</p>
+                        </div>
+                        <div class="story-actions">
+                            <div class="story-tags">
+                                <a href="#" class="story-tag">Aventure</a>
+                                <a href="#" class="story-tag">Horreur</a>
+                                <a href="#" class="story-tag">Océan</a>
+                            </div>
+                            <a href="stories/profondeurs-abyssales.html" class="btn">Lire</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <a href="stories.html" class="btn btn-primary">Voir toutes les histoires</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="timeline" class="timeline">
+            <div class="timeline-container">
+                <h2 class="section-title">Chronologie d'Everos</h2>
+                <p class="section-description">Les événements majeurs qui ont façonné l'histoire de notre univers</p>
+                
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-entry">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-entry-content">
+                        <div class="timeline-date">Ère de la Création</div>
+                        <h3 class="timeline-title">L'Éveil des Sept</h3>
+                        <p class="timeline-description">Les sept divinités primordiales émergent du chaos originel et commencent à façonner le monde d'Everos selon leur vision.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-entry">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-entry-content">
+                        <div class="timeline-date">Ère de la Séparation</div>
+                        <h3 class="timeline-title">Le Grand Schisme</h3>
+                        <p class="timeline-description">Suite à un conflit divin majeur, le continent primordial se divise en sept parties distinctes, chacune sous l'influence d'une divinité.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-entry">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-entry-content">
+                        <div class="timeline-date">Ère des Mortels</div>
+                        <h3 class="timeline-title">L'Avènement des Peuples</h3>
+                        <p class="timeline-description">Les divinités créent les différentes races mortelles qui peuplent leurs royaumes respectifs.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-entry">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-entry-content">
+                        <div class="timeline-date">Ère des Conflits</div>
+                        <h3 class="timeline-title">La Guerre des Flammes Noires</h3>
+                        <p class="timeline-description">Premier conflit majeur opposant les fidèles d'Obsidienne à ceux d'Elzeryn, laissant des cicatrices visibles sur les deux continents.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-entry">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-entry-content">
+                        <div class="timeline-date">Ère de l'Harmonie</div>
+                        <h3 class="timeline-title">Le Concordat des Sept</h3>
+                        <p class="timeline-description">Après des siècles de conflits intermittents, les divinités établissent un pacte de non-ingérence dans les affaires des autres royaumes.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-entry">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-entry-content">
+                        <div class="timeline-date">Ère Présente</div>
+                        <h3 class="timeline-title">L'Âge des Héros</h3>
+                        <p class="timeline-description">Période actuelle où de nombreux mortels accomplissent des exploits légendaires, influençant le destin d'Everos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="characters" class="characters-section">
+            <div class="characters-container">
+                <h2 class="section-title">Personnages Emblématiques</h2>
+                <p class="section-description">Découvrez les héros, villains et figures légendaires qui ont marqué l'histoire d'Everos</p>
+                
+                <div class="character-filter">
+                    <button class="filter-btn active" data-filter="all">Tous</button>
+                    <button class="filter-btn" data-filter="hero">Héros</button>
+                    <button class="filter-btn" data-filter="villain">Antagonistes</button>
+                    <button class="filter-btn" data-filter="obsidienne">Obsidienne</button>
+                    <button class="filter-btn" data-filter="mantha">Mantha</button>
+                    <button class="filter-btn" data-filter="eromnia">Eromnia</button>
+                    <button class="filter-btn" data-filter="light">Light</button>
+                </div>
+                
+                <div class="characters-grid">
+                    <!-- Kaelix -->
+                    <div class="character-card" data-type="hero obsidienne">
+                        <div class="character-portrait">
+                            <img src="https://images.unsplash.com/photo-1566937169390-7be4c63b8a0e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Kaelix le Forgeur">
+                            <div class="character-info">
+                                <h3 class="character-name">Kaelix</h3>
+                                <div class="character-title">Le Forgeur de Destins</div>
+                            </div>
+                        </div>
+                        <div class="character-content">
+                            <div class="character-description">
+                                <p>Premier Grand-Prêtre d'Obsidienne et fondateur de la Forge-Cité de Kaelmar.</p>
+                            </div>
+                            <a href="characters.html#kaelix" class="btn btn-small">Profil Complet</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Elissa -->
+                    <div class="character-card" data-type="hero mantha">
+                        <div class="character-portrait">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Elissa">
+                            <div class="character-info">
+                                <h3 class="character-name">Elissa</h3>
+                                <div class="character-title">Gardienne des Murmures</div>
+                            </div>
+                        </div>
+                        <div class="character-content">
+                            <div class="character-description">
+                                <p>Druidesse capable de communiquer avec les esprits de la forêt ancestrale.</p>
+                            </div>
+                            <a href="characters.html#elissa" class="btn btn-small">Profil Complet</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Soren -->
+                    <div class="character-card" data-type="hero eromnia">
+                        <div class="character-portrait">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Capitaine Soren">
+                            <div class="character-info">
+                                <h3 class="character-name">Capitaine Soren</h3>
+                                <div class="character-title">Navigateur des Abysses</div>
+                            </div>
+                        </div>
+                        <div class="character-content">
+                            <div class="character-description">
+                                <p>Capitaine de vaisseau qui a exploré les recoins les plus dangereux des océans d'Eromnia.</p>
+                            </div>
+                            <a href="characters.html#soren" class="btn btn-small">Profil Complet</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Thorn -->
+                    <div class="character-card" data-type="hero obsidienne">
+                        <div class="character-portrait">
+                            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Thorn">
+                            <div class="character-info">
+                                <h3 class="character-name">Thorn</h3>
+                                <div class="character-title">Forgeron Renégat</div>
+                            </div>
+                        </div>
+                        <div class="character-content">
+                            <div class="character-description">
+                                <p>Ancien disciple d'Obsidienne en quête des sept Lames du Destin.</p>
+                            </div>
+                            <a href="characters.html#thorn" class="btn btn-small">Profil Complet</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Lumina -->
+                    <div class="character-card" data-type="hero light">
+                        <div class="character-portrait">
+                            <img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Lumina">
+                            <div class="character-info">
+                                <h3 class="character-name">Lumina</h3>
+                                <div class="character-title">Oracle Céleste</div>
+                            </div>
+                        </div>
+                        <div class="character-content">
+                            <div class="character-description">
+                                <p>Prophétesse de Light dont les visions guident les mortels dans les moments de crise.</p>
+                            </div>
+                            <a href="characters.html#lumina" class="btn btn-small">Profil Complet</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Mordrath -->
+                    <div class="character-card" data-type="villain obsidienne">
+                        <div class="character-portrait">
+                            <img src="https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Mordrath">
+                            <div class="character-info">
+                                <h3 class="character-name">Mordrath</h3>
+                                <div class="character-title">Seigneur des Cendres</div>
+                            </div>
+                        </div>
+                        <div class="character-content">
+                            <div class="character-description">
+                                <p>Ancien champion d'Obsidienne corrompu par sa quête de pouvoir sans limites.</p>
+                            </div>
+                            <a href="characters.html#mordrath" class="btn btn-small">Profil Complet</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Némésia -->
+                    <div class="character-card" data-type="villain eromnia">
+                        <div class="character-portrait">
+                            <img src="https://images.unsplash.com/photo-1569076879128-111fcc4e2925?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Némésia">
+                            <div class="character-info">
+                                <h3 class="character-name">Némésia</h3>
+                                <div class="character-title">Reine des Abysses</div>
+                            </div>
+                        </div>
+                        <div class="character-content">
+                            <div class="character-description">
+                                <p>Créature mi-humaine mi-marine qui règne sur un royaume sous-marin rebelle à Eromnia.</p>
+                            </div>
+                            <a href="characters.html#nemesia" class="btn btn-small">Profil Complet</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Vyrael -->
+                    <div class="character-card" data-type="villain light">
+                        <div class="character-portrait">
+                            <img src="https://images.unsplash.com/photo-1613174900678-f870989d6836?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Vyrael">
+                            <div class="character-info">
+                                <h3 class="character-name">Vyrael</h3>
+                                <div class="character-title">Ange Déchu</div>
+                            </div>
+                        </div>
+                        <div class="character-content">
+                            <div class="character-description">
+                                <p>Ancien serviteur de Light banni pour avoir tenté d'usurper son pouvoir divin.</p>
+                            </div>
+                            <a href="characters.html#vyrael" class="btn btn-small">Profil Complet</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center" style="margin-top: var(--spacing-md);">
+                    <a href="characters.html" class="btn btn-primary">Tous les personnages</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="legends" class="featured-stories">
+            <div class="stories-container">
+                <h2 class="section-title">Légendes & Mythes</h2>
+                <p class="section-description">Les récits fondateurs et mythes qui structurent la cosmologie d'Everos</p>
+                
+                <div class="story-card">
+                    <div class="story-header">
+                        <img src="https://images.unsplash.com/photo-1502637827712-8609aac535b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="La Création d'Everos">
+                        <div class="story-overlay">
+                            <h3 class="story-title">La Création d'Everos</h3>
+                            <div class="story-meta">
+                                <span class="story-date">Mythe fondateur</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="story-content">
+                        <div class="story-excerpt">
+                            <p>Au commencement était le Vide, et du Vide émergea la Conscience. Cette Conscience, cherchant à se comprendre elle-même, se divisa en sept aspects distincts qui devinrent les divinités primordiales. Chacune façonna une partie du monde selon sa nature, créant ainsi les sept continents d'Everos.</p>
+                        </div>
+                        <div class="story-actions">
+                            <div class="story-tags">
+                                <a href="#" class="story-tag">Création</a>
+                                <a href="#" class="story-tag">Divinités</a>
+                                <a href="#" class="story-tag">Cosmologie</a>
+                            </div>
+                            <a href="legends/creation-everos.html" class="btn">Lire</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="story-card">
+                    <div class="story-header">
+                        <img src="https://images.unsplash.com/photo-1538370965046-79c0d6907d47?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Le Grand Schisme">
+                        <div class="story-overlay">
+                            <h3 class="story-title">Le Grand Schisme</h3>
+                            <div class="story-meta">
+                                <span class="story-date">Mythe de séparation</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="story-content">
+                        <div class="story-excerpt">
+                            <p>Cette légende raconte comment l'harmonie initiale entre les divinités fut brisée par un conflit sur la nature de la création. Le continent originel unique fut déchiré en sept parties lors d'un cataclysme divin, créant les royaumes séparés que nous connaissons aujourd'hui.</p>
+                        </div>
+                        <div class="story-actions">
+                            <div class="story-tags">
+                                <a href="#" class="story-tag">Conflit</a>
+                                <a href="#" class="story-tag">Cataclysme</a>
+                                <a href="#" class="story-tag">Géographie</a>
+                            </div>
+                            <a href="legends/grand-schisme.html" class="btn">Lire</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul class="footer-links">
+                    <li><a href="../universe/index.html">Explorer</a></li>
+                    <li><a href="../deities/index.html">Divinités & Royaumes</a></li>
+                    <li><a href="index.html">Chroniques</a></li>
+                    <li><a href="../game-systems/index.html">Systèmes de Jeu</a></li>
+                    <li><a href="../gallery/index.html">Galerie</a></li>
+                    <li><a href="../collective/index.html">Le Collectif</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Suivez-nous</h3>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> contact@everos-universe.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Everos Universe - Tous droits réservés</p>
+            <p>Un univers créé par Le Collectif Everos</p>
+        </div>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gestion des onglets de navigation
+            const navItems = document.querySelectorAll('.chronicles-nav-item');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Retirer la classe active de tous les onglets
+                    navItems.forEach(navItem => navItem.classList.remove('active'));
+                    
+                    // Ajouter la classe active à l'onglet cliqué
+                    this.classList.add('active');
+                    
+                    // Naviguer vers l'ancre
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Filtrage des personnages
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const characterCards = document.querySelectorAll('.character-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Mettre à jour les boutons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filtrer les cartes
+                    characterCards.forEach(card => {
+                        const cardType = card.getAttribute('data-type');
+                        
+                        if (filter === 'all' || cardType.includes(filter)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Animation de la chronologie
+            function animateTimeline() {
+                const timelineEntries = document.querySelectorAll('.timeline-entry');
+                
+                timelineEntries.forEach((entry, index) => {
+                    const delay = index * 300;
+                    
+                    setTimeout(() => {
+                        entry.style.opacity = '0';
+                        entry.style.transform = index % 2 === 0 ? 'translateX(-50px)' : 'translateX(50px)';
+                        
+                        setTimeout(() => {
+                            entry.style.transition = 'all 1s ease';
+                            entry.style.opacity = '1';
+                            entry.style.transform = 'translateX(0)';
+                        }, 100);
+                    }, delay);
+                });
+            }
+            
+            // Observer pour animer la chronologie lorsqu'elle entre dans la vue
+            const timelineSection = document.querySelector('.timeline');
+            let timelineAnimated = false;
+            
+            function handleTimelineScroll() {
+                if (!timelineAnimated && isElementInViewport(timelineSection)) {
+                    animateTimeline();
+                    timelineAnimated = true;
+                }
+            }
+            
+            function isElementInViewport(el) {
+                const rect = el.getBoundingClientRect();
+                return (
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.bottom >= 0
+                );
+            }
+            
+            window.addEventListener('scroll', handleTimelineScroll);
+            handleTimelineScroll(); // Vérifier au chargement
+        });
+    </script>
+</body>
+</html>
