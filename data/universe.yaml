@@ -1,0 +1,66 @@
+# Configuration de la page univers
+hero:
+  title: "Explorer l'Univers d'Everos"
+  description: "Découvrez les mondes, les peuples et les mystères de cet univers fantastique"
+  background_image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+
+# Portails d'exploration
+exploration_portals:
+  - title: "Vue d'Ensemble"
+    description: "Comprenez la structure fondamentale de l'univers d'Everos, ses règles physiques et magiques, ainsi que l'histoire de sa création."
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+    alt: "Vue d'ensemble d'Everos"
+    url: "overview/"
+    button_text: "Découvrir"
+
+  - title: "Cartes & Géographie"
+    description: "Explorez les continents divins, leurs géographies uniques, leurs climats et les merveilles qui les caractérisent."
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+    alt: "Cartes d'Everos"
+    url: "maps/"
+    button_text: "Explorer"
+
+  - title: "Cosmologie"
+    description: "Plongez dans la structure cosmique d'Everos, les plans d'existence et les forces qui régissent cet univers complexe."
+    image: "https://images.unsplash.com/photo-1543722530-d2c3201371e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+    alt: "Cosmologie d'Everos"
+    url: "cosmology/"
+    button_text: "Approfondir"
+
+# Caractéristiques de l'univers
+features:
+  - icon: "fas fa-globe-americas"
+    title: "7 Continents Divins"
+    description: "Chaque continent reflète la personnalité et les pouvoirs de la divinité qui l'a créé"
+
+  - icon: "fas fa-magic"
+    title: "Magie Omniprésente"
+    description: "Un système magique complexe tissé dans la structure même de la réalité"
+
+  - icon: "fas fa-users"
+    title: "Peuples Diversifiés"
+    description: "Des cultures riches et variées, chacune adaptée à son environnement unique"
+
+  - icon: "fas fa-scroll"
+    title: "Histoire Millénaire"
+    description: "Des chroniques s'étendant sur des millénaires d'événements épiques"
+
+# Navigation rapide
+quick_navigation:
+  - title: "Divinités & Royaumes"
+    icon: "fas fa-crown"
+    description: "Découvrez les sept divinités d'Everos et leurs domaines respectifs"
+    url: "/pages/deities/"
+    button_text: "Visiter"
+
+  - title: "Chroniques"
+    icon: "fas fa-book-open"
+    description: "Plongez dans les histoires, légendes et personnages légendaires"
+    url: "/pages/chronicles/"
+    button_text: "Lire"
+
+  - title: "Systèmes de Jeu"
+    icon: "fas fa-dice-d20"
+    description: "Accédez aux règles et mécaniques pour jouer dans l'univers d'Everos"
+    url: "/pages/game-systems/"
+    button_text: "Jouer"

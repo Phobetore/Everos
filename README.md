@@ -3,7 +3,7 @@
 
 **Everos** est un univers de fantasy épique créé par **Le Collectif Everos**, où des royaumes divins s'étendent à travers des continents mystérieux, et où chaque divinité règne sur son propre domaine avec ses lois, ses mystères et ses légendes.
 
-[![Site Web](https://img.shields.io/badge/Site-everos--universe.com-blue)](https://axarathe.com/)
+[![Site Web](https://img.shields.io/badge/Site-everos--universe.com-blue)](https://everos-universe.com/)
 [![Licence](https://img.shields.io/badge/Licence-Apache%202.0-green)](#licence)
 [![Hugo](https://img.shields.io/badge/Hugo-0.138.0-ff4088)](https://gohugo.io/)
 

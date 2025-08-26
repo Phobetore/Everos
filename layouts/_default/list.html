@@ -3,6 +3,10 @@
 {{ if in .RelPermalink "/deities/" }}
   {{/* Include the deities-specific layout */}}
   {{ partial "deities-layout.html" . }}
+{{/* Check if this is the universe section */}}
+{{ else if in .RelPermalink "/universe/" }}
+  {{/* Include the universe-specific layout */}}
+  {{ partial "universe-layout.html" . }}
 {{ else }}
   {{/* Use the default list layout for other sections */}}
   <div class="container">
