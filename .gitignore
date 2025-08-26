@@ -3,6 +3,10 @@ public/
 .hugo_build.lock
 resources/
 
+# Hugo binary
+hugo
+hugo_extended_*
+
 # OS and editor files
 .DS_Store
 Thumbs.db
