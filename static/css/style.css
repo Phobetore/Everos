@@ -439,6 +439,7 @@ img {
 }
 
 .deity-icon {
+    z-index: 1;
     position: relative;
     width: 120px;
     height: 120px;

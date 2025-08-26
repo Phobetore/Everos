@@ -1,5 +1,5 @@
 {{ $currentPage := . }}
-<nav class="main-nav">
+<nav class="main-nav{{ if not $currentPage.IsHome }} scrolled{{ end }}">
     <div class="nav-container">
         <div class="logo-container">
             <a href="{{ "/" | relURL }}" class="logo">EVEROS</a>
