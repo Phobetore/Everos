@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     deityIcons.forEach(icon => {
         icon.addEventListener('click', function() {
             const deity = this.getAttribute('data-deity');
-            window.location.href = `pages/deities/${deity}.html`;
+            window.location.href = `pages/deities/${deity}`;
         });
     });
     
