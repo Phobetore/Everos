@@ -1,5 +1,12 @@
 {{ $currentPage := . }}
+<<<<<<< HEAD
 <nav class="main-nav{{ if not $currentPage.IsSection }} scrolled{{ end }}" style="{{ if not $currentPage.IsSection }} position: relative !important;{{ end }}">
+=======
+{{/* Définir les pages racines qui doivent avoir une navbar transparente */}}
+{{ $rootPages := slice "/pages/universe/" "/pages/deities/" "/pages/chronicles/" "/pages/game-systems/" "/pages/gallery/" "/pages/collective/" }}
+{{ $isRootPage := or $currentPage.IsHome (and $currentPage.IsSection (in $rootPages $currentPage.RelPermalink)) }}
+<nav class="main-nav{{ if not $isRootPage }} scrolled{{ end }}" style="{{ if not $isRootPage }} position: relative !important;{{ end }}">
+>>>>>>> 61e94b9822417ab1a3d8c2a27208103d9af5cb7f
     <div class="nav-container">
         <div class="logo-container">
             <a href="{{ "/" | relURL }}" class="logo">EVEROS</a>
@@ -47,9 +54,13 @@
     </div>
 </nav>
 
+<<<<<<< HEAD
 {{ if $currentPage.IsSection }}
+=======
+{{ if $isRootPage }}
+>>>>>>> 61e94b9822417ab1a3d8c2a27208103d9af5cb7f
 <script>
-    // Navigation sticky au scroll (uniquement sur la home)
+    // Navigation sticky au scroll (sur la home et les pages racines)
     const mainNav = document.querySelector('.main-nav');
     window.addEventListener('scroll', function() {
         if (window.scrollY > 100) {
