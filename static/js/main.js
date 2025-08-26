@@ -12,17 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Navigation sticky au scroll
-    const mainNav = document.querySelector('.main-nav');
-    
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 100) {
-            mainNav.classList.add('scrolled');
-        } else {
-            mainNav.classList.remove('scrolled');
-        }
-    });
-    
     // Animation d'apparition des cartes de mise à jour
     const updateCards = document.querySelectorAll('.update-card');
     
