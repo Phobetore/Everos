@@ -75,4 +75,3 @@ jobs:
           password: ${{ secrets.SFTP_PASSWORD }}
           local_path: './public/*'
           remote_path: './axarathe/'
-        if: ${{ secrets.SFTP_PRIVATE_KEY == '' }}
