@@ -42,7 +42,14 @@ body {
     line-height: 1.6;
     color: var(--text-dark);
     background-color: #f9f7f3;
-    background-image: url('https://www.transparenttextures.com/patterns/parchment.png');
+    background-image: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 2px,
+            rgba(255,255,255,.1) 2px,
+            rgba(255,255,255,.1) 4px
+        );
     overflow-x: hidden;
 }
 
@@ -159,7 +166,8 @@ img {
     min-height: 600px;
     position: relative;
     overflow: hidden;
-    background: url('https://images.unsplash.com/photo-1536152470836-b943b246224c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), 
+                radial-gradient(circle at center, #1a0f2e, #0c131b);
     background-size: cover;
     display: flex;
     align-items: center;
@@ -345,12 +353,26 @@ img {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
+}
+
+.slide-content::before {
+    content: "🏛️";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 8rem;
+    opacity: 0.2;
+    z-index: 1;
 }
 
 .slide-content img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    position: relative;
+    z-index: 2;
 }
 
 .slide-info {
@@ -384,15 +406,21 @@ img {
 .carousel-btn {
     background: none;
     border: none;
-    font-size: 2rem;
+    font-size: 3rem;
     color: var(--primary-light);
     cursor: pointer;
     padding: 0.5rem 1rem;
     transition: color 0.3s ease;
+    font-weight: bold;
 }
 
 .carousel-btn:hover {
     color: var(--accent-gold);
+}
+
+.carousel-btn span {
+    display: block;
+    line-height: 1;
 }
 
 .carousel-dots {
@@ -461,34 +489,108 @@ img {
 }
 
 .obsidienne .icon-image {
-    background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
+    background: linear-gradient(135deg, #c62f35, #4b1d28);
+    position: relative;
+}
+
+.obsidienne .icon-image::before {
+    content: "🔥";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    opacity: 0.8;
 }
 
 .mantha .icon-image {
-    background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
+    background: linear-gradient(135deg, #4a7c5c, #1e3a2e);
+    position: relative;
+}
+
+.mantha .icon-image::before {
+    content: "🌿";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    opacity: 0.8;
 }
 
 .labir .icon-image {
-    background-image: url('https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
+    background: linear-gradient(135deg, #4a7ba7, #1e3a5f);
+    position: relative;
+}
+
+.labir .icon-image::before {
+    content: "🌊";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    opacity: 0.8;
 }
 
 .hisangarde .icon-image {
-    background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
+    background: linear-gradient(135deg, #b0b0b0, #3a3a3a);
+    position: relative;
+}
+
+.hisangarde .icon-image::before {
+    content: "⛰️";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    opacity: 0.8;
 }
 
 .eromnia .icon-image {
-    background-image: url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
+    background: linear-gradient(135deg, #d4a574, #5f3a1e);
+    position: relative;
+}
+
+.eromnia .icon-image::before {
+    content: "🏜️";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    opacity: 0.8;
 }
 
 .light .icon-image {
-    background-image: url('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
+    background: linear-gradient(135deg, #d4d4a7, #5f5f3a);
+    position: relative;
+}
+
+.light .icon-image::before {
+    content: "☀️";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    opacity: 0.8;
 }
 
 .elzeryn .icon-image {
-    background-image: url('https://images.unsplash.com/photo-1486078695445-0497c2dc4236?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
-    background-color: #a0c4e4; /* Couleur de secours si l'image ne charge pas */
-    background-size: cover;
-    background-position: center;
+    background: linear-gradient(135deg, #a574d4, #3a1e5f);
+    position: relative;
+}
+
+.elzeryn .icon-image::before {
+    content: "🔮";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    opacity: 0.8;
 }
 
 .deity-tooltip {
@@ -578,6 +680,28 @@ img {
     transition: transform 0.5s ease;
 }
 
+/* Fallback styling for when images don't load */
+.update-image {
+    background: linear-gradient(135deg, var(--primary-medium), var(--primary-light));
+    position: relative;
+}
+
+.update-image::before {
+    content: "📰";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    opacity: 0.3;
+    z-index: 1;
+}
+
+.update-image img {
+    position: relative;
+    z-index: 2;
+}
+
 .update-card:hover .update-image img {
     transform: scale(1.05);
 }
@@ -606,7 +730,7 @@ img {
 /* Call to Action */
 .call-to-action {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+                linear-gradient(135deg, #1a0f2e, #0c131b, #344966);
     background-size: cover;
     background-attachment: fixed;
     padding: var(--spacing-xl) 0;
