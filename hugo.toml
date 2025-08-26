@@ -49,7 +49,7 @@ enableRobotsTXT = true
 [params]
   description = "Everos - Un univers de fantasy épique avec des royaumes divins, des histoires captivantes et un riche système de jeu de rôle."
   author = "Le Collectif Everos"
-  contact_email = "contact@everos-universe.com"
+  contact_email = "contact@axarathe.com"
   
   # Social media
   [params.social]
@@ -87,6 +87,7 @@ enableRobotsTXT = true
     name = "Divinités & Royaumes"
     url = "/pages/deities/"
     weight = 20
+    identifier = "deities"
 
   [[menu.main]]
     name = "Chroniques"

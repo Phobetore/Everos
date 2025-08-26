@@ -8,22 +8,41 @@
             <i class="fas fa-bars"></i>
         </div>
         <ul class="nav-menu">
-            {{ range .Site.Menus.main }}
-                {{ if .HasChildren }}
-                <li>
-                    <a href="{{ .URL | relURL }}" class="nav-link{{ if $currentPage.IsMenuCurrent "main" . }} active{{ end }}">{{ .Name }}</a>
-                    <div class="dropdown-content">
-                        {{ range .Children }}
-                        <a href="{{ .URL | relURL }}"{{ if $currentPage.IsMenuCurrent "main" . }} class="active"{{ end }}>{{ .Name }}</a>
-                        {{ end }}
-                    </div>
-                </li>
-                {{ else }}
-                <li>
-                    <a href="{{ .URL | relURL }}" class="nav-link{{ if $currentPage.IsMenuCurrent "main" . }} active{{ end }}">{{ .Name }}</a>
-                </li>
-                {{ end }}
+          {{ range .Site.Menus.main }}
+            {{/* Cas spécial: le parent "Divinités & Royaumes" est rempli depuis data/divinites.yaml */}}
+            {{ if eq .Identifier "deities" }}
+              <li>
+                <a href="{{ .URL | relURL }}" class="nav-link{{ if $currentPage.IsMenuCurrent "main" . }} active{{ end }}">
+                  {{ .Name }}
+                </a>
+                <div class="dropdown-content">
+                  {{ $deities := site.Data.divinites }}
+                  {{ if $deities }}
+                    {{ range sort $deities "name" }}
+                      <a href="{{ printf "/pages/deities/%s/" .slug | relURL }}">{{ .name }}</a>
+                    {{ end }}
+                  {{ else }}
+                    <span class="dropdown-empty">Aucune divinité disponible</span>
+                  {{ end }}
+                </div>
+              </li>
+
+            {{ else if .HasChildren }}
+              <li>
+                <a href="{{ .URL | relURL }}" class="nav-link{{ if $currentPage.IsMenuCurrent "main" . }} active{{ end }}">{{ .Name }}</a>
+                <div class="dropdown-content">
+                  {{ range .Children }}
+                    <a href="{{ .URL | relURL }}"{{ if $currentPage.IsMenuCurrent "main" . }} class="active"{{ end }}>{{ .Name }}</a>
+                  {{ end }}
+                </div>
+              </li>
+
+            {{ else }}
+              <li>
+                <a href="{{ .URL | relURL }}" class="nav-link{{ if $currentPage.IsMenuCurrent "main" . }} active{{ end }}">{{ .Name }}</a>
+              </li>
             {{ end }}
+          {{ end }}
         </ul>
     </div>
 </nav>
