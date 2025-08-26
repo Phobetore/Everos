@@ -1,5 +1,5 @@
 {{ $currentPage := . }}
-<nav class="main-nav{{ if not $currentPage.IsHome }} scrolled{{ end }}" style="{{ if not $currentPage.IsHome }} position: relative !important;{{ end }}">
+<nav class="main-nav{{ if not $currentPage.IsSection }} scrolled{{ end }}" style="{{ if not $currentPage.IsSection }} position: relative !important;{{ end }}">
     <div class="nav-container">
         <div class="logo-container">
             <a href="{{ "/" | relURL }}" class="logo">EVEROS</a>
@@ -47,7 +47,7 @@
     </div>
 </nav>
 
-{{ if $currentPage.IsHome }}
+{{ if $currentPage.IsSection }}
 <script>
     // Navigation sticky au scroll (uniquement sur la home)
     const mainNav = document.querySelector('.main-nav');
