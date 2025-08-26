@@ -17,7 +17,7 @@
         <button class="carousel-btn prev"><i class="fas fa-chevron-left"></i></button>
         <div class="carousel-dots">
             {{ range $index, $item := .Site.Data.carousel }}
-            <span class="dot{{ if .active }} active{{ end }}" data-slide="{{ $index }}"></span>
+            <span class="dot{{ if .active }} active{{ end }}"></span>
             {{ end }}
         </div>
         <button class="carousel-btn next"><i class="fas fa-chevron-right"></i></button>

@@ -233,30 +233,6 @@ img {
     color: var(--text-light);
     cursor: pointer;
     z-index: 101;
-    position: relative;
-    width: 30px;
-    height: 30px;
-    padding: 5px;
-}
-
-/* Fallback hamburger icon if Font Awesome doesn't load */
-.menu-toggle::before {
-    content: '☰';
-    display: block;
-    font-size: 2.4rem;
-    line-height: 1;
-}
-
-/* Hide the fallback when Font Awesome loads */
-.menu-toggle i {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.menu-toggle i::before {
-    display: block;
 }
 
 .nav-menu {
@@ -486,38 +462,33 @@ img {
 
 .obsidienne .icon-image {
     background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
-    background-color: #c62f35; /* Fallback color for Obsidienne */
 }
 
 .mantha .icon-image {
     background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
-    background-color: #4a7c59; /* Fallback color for Mantha */
 }
 
 .labir .icon-image {
     background-image: url('https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
-    background-color: #0e3a5a; /* Fallback color for Labir */
 }
 
 .hisangarde .icon-image {
     background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
-    background-color: #8b9dc3; /* Fallback color for Hisangarde */
 }
 
 .eromnia .icon-image {
     background-image: url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
-    background-color: #deb887; /* Fallback color for Eromnia */
 }
 
 .light .icon-image {
     background-image: url('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
-    background-color: #ffd700; /* Fallback color for Light */
 }
 
 .elzeryn .icon-image {
     background-image: url('https://images.unsplash.com/photo-1486078695445-0497c2dc4236?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
-    background-color: #a0c4e4; /* Fallback color for Elzeryn */
-}
+    background-color: #a0c4e4; /* Couleur de secours si l'image ne charge pas */
+    background-size: cover;
+    background-position: center;
 }
 
 .deity-tooltip {
