@@ -1,0 +1,29 @@
+{{/* Info Card Shortcode
+Usage: {{< infocard title="Title" icon="fas fa-crown" url="/link/" >}}
+        Card content goes here
+        {{< /infocard >}}
+*/}}
+{{ $title := .Get "title" }}
+{{ $icon := .Get "icon" }}
+{{ $url := .Get "url" }}
+{{ $class := .Get "class" | default "" }}
+
+<div class="info-card {{ $class }}">
+    {{ if $icon }}
+    <div class="info-card-icon">
+        <i class="{{ $icon }}"></i>
+    </div>
+    {{ end }}
+    
+    {{ if $title }}
+    <h3 class="info-card-title">{{ $title }}</h3>
+    {{ end }}
+    
+    <div class="info-card-content">
+        {{ .Inner | markdownify }}
+    </div>
+    
+    {{ if $url }}
+    <a href="{{ $url | relURL }}" class="info-card-link">En savoir plus</a>
+    {{ end }}
+</div>

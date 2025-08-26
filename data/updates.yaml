@@ -1,0 +1,17 @@
+- type: "Nouvelle Divinité"
+  title: "Découverte d'Elzeryn"
+  description: "Une nouvelle divinité a été révélée dans les terres arcanes, maître des mystères magiques."
+  date: "2025-01-15"
+  url: "/pages/deities/elzeryn/"
+
+- type: "Extension de Lore"
+  title: "Les Continents d'Everos"
+  description: "Nouvelle cartographie détaillée des sept continents divins et de leurs interactions."
+  date: "2025-01-10"
+  url: "/pages/universe/maps/"
+
+- type: "Règles de Jeu"
+  title: "Système de Magie Divine"
+  description: "Nouveau système de magie lié aux divinités pour vos campagnes de jeu de rôle."
+  date: "2025-01-05"
+  url: "/pages/game-systems/rpg-rules/"
