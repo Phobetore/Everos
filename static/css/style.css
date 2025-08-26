@@ -345,12 +345,13 @@ img {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    background-size: cover;
+    background-position: center;
+    background-color: var(--primary-medium); /* Couleur de fallback */
 }
 
 .slide-content img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    display: none; /* On n'utilise plus les balises img */
 }
 
 .slide-info {
@@ -462,31 +463,49 @@ img {
 
 .obsidienne .icon-image {
     background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
+    background-color: #c62f35; /* Couleur de secours Obsidienne - rouge volcanique */
+    background-size: cover;
+    background-position: center;
 }
 
 .mantha .icon-image {
     background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
+    background-color: #2d5a3d; /* Couleur de secours Mantha - vert forêt */
+    background-size: cover;
+    background-position: center;
 }
 
 .labir .icon-image {
     background-image: url('https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
+    background-color: #2e5984; /* Couleur de secours Labir - bleu océan */
+    background-size: cover;
+    background-position: center;
 }
 
 .hisangarde .icon-image {
     background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
+    background-color: #7a7a7a; /* Couleur de secours Hisangarde - gris montagne */
+    background-size: cover;
+    background-position: center;
 }
 
 .eromnia .icon-image {
     background-image: url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
+    background-color: #bf7c2e; /* Couleur de secours Eromnia - or désert */
+    background-size: cover;
+    background-position: center;
 }
 
 .light .icon-image {
     background-image: url('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
+    background-color: #bfbf7c; /* Couleur de secours Light - jaune lumière */
+    background-size: cover;
+    background-position: center;
 }
 
 .elzeryn .icon-image {
     background-image: url('https://images.unsplash.com/photo-1486078695445-0497c2dc4236?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');
-    background-color: #a0c4e4; /* Couleur de secours si l'image ne charge pas */
+    background-color: #7c2ebf; /* Couleur de secours Elzeryn - violet arcane */
     background-size: cover;
     background-position: center;
 }

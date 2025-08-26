@@ -2,8 +2,7 @@
     <div class="carousel-track">
         {{ range .Site.Data.carousel }}
         <div class="carousel-slide{{ if .active }} active{{ end }}">
-            <div class="slide-content">
-                <img src="{{ .image }}" alt="{{ .title }}">
+            <div class="slide-content" style="background-image: url('{{ .image }}');">
                 <div class="slide-info">
                     <h3>{{ .title }}</h3>
                     <p>{{ .description }}</p>
