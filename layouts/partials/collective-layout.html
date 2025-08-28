@@ -1,0 +1,591 @@
+{{/* Collective Layout Partial */}}
+{{ $collective := .Site.Data.collective }}
+
+<style>
+/* Styles spécifiques à la page du collectif */
+.collective-hero {
+    height: 60vh;
+    min-height: 400px;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('{{ $collective.hero.background_image }}') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-light);
+}
+
+.collective-hero-content {
+    max-width: 800px;
+    padding: 0 var(--spacing-md);
+}
+
+.collective-hero-content h1 {
+    font-size: 4.8rem;
+    color: var(--text-light);
+    margin-bottom: var(--spacing-sm);
+}
+
+.collective-hero-content p {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.collective-intro {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-md);
+    text-align: center;
+}
+
+.collective-intro p {
+    font-size: 2rem;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+}
+
+.collective-intro .highlight {
+    color: var(--accent-gold);
+    font-family: var(--font-display);
+    font-weight: bold;
+}
+
+.collective-members {
+    background-color: var(--primary-light);
+    padding: var(--spacing-xl) 0;
+}
+
+.members-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.member-card {
+    background-color: var(--primary-medium);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.member-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.member-img-container {
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+}
+
+.member-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.member-card:hover .member-img {
+    transform: scale(1.05);
+}
+
+.deity-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    color: var(--text-light);
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--accent-gold);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.member-card:hover .deity-badge {
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+}
+
+.member-info {
+    padding: var(--spacing-md);
+    color: var(--text-light);
+}
+
+.member-name {
+    font-size: 2.4rem;
+    margin-bottom: var(--spacing-xs);
+    color: var(--accent-gold);
+    font-family: var(--font-display);
+}
+
+.member-role {
+    font-size: 1.6rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-medium);
+    font-style: italic;
+}
+
+.member-bio {
+    font-size: 1.6rem;
+    line-height: 1.5;
+    margin-bottom: var(--spacing-md);
+}
+
+.member-social {
+    display: flex;
+    gap: 15px;
+}
+
+.member-social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    transition: all 0.3s ease;
+}
+
+.member-social-icon:hover {
+    background-color: var(--accent-gold);
+    color: var(--primary-dark);
+    transform: translateY(-3px);
+}
+
+.member-deity-name {
+    margin-top: var(--spacing-sm);
+    color: var(--accent-gold);
+    font-size: 1.6rem;
+    font-family: var(--font-display);
+}
+
+.collective-history {
+    padding: var(--spacing-xl) 0;
+    background-color: var(--primary-dark);
+}
+
+.history-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.history-title {
+    font-size: 3.6rem;
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    color: var(--accent-gold);
+}
+
+.timeline {
+    position: relative;
+    padding-left: 50px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15px;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, 
+        rgba(255, 215, 0, 0.8) 0%, 
+        rgba(255, 215, 0, 0.2) 100%);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: var(--spacing-lg);
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--accent-gold);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.timeline-date {
+    font-size: 2rem;
+    color: var(--accent-gold);
+    margin-bottom: var(--spacing-xs);
+    font-family: var(--font-display);
+}
+
+.timeline-event {
+    font-size: 2.4rem;
+    color: var(--text-light);
+    margin-bottom: var(--spacing-xs);
+}
+
+.timeline-description {
+    font-size: 1.6rem;
+    color: var(--text-medium);
+    line-height: 1.6;
+}
+
+.collective-vision {
+    padding: var(--spacing-xl) 0;
+    background-color: var(--primary-medium);
+}
+
+.vision-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.vision-title {
+    font-size: 3.6rem;
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    color: var(--accent-gold);
+}
+
+.vision-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.vision-card {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: var(--spacing-md);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.vision-card-icon {
+    font-size: 3.6rem;
+    color: var(--accent-gold);
+    margin-bottom: var(--spacing-sm);
+}
+
+.vision-card-title {
+    font-size: 2.4rem;
+    color: var(--text-light);
+    margin-bottom: var(--spacing-sm);
+}
+
+.vision-card-text {
+    font-size: 1.6rem;
+    color: var(--text-medium);
+    line-height: 1.6;
+}
+
+.join-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
+                url('{{ $collective.join.background_image }}') no-repeat center center;
+    background-size: cover;
+    padding: var(--spacing-xl) 0;
+    text-align: center;
+}
+
+.join-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.join-title {
+    font-size: 3.6rem;
+    color: var(--accent-gold);
+    margin-bottom: var(--spacing-md);
+}
+
+.join-text {
+    font-size: 1.8rem;
+    color: var(--text-light);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.6;
+}
+
+.join-form {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-sm);
+    text-align: left;
+}
+
+.form-label {
+    display: block;
+    font-size: 1.6rem;
+    color: var(--text-light);
+    margin-bottom: 8px;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: var(--primary-dark);
+    border: 1px solid var(--primary-light);
+    border-radius: 4px;
+    color: var(--text-light);
+    font-size: 1.6rem;
+}
+
+.form-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-button {
+    background: linear-gradient(45deg, var(--accent-gold), #e6c06e);
+    color: var(--primary-dark);
+    border: none;
+    border-radius: 4px;
+    padding: 12px 24px;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: var(--spacing-sm);
+    font-family: var(--font-display);
+    font-weight: bold;
+}
+
+.form-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 768px) {
+    .collective-hero-content h1 {
+        font-size: 3.6rem;
+    }
+    
+    .collective-hero-content p {
+        font-size: 1.8rem;
+    }
+    
+    .collective-intro p {
+        font-size: 1.8rem;
+    }
+    
+    .members-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .vision-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .timeline {
+        padding-left: 30px;
+    }
+    
+    .timeline-item::before {
+        left: -30px;
+        width: 20px;
+        height: 20px;
+    }
+}
+</style>
+
+<div class="collective-hero">
+    <div class="collective-hero-content">
+        <h1>{{ $collective.hero.title }}</h1>
+        <p>{{ $collective.hero.description }}</p>
+    </div>
+</div>
+
+<section class="collective-intro">
+    <p>{{ $collective.intro.text1 | safeHTML }}</p>
+    <p>{{ $collective.intro.text2 }}</p>
+</section>
+
+<section class="collective-members">
+    <div class="members-container">
+        <div class="members-grid">
+            {{ range $collective.members }}
+            <div class="member-card">
+                <div class="member-img-container">
+                    <img src="{{ .image }}" alt="{{ .name }}" class="member-img">
+                    <div class="deity-badge">
+                        <i class="{{ .icon }}"></i>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <h3 class="member-name">{{ .name }}</h3>
+                    <p class="member-role">{{ .role }}</p>
+                    <p class="member-bio">{{ .bio }}</p>
+                    <p class="member-deity-name">Divinité : {{ .deity_name }}, {{ .deity_description }}</p>
+                    <div class="member-social">
+                        {{ range .social }}
+                        <a href="{{ .url }}" class="member-social-icon"><i class="{{ .icon }}"></i></a>
+                        {{ end }}
+                    </div>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+
+<section class="collective-history">
+    <div class="history-container">
+        <h2 class="history-title">{{ $collective.timeline.title }}</h2>
+        <div class="timeline">
+            {{ range $collective.timeline.events }}
+            <div class="timeline-item">
+                <div class="timeline-date">{{ .year }}</div>
+                <h3 class="timeline-event">{{ .event }}</h3>
+                <p class="timeline-description">{{ .description }}</p>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+
+<section class="collective-vision">
+    <div class="vision-container">
+        <h2 class="vision-title">{{ $collective.vision.title }}</h2>
+        <div class="vision-cards">
+            {{ range $collective.vision.values }}
+            <div class="vision-card">
+                <div class="vision-card-icon">
+                    <i class="{{ .icon }}"></i>
+                </div>
+                <h3 class="vision-card-title">{{ .title }}</h3>
+                <p class="vision-card-text">{{ .description }}</p>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+
+<section class="join-section">
+    <div class="join-container">
+        <h2 class="join-title">{{ $collective.join.title }}</h2>
+        <p class="join-text">{{ $collective.join.description }}</p>
+        <div class="join-form">
+            <form action="{{ $collective.join.form.action }}" method="POST" data-netlify="true" data-netlify-honeypot="{{ $collective.join.form.honeypot }}" data-netlify-recaptcha="true">
+                <input type="hidden" name="{{ $collective.join.form.honeypot }}" />
+                
+                <div class="form-group">
+                    <label for="name" class="form-label">Votre nom</label>
+                    <input type="text" id="name" name="name" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="form-label">Votre email</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="interest" class="form-label">Votre domaine d'intérêt</label>
+                    <select id="interest" name="interest" class="form-input">
+                        <option value="writing">Écriture</option>
+                        <option value="art">Illustration</option>
+                        <option value="gamedesign">Game Design</option>
+                        <option value="music">Musique</option>
+                        <option value="development">Développement</option>
+                        <option value="community">Animation de Communauté</option>
+                        <option value="other">Autre</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message" class="form-label">Votre message</label>
+                    <textarea id="message" name="message" class="form-textarea" required></textarea>
+                </div>
+                
+                <div data-netlify-recaptcha="true"></div>
+                
+                <button type="submit" class="form-button">Envoyer votre message</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animation pour les cartes des membres au scroll
+    const memberCards = document.querySelectorAll('.member-card');
+    
+    function isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) + 100 &&
+            rect.bottom >= 0
+        );
+    }
+    
+    function animateVisibleCards() {
+        memberCards.forEach((card, index) => {
+            if (isElementInViewport(card) && !card.classList.contains('animated')) {
+                setTimeout(() => {
+                    card.classList.add('animated');
+                    card.style.animation = 'fadeInUp 0.6s ease forwards';
+                }, index * 150);
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', animateVisibleCards);
+    animateVisibleCards();
+    
+    // Animation pour les items de la timeline au scroll
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    
+    function animateVisibleTimelineItems() {
+        timelineItems.forEach((item, index) => {
+            if (isElementInViewport(item) && !item.classList.contains('animated')) {
+                setTimeout(() => {
+                    item.classList.add('animated');
+                    item.style.animation = 'fadeInLeft 0.6s ease forwards';
+                }, index * 300);
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', animateVisibleTimelineItems);
+    animateVisibleTimelineItems();
+    
+    // Animation pour les cartes de vision au scroll
+    const visionCards = document.querySelectorAll('.vision-card');
+    
+    function animateVisibleVisionCards() {
+        visionCards.forEach((card, index) => {
+            if (isElementInViewport(card) && !card.classList.contains('animated')) {
+                setTimeout(() => {
+                    card.classList.add('animated');
+                    card.style.animation = 'fadeInUp 0.6s ease forwards';
+                }, index * 200);
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', animateVisibleVisionCards);
+    animateVisibleVisionCards();
+});
+</script>
