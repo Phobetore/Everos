@@ -297,85 +297,122 @@
     line-height: 1.6;
 }
 
-.join-section {
+.connect-section {
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
-                url('{{ $collective.join.background_image }}') no-repeat center center;
+                url('{{ $collective.connect.background_image }}') no-repeat center center;
     background-size: cover;
     padding: var(--spacing-xl) 0;
     text-align: center;
 }
 
-.join-container {
-    max-width: 700px;
+.connect-container {
+    max-width: 900px;
     margin: 0 auto;
     padding: 0 var(--spacing-md);
 }
 
-.join-title {
+.connect-title {
     font-size: 3.6rem;
     color: var(--accent-gold);
     margin-bottom: var(--spacing-md);
 }
 
-.join-text {
+.connect-text {
     font-size: 1.8rem;
     color: var(--text-light);
     margin-bottom: var(--spacing-lg);
     line-height: 1.6;
 }
 
-.join-form {
+.connect-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.connect-card {
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 8px;
     padding: var(--spacing-md);
-    margin-top: var(--spacing-md);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
 }
 
-.form-group {
+.connect-card:hover {
+    border-color: var(--accent-gold);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+}
+
+.connect-card-icon {
+    font-size: 4.8rem;
     margin-bottom: var(--spacing-sm);
-    text-align: left;
+    color: var(--accent-gold);
 }
 
-.form-label {
-    display: block;
-    font-size: 1.6rem;
+.connect-card-title {
+    font-size: 2.4rem;
     color: var(--text-light);
-    margin-bottom: 8px;
+    margin-bottom: var(--spacing-xs);
+    font-family: var(--font-display);
 }
 
-.form-input,
-.form-textarea {
-    width: 100%;
-    padding: 12px 16px;
-    background-color: var(--primary-dark);
-    border: 1px solid var(--primary-light);
-    border-radius: 4px;
-    color: var(--text-light);
+.connect-card-description {
     font-size: 1.6rem;
+    color: var(--text-medium);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.5;
 }
 
-.form-textarea {
-    min-height: 120px;
-    resize: vertical;
-}
-
-.form-button {
+.connect-button {
     background: linear-gradient(45deg, var(--accent-gold), #e6c06e);
     color: var(--primary-dark);
     border: none;
     border-radius: 4px;
     padding: 12px 24px;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: var(--spacing-sm);
     font-family: var(--font-display);
     font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
 }
 
-.form-button:hover {
+.connect-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    color: var(--primary-dark);
+}
+
+.social-platforms {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.social-platform {
+    background-color: var(--primary-dark);
+    border: 2px solid var(--primary-light);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 2.4rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.social-platform:hover {
+    background-color: var(--accent-gold);
+    border-color: var(--accent-gold);
+    color: var(--primary-dark);
     transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 @media screen and (max-width: 768px) {
@@ -483,46 +520,55 @@
     </div>
 </section>
 
-<section class="join-section">
-    <div class="join-container">
-        <h2 class="join-title">{{ $collective.join.title }}</h2>
-        <p class="join-text">{{ $collective.join.description }}</p>
-        <div class="join-form">
-            <form action="{{ $collective.join.form.action }}" method="POST" data-netlify="true" data-netlify-honeypot="{{ $collective.join.form.honeypot }}" data-netlify-recaptcha="true">
-                <input type="hidden" name="{{ $collective.join.form.honeypot }}" />
-                
-                <div class="form-group">
-                    <label for="name" class="form-label">Votre nom</label>
-                    <input type="text" id="name" name="name" class="form-input" required>
+<section class="connect-section">
+    <div class="connect-container">
+        <h2 class="connect-title">{{ $collective.connect.title }}</h2>
+        <p class="connect-text">{{ $collective.connect.description }}</p>
+        
+        <div class="connect-options">
+            <!-- Discord Card -->
+            <div class="connect-card">
+                <div class="connect-card-icon">
+                    <i class="{{ $collective.connect.discord.icon }}"></i>
                 </div>
-                
-                <div class="form-group">
-                    <label for="email" class="form-label">Votre email</label>
-                    <input type="email" id="email" name="email" class="form-input" required>
+                <h3 class="connect-card-title">{{ $collective.connect.discord.title }}</h3>
+                <p class="connect-card-description">{{ $collective.connect.discord.description }}</p>
+                <a href="{{ .Site.Params.social.discord }}" class="connect-button" target="_blank" rel="noopener">
+                    Rejoindre Discord
+                </a>
+            </div>
+            
+            <!-- Social Media Card -->
+            <div class="connect-card">
+                <div class="connect-card-icon">
+                    <i class="fas fa-share-alt"></i>
                 </div>
-                
-                <div class="form-group">
-                    <label for="interest" class="form-label">Votre domaine d'intérêt</label>
-                    <select id="interest" name="interest" class="form-input">
-                        <option value="writing">Écriture</option>
-                        <option value="art">Illustration</option>
-                        <option value="gamedesign">Game Design</option>
-                        <option value="music">Musique</option>
-                        <option value="development">Développement</option>
-                        <option value="community">Animation de Communauté</option>
-                        <option value="other">Autre</option>
-                    </select>
+                <h3 class="connect-card-title">{{ $collective.connect.social.title }}</h3>
+                <p class="connect-card-description">{{ $collective.connect.social.description }}</p>
+                <div class="social-platforms">
+                    <a href="{{ .Site.Params.social.twitter }}" class="social-platform" title="Twitter" target="_blank" rel="noopener">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="{{ .Site.Params.social.instagram }}" class="social-platform" title="Instagram" target="_blank" rel="noopener">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="{{ .Site.Params.social.youtube }}" class="social-platform" title="YouTube" target="_blank" rel="noopener">
+                        <i class="fab fa-youtube"></i>
+                    </a>
                 </div>
-                
-                <div class="form-group">
-                    <label for="message" class="form-label">Votre message</label>
-                    <textarea id="message" name="message" class="form-textarea" required></textarea>
+            </div>
+            
+            <!-- Contact Card -->
+            <div class="connect-card">
+                <div class="connect-card-icon">
+                    <i class="{{ $collective.connect.contact.icon }}"></i>
                 </div>
-                
-                <div data-netlify-recaptcha="true"></div>
-                
-                <button type="submit" class="form-button">Envoyer votre message</button>
-            </form>
+                <h3 class="connect-card-title">{{ $collective.connect.contact.title }}</h3>
+                <p class="connect-card-description">{{ $collective.connect.contact.description }}</p>
+                <a href="mailto:{{ .Site.Params.contact_email }}" class="connect-button">
+                    Nous écrire
+                </a>
+            </div>
         </div>
     </div>
 </section>

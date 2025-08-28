@@ -176,10 +176,18 @@ vision:
       description: "Nous développons des expériences de jeu uniques qui permettent aux joueurs de vivre leurs propres aventures dans Everos."
       icon: "fas fa-gamepad"
 
-join:
-  title: "Rejoignez le Collectif"
-  description: "Vous êtes passionné de création, d'écriture, d'art ou de jeux ? Vous souhaitez contribuer à l'univers d'Everos ? N'hésitez pas à nous contacter !"
+connect:
+  title: "Rejoignez Notre Communauté"
+  description: "Vous êtes passionné par l'univers d'Everos ? Rejoignez notre communauté, suivez-nous sur nos réseaux sociaux ou contactez-nous directement !"
   background_image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
-  form:
-    action: "/pages/collective/remerciements/"
-    honeypot: "bot-field"
+  discord:
+    title: "Rejoignez notre Discord"
+    description: "Discutez avec la communauté, participez aux événements et accédez aux contenus exclusifs"
+    icon: "fab fa-discord"
+  social:
+    title: "Suivez-nous"
+    description: "Restez au courant des dernières nouvelles et créations"
+  contact:
+    title: "Contactez-nous"
+    description: "Une question, une suggestion ? Écrivez-nous directement"
+    icon: "fas fa-envelope"
