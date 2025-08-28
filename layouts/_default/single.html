@@ -228,6 +228,27 @@
             font-weight: bold;
             text-align: right;
         }
+
+        /* Style blockquotes in culture section as lore quotes */
+        .cultures-section blockquote {
+            font-style: italic;
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            border-left: 3px solid var(--deity-accent);
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .cultures-section blockquote p {
+            margin: 0;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .cultures-section blockquote p:last-child {
+            margin-bottom: 0;
+            font-style: normal;
+            font-weight: bold;
+            text-align: right;
+        }
         
         .lore-section {
             padding: var(--spacing-lg) 0;
@@ -511,6 +532,7 @@
             {{ $continentType := printf "%T" $deity.continent }}
             {{ if ne $continentType "string" }}
                 {{ if $deity.continent }}
+                {{ $pageContent := .Content }}  {{/* Store page content before changing context */}}
                 {{ with $deity.continent }}
                 <section id="continent" class="continent-section">
                     <div class="continent-container">
@@ -548,26 +570,45 @@
                         </div>
                         {{ end }}
                         
-                        {{ if .culture }}
-                        {{ with .culture }}
+                        {{/* Check if the page content contains culture information */}}
+                        {{ if or (in $pageContent "la-population") (.culture) }}
                         <div class="cultures-section">
-                            <h3 class="subsection-title">La population</h3>
-                            <p>{{ .population | default "flemme de remplir maintenant" }}</p>
-                            
-                            <h4>Organisation Sociale</h4>
-                            <p>{{ .social_organization | default "flemme de remplir maintenant" }}</p>
-                            
-                            <h4>Croyances et Traditions</h4>
-                            <p>{{ .beliefs_traditions | default "flemme de remplir maintenant" }}</p>
-                            
-                            {{ range .quotes }}
-                            <div class="lore-quote">
-                                <p>"{{ .text | default "Ici une citation stylé du lore" }}"</p>
-                                <cite>— {{ .author | default "Ici le mec qui l'a dit" }}</cite>
-                            </div>
+                            {{ if in $pageContent "la-population" }}
+                                <!-- Using markdown content -->
+                                {{/* Extract and render just the culture section from markdown content */}}
+                                {{ $sections := split $pageContent "la-population" }}
+                                {{ if gt (len $sections) 1 }}
+                                    {{ $cultureSection := index $sections 1 }}
+                                    {{/* Stop at the next ## heading if it exists - look for next h2 tag */}}
+                                    {{ $cultureParts := split $cultureSection "<h2" }}
+                                    {{ $cultureContent := index $cultureParts 0 }}
+                                    {{/* Remove the closing part of the h2 tag from our content */}}
+                                    {{ $cultureContent = $cultureContent | replaceRE "^[^>]*>" "" }}
+                                    <h3 class="subsection-title">La population</h3>
+                                    {{ $cultureContent | safeHTML }}
+                                {{ end }}
+                            {{ else if .culture }}
+                                <!-- Using YAML data -->
+                                {{/* Fall back to YAML data for other deities */}}
+                                {{ with .culture }}
+                                <h3 class="subsection-title">La population</h3>
+                                <p>{{ .population | default "flemme de remplir maintenant" }}</p>
+                                
+                                <h4>Organisation Sociale</h4>
+                                <p>{{ .social_organization | default "flemme de remplir maintenant" }}</p>
+                                
+                                <h4>Croyances et Traditions</h4>
+                                <p>{{ .beliefs_traditions | default "flemme de remplir maintenant" }}</p>
+                                
+                                {{ range .quotes }}
+                                <div class="lore-quote">
+                                    <p>"{{ .text | default "Ici une citation stylé du lore" }}"</p>
+                                    <cite>— {{ .author | default "Ici le mec qui l'a dit" }}</cite>
+                                </div>
+                                {{ end }}
+                                {{ end }}
                             {{ end }}
                         </div>
-                        {{ end }}
                         {{ end }}
                     </div>
                 </section>

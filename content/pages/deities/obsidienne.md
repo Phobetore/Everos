@@ -20,3 +20,19 @@ Les fidèles d'Obsidienne sont principalement des forgerons, des guerriers et de
 ### Mystères et Légendes
 
 On raconte qu'Obsidienne garde en son cœur le Premier Feu, l'étincelle originelle qui a donné naissance à toute magie dans Everos. Les plus courageux - ou les plus téméraires - tentent parfois de s'approcher de ce feu primordial.
+
+## La Population
+
+Le peuple d'Urganis est principalement composé de forgerons, d'artisans et de guerriers qui vénèrent l'art de la création par le feu.
+
+### Organisation Sociale
+
+La société est organisée autour des guildes d'artisans, avec les Maîtres Forgerons au sommet de la hiérarchie.
+
+### Croyances et Traditions
+
+Les habitants croient en la destruction créatrice - l'idée que pour créer quelque chose de nouveau, l'ancien doit parfois être détruit.
+
+> "Comme le métal sous le marteau, soyez malléables mais jamais brisés. Que la chaleur vous transforme, que le froid vous trempe, et que votre âme devienne aussi résistante que l'acier forgé d'Obsidienne."
+> 
+> — Précepte fondamental du culte d'Obsidienne
