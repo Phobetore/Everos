@@ -40,15 +40,18 @@ class DivineRelationsDiagram {
         // Conteneur pour les relations SVG
         this.svg = document.createElementNS(this.svgNS, 'svg');
         this.svg.setAttribute('class', 'relations-svg');
-        this.svg.setAttribute('viewBox', '0 0 1000 600');
-        this.svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+        // ViewBox will be set dynamically in updateDimensions
         this.container.appendChild(this.svg);
     }
     
     calculatePositions() {
-        const centerX = 500;
-        const centerY = 300;
-        const radius = 200;
+        // Use dynamic positioning based on actual container dimensions
+        // This ensures proper alignment between nodes and SVG lines
+        this.updateDimensions();
+        
+        const centerX = this.containerWidth / 2;
+        const centerY = this.containerHeight / 2;
+        const radius = Math.min(this.containerWidth, this.containerHeight) * 0.3; // 30% of smaller dimension
         const angleStep = (2 * Math.PI) / this.deities.length;
         
         this.positions = {};
@@ -60,6 +63,17 @@ class DivineRelationsDiagram {
                 y: centerY + radius * Math.sin(angle)
             };
         });
+    }
+    
+    updateDimensions() {
+        // Get actual container dimensions for accurate positioning
+        const containerRect = this.container.getBoundingClientRect();
+        this.containerWidth = containerRect.width;
+        this.containerHeight = containerRect.height;
+        
+        // Update SVG viewBox to match container dimensions
+        this.svg.setAttribute('viewBox', `0 0 ${this.containerWidth} ${this.containerHeight}`);
+        this.svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     }
     
     createSVG() {
@@ -119,8 +133,9 @@ class DivineRelationsDiagram {
             // Créer le nœud
             const node = document.createElement('div');
             node.className = 'deity-node';
-            node.style.left = `${(position.x / 1000) * 100}%`;
-            node.style.top = `${(position.y / 600) * 100}%`;
+            // Use absolute positioning with pixel values for precise alignment with SVG
+            node.style.left = `${position.x}px`;
+            node.style.top = `${position.y}px`;
             node.style.transform = 'translate(-50%, -50%)';
             node.style.backgroundImage = `url('${deity.image}')`;
             node.style.borderColor = deity.colors.accent;
@@ -253,7 +268,23 @@ class DivineRelationsDiagram {
         });
         
         // Responsive handling
-        window.addEventListener('resize', () => this.handleResize());
+        window.addEventListener('resize', () => {
+            clearTimeout(this.resizeTimeout);
+            this.resizeTimeout = setTimeout(() => {
+                this.handleResize();
+            }, 100);
+        });
+        
+        // Resize observer for container size changes
+        if (window.ResizeObserver) {
+            this.resizeObserver = new ResizeObserver(() => {
+                clearTimeout(this.resizeTimeout);
+                this.resizeTimeout = setTimeout(() => {
+                    this.handleResize();
+                }, 100);
+            });
+            this.resizeObserver.observe(this.container);
+        }
     }
     
     handleNodeHover(event, deityName) {
@@ -390,8 +421,36 @@ class DivineRelationsDiagram {
     }
     
     handleResize() {
-        // Recalculer les positions si nécessaire
-        // Pour l'instant, le SVG est responsive grâce au viewBox
+        // Recalculate positions and update elements when container size changes
+        this.calculatePositions();
+        this.updateNodePositions();
+        this.updateLinePositions();
+    }
+    
+    updateNodePositions() {
+        this.nodes.forEach((nodeData, deityName) => {
+            const position = this.positions[deityName];
+            if (position) {
+                nodeData.element.style.left = `${position.x}px`;
+                nodeData.element.style.top = `${position.y}px`;
+                nodeData.position = position;
+            }
+        });
+    }
+    
+    updateLinePositions() {
+        this.lines.forEach((lineData, relationKey) => {
+            const relation = lineData.relation;
+            const fromPos = this.positions[relation.from];
+            const toPos = this.positions[relation.to];
+            
+            if (fromPos && toPos) {
+                lineData.element.setAttribute('x1', fromPos.x);
+                lineData.element.setAttribute('y1', fromPos.y);
+                lineData.element.setAttribute('x2', toPos.x);
+                lineData.element.setAttribute('y2', toPos.y);
+            }
+        });
     }
     
     // Méthode pour mettre à jour les données
@@ -405,6 +464,12 @@ class DivineRelationsDiagram {
     destroy() {
         if (this.tooltip) {
             this.tooltip.remove();
+        }
+        if (this.resizeObserver) {
+            this.resizeObserver.disconnect();
+        }
+        if (this.resizeTimeout) {
+            clearTimeout(this.resizeTimeout);
         }
         this.container.innerHTML = '';
         this.nodes.clear();
