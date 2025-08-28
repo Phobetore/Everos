@@ -10,8 +10,129 @@
     accent: "#c62f35"
     text: "#f8f0e8"
     light: "#d9534f"
-  continent: "terres-volcaniques"
+  continent: 
+    name: "Urganis"
+    slug: "terres-volcaniques"
+    description: "Le continent volcanique d'Urganis pulse avec le feu éternel de sa déesse"
+    map_image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+    locations:
+      - name: "Kaelmar"
+        description: "La capitale forge où résident les plus grands artisans"
+        position:
+          top: "30%"
+          left: "40%"
+      - name: "Monts Ardents"
+        description: "Chaîne volcanique active aux flammes éternelles"
+        position:
+          top: "50%"
+          left: "20%"
+      - name: "Désert de Cendre"
+        description: "Plaines de cendres volcaniques aux reflets d'obsidienne"
+        position:
+          top: "70%"
+          left: "60%"
+    regions:
+      - name: "Kaelmar"
+        description: "La capitale forge où résident les plus grands artisans du continent."
+        image: "https://images.unsplash.com/photo-1554232682-b9ef9c92f8de?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      - name: "Monts Ardents"
+        description: "Chaîne volcanique active dont les flammes ne s'éteignent jamais."
+        image: "https://images.unsplash.com/photo-1621682372775-533449e550ed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      - name: "Désert de Cendre"
+        description: "Vastes plaines de cendres volcaniques aux reflets d'obsidienne."
+        image: "https://images.unsplash.com/photo-1533756972958-d6f38a9761e3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+    culture:
+      population: "Le peuple d'Urganis est principalement composé de forgerons, d'artisans et de guerriers qui vénèrent l'art de la création par le feu."
+      social_organization: "La société est organisée autour des guildes d'artisans, avec les Maîtres Forgerons au sommet de la hiérarchie."
+      beliefs_traditions: "Les habitants croient en la destruction créatrice - l'idée que pour créer quelque chose de nouveau, l'ancien doit parfois être détruit."
+      quotes:
+        - text: "Ici une citation stylé du lore"
+          author: "Ici le mec qui l'a dit"
   domain: "Feu, Forge, Destruction créatrice"
+  symbols:
+    - icon: "fas fa-hammer"
+      name: "Marteau de Forge"
+    - icon: "fas fa-fire"
+      name: "Flamme Éternelle"
+    - icon: "fas fa-mountain"
+      name: "Volcan Sacré"
+  lore:
+    origins:
+      title: "L'Émergence de la Déesse"
+      content: |
+        Obsidienne fut la première divinité à émerger du chaos primordial, née de la première étincelle qui enflamma l'univers naissant.
+        
+        ## La Création des Différentes Espèces
+        
+        Après avoir façonné son continent, Obsidienne créa les premiers forgerons divins, des êtres capables de manipuler le feu et le métal.
+        
+        ## La Relation avec les Autres Divinités
+        
+        En tant qu'aînée, Obsidienne maintient un rôle de guide auprès des autres divinités, bien que sa nature ardente crée parfois des tensions.
+      quotes:
+        - text: "Du chaos naquit la flamme, de la flamme naquit la forme, de la forme naquit la beauté."
+          author: "Première prophétie d'Obsidienne"
+    powers:
+      title: "Le Pouvoir de la Forge"
+      content: |
+        En tant que divinité liée au feu et à la terre, Obsidienne possède des pouvoirs considérables sur les éléments qui constituent le cœur même d'Everos.
+        
+        ## Maîtrise Élémentaire
+        
+        - **Contrôle du Magma** — Obsidienne peut faire surgir la lave des profondeurs ou l'apaiser à volonté
+        - **Forge Divine** — Capable de créer des armes et armures d'une puissance inégalée
+        - **Vision de Feu** — Peut percevoir le monde à travers toute flamme allumée en son nom
+      quotes:
+        - text: "Le métal se plie sous le marteau mais ne rompt pas. Ainsi doivent être mes fidèles."
+          author: "Enseignement d'Obsidienne aux premiers forgerons"
+    relationships:
+      title: "Place dans le Panthéon d'Everos"
+      content: |
+        En tant que première divinité à émerger, Obsidienne revendique une position privilégiée dans le panthéon d'Everos.
+        
+        ## Alliances
+        
+        - **Hisangarde** — Affinité naturelle pour la pierre et les hauteurs
+        - **Light** — Respect mutuel basé sur la nature créatrice
+        
+        ## Rivalités
+        
+        - **Elzeryn** — Opposition fondamentale entre le feu et la glace
+        - **Labir** — Éléments naturellement antagonistes
+      quotes:
+        - text: "Obsidienne fut la première à émerger du chaos primordial, mais sa nature ardente l'empêche parfois de voir au-delà de sa propre lumière."
+          author: "Observation attribuée à Light"
+    worship:
+      title: "Le Culte du Feu Éternel"
+      content: |
+        Le culte d'Obsidienne est l'un des plus répandus et des plus anciens d'Everos, centré sur la vénération du feu comme symbole de transformation.
+        
+        ## Organisation du Culte
+        
+        - **Les Apprentis** — Débutants qui apprennent les bases
+        - **Les Attiseurs** — Responsables des feux sacrés
+        - **Les Forgerons** — Prêtres confirmés
+        - **Les Maîtres de Forge** — Élite du clergé
+        - **Le Forgeur Suprême** — Chef spirituel unique
+      quotes:
+        - text: "Comme le métal sous le marteau, soyez malléables mais jamais brisés."
+          author: "Précepte fondamental du culte d'Obsidienne"
+  characters:
+    - name: "Nahia"
+      title: "L'affreuse Sainte"
+      description: "D'une enfant rêveuse à une terreur des églises : l'histoire d'une figure éminente du folklore d'Urganis."
+      image: "https://images.unsplash.com/photo-1566937169390-7be4c63b8a0e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+      link: "../chronicles/characters.html#nahia"
+    - name: "Kaelor"
+      title: "Maître Forgeron Légendaire"
+      description: "Le plus grand artisan d'Urganis, créateur d'artefacts légendaires forgés dans les flammes divines."
+      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+      link: "../chronicles/characters.html#kaelor"
+    - name: "Vyrak"
+      title: "Champion des Flammes"
+      description: "Guerrier béni par Obsidienne, capable de manier des armes enflammées et de résister aux températures extrêmes."
+      image: "https://images.unsplash.com/photo-1548690312-e3b507d8c110?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+      link: "../chronicles/characters.html#vyrak"
 
 - slug: "mantha"
   name: "Mantha"
