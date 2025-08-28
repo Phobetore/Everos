@@ -1,0 +1,55 @@
+# Detailed content for Labir
+# This file contains all the detailed content specific to Labir
+# Separated from the main divinites.yaml for better organization
+
+continent:
+  name: "Thalanis"
+  slug: "archipels-marins"
+  description: "Les archipels marins de Thalanis où Labir commande aux vastes océans et à leurs mystères abyssaux"
+  map_image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+  locations:
+    - name: "Palais des Profondeurs"
+      description: "Résidence sous-marine de Labir"
+      position:
+        top: "60%"
+        left: "40%"
+    - name: "Récifs de Corail"
+      description: "Jardins marins aux mille couleurs"
+      position:
+        top: "30%"
+        left: "70%"
+    - name: "Fosse Abyssale"
+      description: "Profondeurs mystérieuses aux secrets anciens"
+      position:
+        top: "80%"
+        left: "20%"
+  regions:
+    - name: "Palais des Profondeurs"
+      description: "Résidence sous-marine de Labir, palace de corail et de nacre."
+      image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+
+culture:
+  population: "Marins, pêcheurs et explorateurs océaniques qui vénèrent les mystères des profondeurs."
+  social_organization: "Société organisée en flottes et guildes maritimes."
+  beliefs_traditions: "Respect des océans et de leurs créatures, navigation guidée par les courants divins."
+
+lore:
+  origins:
+    title: "Seigneur des Profondeurs"
+    content: "Labir émergea des premières eaux qui recouvrirent Everos, apportant les mystères des profondeurs."
+  powers:
+    title: "Maîtrise des Océans"
+    content: "Contrôle des marées, des tempêtes et des créatures marines."
+  relationships:
+    title: "Gardien des Mystères Aquatiques"
+    content: "Maintient l'équilibre entre les forces terrestres et marines."
+  worship:
+    title: "Culte des Marées"
+    content: "Vénération pratiquée sur les côtes et en haute mer."
+
+characters:
+  - name: "Captain Nerida"
+    title: "Exploratrice des Abysses"
+    description: "Capitaine légendaire qui a cartographié les profondeurs océaniques."
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+    link: "../chronicles/characters.html#nerida"

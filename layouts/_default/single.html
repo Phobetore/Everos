@@ -3,6 +3,7 @@
     {{ $deities := where .Site.Data.divinites "slug" .Params.deity_slug }}
     {{ if gt (len $deities) 0 }}
         {{ $deity := index $deities 0 }}
+        {{ $deityDetails := index .Site.Data.deities .Params.deity_slug }}
         {{ if $deity }}
 
     <!-- Page-specific CSS with deity colors -->
@@ -477,15 +478,10 @@
         <header class="deity-header">
             <div class="deity-header-content">
                 <h1 class="deity-title">{{ $deity.name }}</h1>
-                {{ $continentType := printf "%T" $deity.continent }}
-                {{ if ne $continentType "string" }}
-                    {{ if $deity.continent.name }}
-                    <div class="deity-script">{{ $deity.continent.name }}</div>
-                    {{ else }}
-                    <div class="deity-script">{{ $deity.continent }}</div>
-                    {{ end }}
+                {{ if $deityDetails.continent.name }}
+                <div class="deity-script">{{ $deityDetails.continent.name }}</div>
                 {{ else }}
-                    <div class="deity-script">{{ $deity.continent }}</div>
+                <div class="deity-script">{{ $deity.continent }}</div>
                 {{ end }}
                 {{ if eq $deity.slug "obsidienne" }}
                 <h2 class="deity-subtitle">Divinité de la terre et de l'effort</h2>
@@ -528,103 +524,92 @@
         <!-- Main Content -->
         <div class="main-content">
             
-            <!-- Continent Section - Check if it's a complex object or simple string -->
-            {{ $continentType := printf "%T" $deity.continent }}
-            {{ if ne $continentType "string" }}
-                {{ if $deity.continent }}
-                {{ $pageContent := .Content }}  {{/* Store page content before changing context */}}
-                {{ with $deity.continent }}
-                <section id="continent" class="continent-section">
-                    <div class="continent-container">
-                        <h2 class="section-title">{{ .name | default "[Nom du continent]" }}</h2>
-                        <p class="section-description">{{ .description | default "[Description du continent]" }}</p>
+            <!-- Continent Section -->
+            {{ if $deityDetails.continent }}
+            {{ with $deityDetails.continent }}
+            <section id="continent" class="continent-section">
+                <div class="continent-container">
+                    <h2 class="section-title">{{ .name | default "[Nom du continent]" }}</h2>
+                    <p class="section-description">{{ .description | default "[Description du continent]" }}</p>
+                    
+                    {{ if .map_image }}
+                    <div class="continent-map">
+                        <img src="{{ .map_image }}" alt="Carte de {{ .name | default "Continent" }}">
+                        <div class="map-overlay"></div>
                         
-                        {{ if .map_image }}
-                        <div class="continent-map">
-                            <img src="{{ .map_image }}" alt="Carte de {{ .name | default "Continent" }}">
-                            <div class="map-overlay"></div>
-                            
-                            <!-- Points d'intérêt sur la carte -->
-                            {{ range .locations }}
-                            <div class="map-marker" style="top: {{ .position.top }}; left: {{ .position.left }};">
-                                <div class="map-tooltip">
-                                    <h4>{{ .name }}</h4>
-                                    <p>{{ .description }}</p>
-                                </div>
+                        <!-- Points d'intérêt sur la carte -->
+                        {{ range .locations }}
+                        <div class="map-marker" style="top: {{ .position.top }}; left: {{ .position.left }};">
+                            <div class="map-tooltip">
+                                <h4>{{ .name }}</h4>
+                                <p>{{ .description }}</p>
                             </div>
-                            {{ end }}
-                        </div>
-                        {{ end }}
-                        
-                        {{ if .regions }}
-                        <div class="geography-grid">
-                            {{ range .regions }}
-                            <div class="geography-card">
-                                <img src="{{ .image }}" alt="{{ .name }}">
-                                <div class="geography-card-content">
-                                    <h3>{{ .name }}</h3>
-                                    <p>{{ .description }}</p>
-                                </div>
-                            </div>
-                            {{ end }}
-                        </div>
-                        {{ end }}
-                        
-                        {{/* Check if the page content contains culture information */}}
-                        {{ if or (in $pageContent "la-population") (.culture) }}
-                        <div class="cultures-section">
-                            {{ if in $pageContent "la-population" }}
-                                <!-- Using markdown content -->
-                                {{/* Extract and render just the culture section from markdown content */}}
-                                {{ $sections := split $pageContent "la-population" }}
-                                {{ if gt (len $sections) 1 }}
-                                    {{ $cultureSection := index $sections 1 }}
-                                    {{/* Stop at the next ## heading if it exists - look for next h2 tag */}}
-                                    {{ $cultureParts := split $cultureSection "<h2" }}
-                                    {{ $cultureContent := index $cultureParts 0 }}
-                                    {{/* Remove the closing part of the h2 tag from our content */}}
-                                    {{ $cultureContent = $cultureContent | replaceRE "^[^>]*>" "" }}
-                                    <h3 class="subsection-title">La population</h3>
-                                    {{ $cultureContent | safeHTML }}
-                                {{ end }}
-                            {{ else if .culture }}
-                                <!-- Using YAML data -->
-                                {{/* Fall back to YAML data for other deities */}}
-                                {{ with .culture }}
-                                <h3 class="subsection-title">La population</h3>
-                                <p>{{ .population | default "flemme de remplir maintenant" }}</p>
-                                
-                                <h4>Organisation Sociale</h4>
-                                <p>{{ .social_organization | default "flemme de remplir maintenant" }}</p>
-                                
-                                <h4>Croyances et Traditions</h4>
-                                <p>{{ .beliefs_traditions | default "flemme de remplir maintenant" }}</p>
-                                
-                                {{ range .quotes }}
-                                <div class="lore-quote">
-                                    <p>"{{ .text | default "Ici une citation stylé du lore" }}"</p>
-                                    <cite>— {{ .author | default "Ici le mec qui l'a dit" }}</cite>
-                                </div>
-                                {{ end }}
-                                {{ end }}
-                            {{ end }}
                         </div>
                         {{ end }}
                     </div>
-                </section>
-                {{ end }}
-                {{ end }}
+                    {{ end }}
+                    
+                    {{ if .regions }}
+                    <div class="geography-grid">
+                        {{ range .regions }}
+                        <div class="geography-card">
+                            <img src="{{ .image }}" alt="{{ .name }}">
+                            <div class="geography-card-content">
+                                <h3>{{ .name }}</h3>
+                                <p>{{ .description }}</p>
+                            </div>
+                        </div>
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                    
+                    <!-- Culture Section -->
+                    {{ if $deityDetails.culture }}
+                    {{ with $deityDetails.culture }}
+                    <div class="cultures-section">
+                        <h3 class="subsection-title">La population</h3>
+                        <p>{{ .population | default "flemme de remplir maintenant" }}</p>
+                        
+                        <h4>Organisation Sociale</h4>
+                        <p>{{ .social_organization | default "flemme de remplir maintenant" }}</p>
+                        
+                        <h4>Croyances et Traditions</h4>
+                        <p>{{ .beliefs_traditions | default "flemme de remplir maintenant" }}</p>
+                        
+                        {{ range .quotes }}
+                        <div class="lore-quote">
+                            <p>"{{ .text }}"</p>
+                            <cite>— {{ .author }}</cite>
+                        </div>
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                    {{ end }}
+                </div>
+            </section>
+            {{ end }}
+            {{ else }}
+            <!-- Fallback for simple continent string -->
+            <section id="continent" class="continent-section">
+                <div class="continent-container">
+                    <h2 class="section-title">{{ $deity.continent }}</h2>
+                    <p class="section-description">Continent de {{ $deity.name }}</p>
+                    
+                    <!-- Check for page content -->
+                    {{ .Content | safeHTML }}
+                </div>
+            </section>
             {{ end }}
 
             <!-- Lore Section -->
-            {{ if $deity.lore }}
+            {{ if $deityDetails.lore }}
             <section id="lore" class="lore-section">
                 <div class="lore-container">
                     <h2 class="section-title">Lore Divin</h2>
                     
                     <div class="lore-tabs">
                         {{ $first := true }}
-                        {{ range $key, $loreSection := $deity.lore }}
+                        {{ range $key, $loreSection := $deityDetails.lore }}
                         <div class="lore-tab{{ if $first }} active{{ end }}" data-tab="{{ $key }}">
                             {{ $loreSection.title }}
                         </div>
@@ -633,7 +618,7 @@
                     </div>
                     
                     {{ $first := true }}
-                    {{ range $key, $loreSection := $deity.lore }}
+                    {{ range $key, $loreSection := $deityDetails.lore }}
                     <div class="lore-content{{ if $first }} active{{ end }}" id="{{ $key }}">
                         {{ $loreSection.content | markdownify }}
                         
@@ -651,14 +636,14 @@
             {{ end }}
 
             <!-- Characters Section -->
-            {{ if $deity.characters }}
+            {{ if $deityDetails.characters }}
             <section id="characters" class="characters-section">
                 <div class="characters-container">
                     <h2 class="section-title">Personnages Notables</h2>
                     <p class="section-description">Héros, champions et figures légendaires liés à {{ $deity.name }}.</p>
                     
                     <div class="characters-grid">
-                        {{ range $deity.characters }}
+                        {{ range $deityDetails.characters }}
                         <div class="character-card">
                             <div class="character-portrait">
                                 <img src="{{ .image }}" alt="{{ .name }}">
