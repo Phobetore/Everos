@@ -1,0 +1,38 @@
+{{/* System Card Shortcode
+Usage: {{< system-card title="Jeu de Rôle Everos" image="https://..." badge="Complet" url="/pages/game-systems/rpg-rules/" >}}
+        Features:
+        - {{< system-feature icon="fas fa-dice-d20" >}}Système de dés original{{< /system-feature >}}
+        - {{< system-feature icon="fas fa-magic" >}}Magie liée aux divinités{{< /system-feature >}}
+        
+        Description du système de jeu...
+        {{< /system-card >}}
+*/}}
+{{ $title := .Get "title" }}
+{{ $image := .Get "image" }}
+{{ $badge := .Get "badge" }}
+{{ $url := .Get "url" }}
+
+<div class="system-card">
+    {{ if $image }}
+    <div class="system-card-image">
+        <img src="{{ $image }}" alt="{{ $title }}">
+        {{ if $badge }}
+        <div class="system-badge">{{ $badge }}</div>
+        {{ end }}
+    </div>
+    {{ end }}
+    
+    <div class="system-card-content">
+        {{ if $title }}
+        <h3>{{ $title }}</h3>
+        {{ end }}
+        
+        <div class="system-description">
+            {{ .Inner | markdownify }}
+        </div>
+        
+        {{ if $url }}
+        <a href="{{ $url | relURL }}" class="btn">{{ .Get "button_text" | default "Découvrir" }}</a>
+        {{ end }}
+    </div>
+</div>

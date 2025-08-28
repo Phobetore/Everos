@@ -11,6 +11,14 @@
 {{ else if in .RelPermalink "/chronicles/" }}
   {{/* Include the chronicles-specific layout */}}
   {{ partial "chronicles-layout.html" . }}
+{{/* Check if this is the game-systems section */}}
+{{ else if in .RelPermalink "/game-systems/" }}
+  {{/* Include the game-systems-specific layout */}}
+  {{ partial "game-systems-layout.html" . }}
+{{/* Check if this is the gallery section */}}
+{{ else if in .RelPermalink "/gallery/" }}
+  {{/* Include the gallery-specific layout */}}
+  {{ partial "gallery-layout.html" . }}
 {{ else }}
   {{/* Use the default list layout for other sections */}}
   <div class="container">
