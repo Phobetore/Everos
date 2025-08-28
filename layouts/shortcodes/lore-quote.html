@@ -1,0 +1,13 @@
+{{/* Lore Quote Shortcode
+Usage: {{< lore-quote author="Author Name" >}}
+        Quote content goes here
+        {{< /lore-quote >}}
+*/}}
+{{ $author := .Get "author" | default "" }}
+
+<div class="lore-quote">
+    <p>{{ .Inner | markdownify }}</p>
+    {{ if $author }}
+    <cite>— {{ $author }}</cite>
+    {{ end }}
+</div>
