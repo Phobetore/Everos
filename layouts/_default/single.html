@@ -461,12 +461,16 @@
                     {{ if $deity.continent.name }}
                     <div class="deity-script">{{ $deity.continent.name }}</div>
                     {{ else }}
-                    <div class="deity-script">Urganis</div>
+                    <div class="deity-script">{{ $deity.continent }}</div>
                     {{ end }}
                 {{ else }}
                     <div class="deity-script">{{ $deity.continent }}</div>
                 {{ end }}
+                {{ if eq $deity.slug "obsidienne" }}
                 <h2 class="deity-subtitle">Divinité de la terre et de l'effort</h2>
+                {{ else }}
+                <h2 class="deity-subtitle">{{ $deity.title }}</h2>
+                {{ end }}
                 
                 {{ if $deity.symbols }}
                 <div class="deity-symbols">
