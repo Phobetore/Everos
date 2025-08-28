@@ -1,0 +1,83 @@
+# Relations entre les divinités d'Everos
+# Types: positive, negative, neutral
+
+relations:
+  - from: "Obsidienne"
+    to: "Mantha"
+    type: "negative"
+    description: "Conflit élémentaire entre le feu destructeur et la nature protectrice"
+    details: "Les flammes d'Obsidienne menacent constamment les forêts de Mantha, créant une tension perpétuelle entre destruction et création."
+
+  - from: "Obsidienne"
+    to: "Eromnia"
+    type: "neutral"
+    description: "Équilibre tendu entre passion ardente et sérénité océanique"
+    details: "Leurs domaines se complètent dans l'équilibre cosmique, mais leurs tempéraments opposés créent une relation complexe."
+
+  - from: "Mantha"
+    to: "Labir"
+    type: "negative"
+    description: "Territoires disputés entre forêts sauvages et cités ordonnées"
+    details: "L'expansion urbaine de Labir empiète sur les domaines naturels de Mantha, causant des frictions constantes."
+
+  - from: "Mantha"
+    to: "Hisangarde"
+    type: "positive"
+    description: "Alliance naturelle entre gardienne des forêts et protectrice des âmes"
+    details: "Toutes deux protectrices de la vie, elles partagent une vision commune de l'harmonie et de la préservation."
+
+  - from: "Labir"
+    to: "Light"
+    type: "positive"
+    description: "Quête commune de connaissance et d'illumination"
+    details: "La soif de savoir de Labir s'accorde parfaitement avec la recherche de vérité de Light, créant une alliance intellectuelle."
+
+  - from: "Hisangarde"
+    to: "Elzeryn"
+    type: "neutral"
+    description: "Respect mutuel mais distant entre lumière et ombre"
+    details: "Reconnaissant la nécessité de l'autre dans l'équilibre cosmique, elles maintiennent une relation respectueuse mais prudente."
+
+  - from: "Light"
+    to: "Eromnia"
+    type: "positive"
+    description: "Harmonie cosmique entre sagesse divine et profondeurs océaniques"
+    details: "L'illumination de Light trouve un écho dans les mystères profonds d'Eromnia, créant une synergie spirituelle."
+
+  - from: "Elzeryn"
+    to: "Obsidienne"
+    type: "negative"
+    description: "Opposition primordiale entre ombres froides et flammes ardentes"
+    details: "Leurs essences sont fondamentalement opposées, créant une rivalité ancestrale qui façonne l'équilibre du monde."
+
+  - from: "Light"
+    to: "Elzeryn"
+    type: "negative"
+    description: "Dualité éternelle entre lumière et ténèbres"
+    details: "Opposées par nature, elles représentent les deux faces d'une même vérité cosmique, en conflit perpétuel mais nécessaire."
+
+  - from: "Eromnia"
+    to: "Hisangarde"
+    type: "positive"
+    description: "Communion entre mystères océaniques et protection spirituelle"
+    details: "Les profondeurs d'Eromnia et la sagesse protectrice d'Hisangarde se complètent dans la guidance des âmes perdues."
+
+  - from: "Labir"
+    to: "Obsidienne"
+    type: "neutral"
+    description: "Collaboration pragmatique pour les arts de la forge"
+    details: "Bien que leurs philosophies diffèrent, ils reconnaissent mutuellement l'importance de la création et de la technique."
+
+  - from: "Elzeryn"
+    to: "Eromnia"
+    type: "neutral"
+    description: "Entente mystérieuse entre ombres et profondeurs"
+    details: "Toutes deux gardiennes de secrets anciens, elles partagent une compréhension tacite des mystères cachés du monde."
+
+# Configuration du diagramme
+diagram_config:
+  layout: "circular"  # circular, grid, constellation
+  animation_speed: "normal"  # slow, normal, fast
+  show_legend: true
+  interactive_mode: true
+  mobile_optimized: true
