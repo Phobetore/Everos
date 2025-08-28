@@ -204,12 +204,17 @@
 </section>
 
 <section class="deity-relations">
-    <h2 class="section-title" style="color:white;">Relations Divines</h2>
-    
-    <div class="relations-diagram" id="relations-diagram">
-        <!-- Les relations seront générées dynamiquement par JavaScript -->
+    <div class="relations-container">
+        <h2 class="section-title">Relations Divines</h2>
+        
+        <div class="relations-diagram" id="relations-diagram">
+            <!-- Le diagramme sera généré dynamiquement par JavaScript -->
+        </div>
     </div>
 </section>
+
+<!-- CSS et JS pour les relations divines -->
+<link rel="stylesheet" href="{{ "css/divine-relations.css" | relURL }}">
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -232,100 +237,28 @@ document.addEventListener('DOMContentLoaded', function() {
         {{ end }}
     ];
 
-    // Relations entre les divinités - ces données pourraient aussi venir du YAML
+    // Relations entre les divinités depuis les données YAML
     const relations = [
-        { from: 'Obsidienne', to: 'Mantha', type: 'negative', description: 'Conflit élémentaire' },
-        { from: 'Obsidienne', to: 'Eromnia', type: 'neutral', description: 'Équilibre tendu' },
-        { from: 'Mantha', to: 'Labir', type: 'negative', description: 'Territoires disputés' },
-        { from: 'Mantha', to: 'Hisangarde', type: 'positive', description: 'Alliance naturelle' },
-        { from: 'Labir', to: 'Light', type: 'positive', description: 'Quête de connaissance' },
-        { from: 'Hisangarde', to: 'Elzeryn', type: 'neutral', description: 'Respect distant' },
-        { from: 'Light', to: 'Eromnia', type: 'positive', description: 'Harmonie cosmique' },
-        { from: 'Elzeryn', to: 'Obsidienne', type: 'negative', description: 'Opposition primordiale' }
+        {{ range $relation := site.Data.relations.relations }}
+        {
+            from: "{{ .from }}",
+            to: "{{ .to }}",
+            type: "{{ .type }}",
+            description: "{{ .description }}",
+            details: "{{ .details }}"
+        },
+        {{ end }}
     ];
     
-    const diagramContainer = document.getElementById('relations-diagram');
+    // Rendre les données disponibles globalement pour le script
+    window.deitiesData = deities;
+    window.relationsData = relations;
     
-    // Positions approximatives des divinités en cercle
-    const positions = {
-        'Obsidienne': { x: 150, y: 150 },
-        'Mantha': { x: 350, y: 100 },
-        'Labir': { x: 500, y: 200 },
-        'Hisangarde': { x: 500, y: 400 },
-        'Eromnia': { x: 350, y: 500 },
-        'Light': { x: 150, y: 400 },
-        'Elzeryn': { x: 100, y: 300 }
-    };
-    
-    // Créer des cercles pour représenter les divinités
-    deities.forEach(deity => {
-        if (!positions[deity.name]) return;
-        
-        const deityElement = document.createElement('div');
-        deityElement.classList.add('deity-node');
-        deityElement.style.position = 'absolute';
-        deityElement.style.left = positions[deity.name].x + 'px';
-        deityElement.style.top = positions[deity.name].y + 'px';
-        deityElement.style.width = '70px';
-        deityElement.style.height = '70px';
-        deityElement.style.borderRadius = '50%';
-        deityElement.style.backgroundSize = 'cover';
-        deityElement.style.backgroundImage = `url('${deity.image}')`;
-        deityElement.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
-        deityElement.style.border = `2px solid ${deity.colors.accent}`;
-        deityElement.style.zIndex = '2';
-        
-        // Nom de la divinité
-        const nameElement = document.createElement('div');
-        nameElement.textContent = deity.name;
-        nameElement.style.position = 'absolute';
-        nameElement.style.width = '100px';
-        nameElement.style.textAlign = 'center';
-        nameElement.style.left = '-15px';
-        nameElement.style.bottom = '-30px';
-        nameElement.style.fontWeight = 'bold';
-        nameElement.style.textShadow = '0 0 5px rgba(0, 0, 0, 0.5)';
-        nameElement.style.color = 'var(--text-light)';
-        
-        deityElement.appendChild(nameElement);
-        diagramContainer.appendChild(deityElement);
-    });
-    
-    // Dessiner les lignes de relation
-    relations.forEach(relation => {
-        const fromPos = positions[relation.from];
-        const toPos = positions[relation.to];
-        
-        if (!fromPos || !toPos) return;
-        
-        const dx = toPos.x - fromPos.x;
-        const dy = toPos.y - fromPos.y;
-        const length = Math.sqrt(dx * dx + dy * dy);
-        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-        
-        const lineElement = document.createElement('div');
-        lineElement.classList.add('relation-line');
-        lineElement.classList.add(`relation-${relation.type}`);
-        lineElement.style.width = (length - 70) + 'px';
-        lineElement.style.left = (fromPos.x + 35) + 'px';
-        lineElement.style.top = (fromPos.y + 35) + 'px';
-        lineElement.style.transform = `rotate(${angle}deg)`;
-        lineElement.style.transformOrigin = '0 0';
-        
-        // Label de la relation
-        const labelElement = document.createElement('div');
-        labelElement.classList.add('relation-label');
-        labelElement.textContent = relation.description;
-        
-        // Positionner le label au milieu de la ligne
-        const midX = fromPos.x + dx / 2;
-        const midY = fromPos.y + dy / 2;
-        labelElement.style.left = midX + 'px';
-        labelElement.style.top = midY + 'px';
-        labelElement.style.transform = 'translate(-50%, -50%)';
-        
-        diagramContainer.appendChild(lineElement);
-        diagramContainer.appendChild(labelElement);
-    });
+    // Initialiser le diagramme des relations divines
+    if (typeof DivineRelationsDiagram !== 'undefined') {
+        new DivineRelationsDiagram('relations-diagram', deities, relations);
+    }
 });
 </script>
+
+<script src="{{ "js/divine-relations.js" | relURL }}"></script>
