@@ -51,12 +51,15 @@ enableRobotsTXT = true
   author = "Le Collectif Everos"
   contact_email = "contact@axarathe.com"
   
-  # Social media
+  # URLs des réseaux sociaux - Ces URLs sont utilisées dans :
+  # - Le footer de toutes les pages (layouts/partials/footer.html)
+  # - La page du collectif (layouts/partials/collective-layout.html)
+  # Modifiez ces URLs pour pointer vers vos vrais comptes de réseaux sociaux
   [params.social]
-    discord = "#"
-    twitter = "#"
-    instagram = "#"
-    youtube = "#"
+    discord = "https://discord.gg/everos"
+    twitter = "https://twitter.com/everos_universe"
+    instagram = "https://instagram.com/everos.universe"
+    youtube = "https://youtube.com/@everos-universe"
 
 # Menu configuration
 [menu]
