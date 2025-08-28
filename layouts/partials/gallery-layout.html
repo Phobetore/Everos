@@ -1,0 +1,562 @@
+{{ $galleryData := .Site.Data.gallery }}
+{{ $deities := .Site.Data.divinites }}
+
+{{/* Custom CSS for gallery page */}}
+<style>
+    /* Styles spécifiques à la page galerie */
+    .gallery-hero {
+        height: 50vh;
+        min-height: 400px;
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                    url('{{ $galleryData.hero.background_image }}') no-repeat center center;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: var(--text-light);
+    }
+    
+    .gallery-hero-content {
+        max-width: 800px;
+        padding: 0 var(--spacing-md);
+    }
+    
+    .gallery-hero-content h1 {
+        font-size: 4.8rem;
+        color: var(--text-light);
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .gallery-hero-content p {
+        font-size: 2rem;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .gallery-filter {
+        background-color: var(--primary-medium);
+        padding: var(--spacing-md) 0;
+        position: sticky;
+        top: 0;
+        z-index: 90;
+    }
+    
+    .filter-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--spacing-md);
+    }
+    
+    .filter-group {
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .filter-title {
+        color: var(--accent-gold);
+        font-family: var(--font-display);
+        font-size: 1.8rem;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .filter-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .filter-btn {
+        background-color: transparent;
+        border: 1px solid var(--text-light);
+        color: var(--text-light);
+        padding: 8px 16px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: var(--font-display);
+        font-size: 1.4rem;
+    }
+    
+    .filter-btn:hover,
+    .filter-btn.active {
+        background-color: var(--accent-gold);
+        border-color: var(--accent-gold);
+        color: var(--primary-dark);
+    }
+    
+    .search-bar {
+        margin-top: var(--spacing-sm);
+        display: flex;
+        align-items: stretch;
+    }
+    
+    .search-input {
+        flex: 1;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 4px 0 0 4px;
+        font-family: var(--font-body);
+        font-size: 1.4rem;
+    }
+    
+    .search-btn {
+        background-color: var(--accent-gold);
+        color: var(--primary-dark);
+        border: none;
+        border-radius: 0 4px 4px 0;
+        padding: 0 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .search-btn:hover {
+        background-color: var(--text-light);
+    }
+    
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: var(--spacing-sm);
+        padding: var(--spacing-md);
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .gallery-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .gallery-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .gallery-item:hover .gallery-image {
+        transform: scale(1.05);
+    }
+    
+    .gallery-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        color: var(--text-light);
+        padding: var(--spacing-sm);
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .gallery-item:hover .gallery-overlay {
+        transform: translateY(0);
+    }
+    
+    .gallery-title {
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+    }
+    
+    .gallery-meta {
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+        color: var(--text-medium);
+    }
+    
+    .gallery-deity {
+        color: var(--accent-gold);
+    }
+    
+    .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .lightbox.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .lightbox-content {
+        max-width: 90%;
+        max-height: 80vh;
+        position: relative;
+    }
+    
+    .lightbox-image {
+        max-width: 100%;
+        max-height: 80vh;
+        object-fit: contain;
+        border: 2px solid var(--accent-gold);
+    }
+    
+    .lightbox-info {
+        position: absolute;
+        bottom: -100px;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: var(--text-light);
+        padding: var(--spacing-sm);
+        border-radius: 0 0 8px 8px;
+    }
+    
+    .lightbox-title {
+        font-size: 2rem;
+        margin-bottom: 5px;
+    }
+    
+    .lightbox-description {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+        line-height: 1.5;
+    }
+    
+    .lightbox-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.4rem;
+        color: var(--text-medium);
+    }
+    
+    .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 3rem;
+        color: var(--text-light);
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+    
+    .lightbox-close:hover {
+        color: var(--accent-gold);
+    }
+    
+    .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        transform: translateY(-50%);
+    }
+    
+    .lightbox-btn {
+        font-size: 3rem;
+        color: var(--text-light);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+    }
+    
+    .lightbox-btn:hover {
+        color: var(--accent-gold);
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    .load-more-container {
+        text-align: center;
+        padding: var(--spacing-md) 0;
+    }
+    
+    @media screen and (max-width: 768px) {
+        .gallery-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .gallery-hero-content h1 {
+            font-size: 3.5rem;
+        }
+        
+        .filter-options {
+            justify-content: center;
+        }
+        
+        .lightbox-info {
+            position: relative;
+            bottom: 0;
+            margin-top: var(--spacing-sm);
+        }
+    }
+</style>
+
+{{/* Hero Section */}}
+<div class="gallery-hero">
+    <div class="gallery-hero-content">
+        <h1>{{ $galleryData.hero.title }}</h1>
+        <p>{{ $galleryData.hero.description }}</p>
+    </div>
+</div>
+
+{{/* Filter Section */}}
+<div class="gallery-filter">
+    <div class="filter-container">
+        <div class="filter-group">
+            <div class="filter-title">Catégories</div>
+            <div class="filter-options">
+                {{ range $galleryData.categories }}
+                <button class="filter-btn{{ if .active }} active{{ end }}" data-filter="{{ .slug }}">{{ .name }}</button>
+                {{ end }}
+            </div>
+        </div>
+        
+        <div class="filter-group">
+            <div class="filter-title">Divinités</div>
+            <div class="filter-options">
+                <button class="filter-btn active" data-filter="all">Toutes</button>
+                {{ range $deities }}
+                <button class="filter-btn" data-filter="{{ .slug }}">{{ .name }}</button>
+                {{ end }}
+            </div>
+        </div>
+        
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Rechercher par titre, artiste ou description...">
+            <button class="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+</div>
+
+{{/* Gallery Grid */}}
+<div class="gallery-grid">
+    {{ range $galleryData.items }}
+    <div class="gallery-item" data-category="{{ .category }}" data-deity="{{ .deity }}">
+        <img src="{{ .image }}" alt="{{ .alt }}" class="gallery-image">
+        <div class="gallery-overlay">
+            <h3 class="gallery-title">{{ .title }}</h3>
+            <div class="gallery-meta">
+                <span class="gallery-artist">Artiste: {{ .artist }}</span> | 
+                <span class="gallery-deity">{{ $currentDeity := .deity }}{{ range $deities }}{{ if eq .slug $currentDeity }}{{ .name }}{{ end }}{{ end }}</span>
+            </div>
+            <div class="gallery-description">
+                {{ .description }}
+            </div>
+        </div>
+    </div>
+    {{ end }}
+</div>
+
+<div class="load-more-container">
+    <button class="btn btn-primary" id="load-more" style="display: none;">Charger Plus</button>
+</div>
+
+{{/* Lightbox */}}
+<div class="lightbox">
+    <div class="lightbox-content">
+        <img src="" alt="" class="lightbox-image">
+        <div class="lightbox-info">
+            <h3 class="lightbox-title"></h3>
+            <p class="lightbox-description"></p>
+            <div class="lightbox-meta">
+                <span class="lightbox-artist"></span>
+                <span class="lightbox-deity"></span>
+            </div>
+        </div>
+    </div>
+    <div class="lightbox-nav">
+        <span class="lightbox-btn prev"><i class="fas fa-chevron-left"></i></span>
+        <span class="lightbox-btn next"><i class="fas fa-chevron-right"></i></span>
+    </div>
+    <span class="lightbox-close"><i class="fas fa-times"></i></span>
+</div>
+
+{{/* JavaScript */}}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const searchInput = document.querySelector('.search-input');
+    const searchBtn = document.querySelector('.search-btn');
+    const lightbox = document.querySelector('.lightbox');
+    const lightboxImage = document.querySelector('.lightbox-image');
+    const lightboxTitle = document.querySelector('.lightbox-title');
+    const lightboxDescription = document.querySelector('.lightbox-description');
+    const lightboxArtist = document.querySelector('.lightbox-artist');
+    const lightboxDeity = document.querySelector('.lightbox-deity');
+    const lightboxClose = document.querySelector('.lightbox-close');
+    const lightboxNext = document.querySelector('.lightbox-btn.next');
+    const lightboxPrev = document.querySelector('.lightbox-btn.prev');
+    
+    let currentFilter = 'all';
+    let currentDeityFilter = 'all';
+    let currentImageIndex = 0;
+    
+    // Filtres
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const filter = this.getAttribute('data-filter');
+            const filterGroup = this.closest('.filter-group');
+            
+            // Retirer la classe active de tous les boutons du même groupe
+            filterGroup.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Déterminer si c'est un filtre de catégorie ou de divinité
+            if (filterGroup.previousElementSibling && filterGroup.previousElementSibling.textContent.includes('Catégories')) {
+                currentFilter = filter;
+            } else {
+                currentDeityFilter = filter;
+            }
+            
+            // Appliquer les filtres
+            applyFilters();
+        });
+    });
+    
+    function applyFilters() {
+        galleryItems.forEach(item => {
+            const itemCategory = item.getAttribute('data-category');
+            const itemDeity = item.getAttribute('data-deity');
+            
+            const matchesCategory = currentFilter === 'all' || itemCategory === currentFilter;
+            const matchesDeity = currentDeityFilter === 'all' || itemDeity === currentDeityFilter;
+            
+            if (matchesCategory && matchesDeity) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+    
+    // Recherche
+    function performSearch() {
+        const searchTerm = searchInput.value.toLowerCase();
+        
+        galleryItems.forEach(item => {
+            const title = item.querySelector('.gallery-title').textContent.toLowerCase();
+            const description = item.querySelector('.gallery-description').textContent.toLowerCase();
+            const artist = item.querySelector('.gallery-artist').textContent.toLowerCase();
+            
+            const matches = title.includes(searchTerm) || description.includes(searchTerm) || artist.includes(searchTerm);
+            
+            if (matches && searchTerm !== '') {
+                item.style.display = 'block';
+            } else if (searchTerm === '') {
+                applyFilters();
+                return;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+    
+    searchInput.addEventListener('input', performSearch);
+    searchBtn.addEventListener('click', performSearch);
+    
+    // Lightbox
+    function visibleItems() {
+        return Array.from(galleryItems).filter(item => item.style.display !== 'none');
+    }
+    
+    galleryItems.forEach((item, index) => {
+        item.addEventListener('click', function() {
+            const image = this.querySelector('.gallery-image');
+            const title = this.querySelector('.gallery-title').textContent;
+            const description = this.querySelector('.gallery-description').textContent;
+            const artist = this.querySelector('.gallery-artist').textContent;
+            const deity = this.querySelector('.gallery-deity').textContent;
+            
+            currentImageIndex = Array.from(visibleItems()).indexOf(this);
+            
+            lightboxImage.src = image.src;
+            lightboxImage.alt = image.alt;
+            lightboxTitle.textContent = title;
+            lightboxDescription.textContent = description;
+            lightboxArtist.textContent = artist;
+            lightboxDeity.textContent = deity;
+            
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+    
+    lightboxClose.addEventListener('click', function() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    });
+    
+    // Navigation lightbox
+    function navigateLightbox(direction) {
+        const items = visibleItems();
+        
+        if (direction === 'next') {
+            currentImageIndex = (currentImageIndex + 1) % items.length;
+        } else {
+            currentImageIndex = (currentImageIndex - 1 + items.length) % items.length;
+        }
+        
+        const newItem = items[currentImageIndex];
+        const image = newItem.querySelector('.gallery-image');
+        const title = newItem.querySelector('.gallery-title').textContent;
+        const description = newItem.querySelector('.gallery-description').textContent;
+        const artist = newItem.querySelector('.gallery-artist').textContent;
+        const deity = newItem.querySelector('.gallery-deity').textContent;
+        
+        lightboxImage.style.opacity = '0';
+        setTimeout(() => {
+            lightboxImage.src = image.src;
+            lightboxImage.alt = image.alt;
+            lightboxTitle.textContent = title;
+            lightboxDescription.textContent = description;
+            lightboxArtist.textContent = artist;
+            lightboxDeity.textContent = deity;
+            lightboxImage.style.opacity = '1';
+        }, 300);
+    }
+    
+    lightboxNext.addEventListener('click', function() {
+        navigateLightbox('next');
+    });
+    
+    lightboxPrev.addEventListener('click', function() {
+        navigateLightbox('prev');
+    });
+    
+    // Contrôles clavier
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        if (e.key === 'ArrowRight' && lightbox.classList.contains('active')) {
+            navigateLightbox('next');
+        }
+        
+        if (e.key === 'ArrowLeft' && lightbox.classList.contains('active')) {
+            navigateLightbox('prev');
+        }
+    });
+});
+</script>
