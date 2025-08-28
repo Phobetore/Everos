@@ -456,8 +456,17 @@
         <header class="deity-header">
             <div class="deity-header-content">
                 <h1 class="deity-title">{{ $deity.name }}</h1>
-                <p class="deity-subtitle">{{ $deity.title }}</p>
-                <div class="deity-script">{{ $deity.domain }}</div>
+                {{ $continentType := printf "%T" $deity.continent }}
+                {{ if ne $continentType "string" }}
+                    {{ if $deity.continent.name }}
+                    <div class="deity-script">{{ $deity.continent.name }}</div>
+                    {{ else }}
+                    <div class="deity-script">Urganis</div>
+                    {{ end }}
+                {{ else }}
+                    <div class="deity-script">{{ $deity.continent }}</div>
+                {{ end }}
+                <h2 class="deity-subtitle">Divinité de la terre et de l'effort</h2>
                 
                 {{ if $deity.symbols }}
                 <div class="deity-symbols">
@@ -494,17 +503,6 @@
         <!-- Main Content -->
         <div class="main-content">
             
-            {{ if .Content }}
-            <!-- Default content section -->
-            <section class="deity-description continent-section">
-                <div class="continent-container">
-                    <h2 class="section-title">Description</h2>
-                    <p>{{ $deity.description }}</p>
-                    {{ .Content }}
-                </div>
-            </section>
-            {{ end }}
-            
             <!-- Continent Section - Check if it's a complex object or simple string -->
             {{ $continentType := printf "%T" $deity.continent }}
             {{ if ne $continentType "string" }}
@@ -512,8 +510,8 @@
                 {{ with $deity.continent }}
                 <section id="continent" class="continent-section">
                     <div class="continent-container">
-                        <h2 class="section-title">{{ .name | default "Continent" }}</h2>
-                        <p class="section-description">{{ .description | default "" }}</p>
+                        <h2 class="section-title">{{ .name | default "[Nom du continent]" }}</h2>
+                        <p class="section-description">{{ .description | default "[Description du continent]" }}</p>
                         
                         {{ if .map_image }}
                         <div class="continent-map">
@@ -550,18 +548,18 @@
                         {{ with .culture }}
                         <div class="cultures-section">
                             <h3 class="subsection-title">La population</h3>
-                            <p>{{ .population }}</p>
+                            <p>{{ .population | default "flemme de remplir maintenant" }}</p>
                             
                             <h4>Organisation Sociale</h4>
-                            <p>{{ .social_organization }}</p>
+                            <p>{{ .social_organization | default "flemme de remplir maintenant" }}</p>
                             
                             <h4>Croyances et Traditions</h4>
-                            <p>{{ .beliefs_traditions }}</p>
+                            <p>{{ .beliefs_traditions | default "flemme de remplir maintenant" }}</p>
                             
                             {{ range .quotes }}
                             <div class="lore-quote">
-                                <p>"{{ .text }}"</p>
-                                <cite>— {{ .author }}</cite>
+                                <p>"{{ .text | default "Ici une citation stylé du lore" }}"</p>
+                                <cite>— {{ .author | default "Ici le mec qui l'a dit" }}</cite>
                             </div>
                             {{ end }}
                         </div>
