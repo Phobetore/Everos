@@ -1,0 +1,713 @@
+{{ $chronicles := site.Data.chronicles }}
+{{ $deities := site.Data.divinites }}
+
+<!-- Chronicles Hero Section -->
+<div class="chronicles-hero">
+    <div class="chronicles-hero-content">
+        <h1>{{ $chronicles.hero.title }}</h1>
+        <p>{{ $chronicles.hero.description }}</p>
+    </div>
+</div>
+
+<!-- Chronicles Navigation -->
+<nav class="chronicles-nav">
+    <div class="chronicles-nav-container">
+        {{ range $chronicles.navigation }}
+        <a href="#{{ .anchor }}" class="chronicles-nav-item{{ if .active }} active{{ end }}">{{ .name }}</a>
+        {{ end }}
+    </div>
+</nav>
+
+<!-- Stories Section -->
+<section id="stories" class="featured-stories">
+    <div class="stories-container">
+        <h2 class="section-title">Histoires Épiques</h2>
+        
+        {{ range $chronicles.featured_stories }}
+        <div class="story-card">
+            <div class="story-header">
+                <img src="{{ .image }}" alt="{{ .title }}">
+                <div class="story-overlay">
+                    <h3 class="story-title">{{ .title }}</h3>
+                    <div class="story-meta">
+                        <div class="story-deity">
+                            <div class="deity-icon-small" style="background-image: url('{{ .deity_icon }}');"></div>
+                            <span>{{ .deity }}</span>
+                        </div>
+                        <span class="story-date">{{ .status }} • {{ .chapters }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="story-content">
+                <div class="story-excerpt">
+                    {{ range .excerpt }}
+                    <p>{{ . }}</p>
+                    {{ end }}
+                </div>
+                <div class="story-actions">
+                    <div class="story-tags">
+                        {{ range .tags }}
+                        <a href="#" class="story-tag">{{ . }}</a>
+                        {{ end }}
+                    </div>
+                    <a href="{{ .url | relURL }}" class="btn">Lire</a>
+                </div>
+            </div>
+        </div>
+        {{ end }}
+        
+        <div class="text-center">
+            <a href="{{ "/pages/chronicles/stories/" | relURL }}" class="btn btn-primary">Voir toutes les histoires</a>
+        </div>
+    </div>
+</section>
+
+<!-- Timeline Section -->
+<section id="timeline" class="timeline">
+    <div class="timeline-container">
+        <h2 class="section-title">Chronologie d'Everos</h2>
+        <p class="section-description">Les événements majeurs qui ont façonné l'histoire de notre univers</p>
+        
+        <div class="timeline-line"></div>
+        
+        {{ range $chronicles.timeline }}
+        <div class="timeline-entry">
+            <div class="timeline-dot"></div>
+            <div class="timeline-entry-content">
+                <div class="timeline-date">{{ .era }}</div>
+                <h3 class="timeline-title">{{ .title }}</h3>
+                <p class="timeline-description">{{ .description }}</p>
+            </div>
+        </div>
+        {{ end }}
+    </div>
+</section>
+
+<!-- Characters Section -->
+<section id="characters" class="characters-section">
+    <div class="characters-container">
+        <h2 class="section-title">Personnages Emblématiques</h2>
+        <p class="section-description">Découvrez les héros, villains et figures légendaires qui ont marqué l'histoire d'Everos</p>
+        
+        <div class="character-filter">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            <button class="filter-btn" data-filter="hero">Héros</button>
+            <button class="filter-btn" data-filter="villain">Antagonistes</button>
+            {{ range $deities }}
+            <button class="filter-btn" data-filter="{{ .slug }}">{{ .name }}</button>
+            {{ end }}
+        </div>
+        
+        <div class="characters-grid">
+            {{ range $chronicles.characters.heroes }}
+            <div class="character-card" data-type="hero {{ .deity }}">
+                <div class="character-portrait">
+                    <img src="{{ .image }}" alt="{{ .name }}">
+                    <div class="character-info">
+                        <h3 class="character-name">{{ .name }}</h3>
+                        <div class="character-title">{{ .title }}</div>
+                    </div>
+                </div>
+                <div class="character-content">
+                    <div class="character-description">
+                        <p>{{ .description }}</p>
+                    </div>
+                    <a href="{{ .url | relURL }}" class="btn btn-small">Profil Complet</a>
+                </div>
+            </div>
+            {{ end }}
+            
+            {{ range $chronicles.characters.villains }}
+            <div class="character-card" data-type="villain {{ .deity }}">
+                <div class="character-portrait">
+                    <img src="{{ .image }}" alt="{{ .name }}">
+                    <div class="character-info">
+                        <h3 class="character-name">{{ .name }}</h3>
+                        <div class="character-title">{{ .title }}</div>
+                    </div>
+                </div>
+                <div class="character-content">
+                    <div class="character-description">
+                        <p>{{ .description }}</p>
+                    </div>
+                    <a href="{{ .url | relURL }}" class="btn btn-small">Profil Complet</a>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+        
+        <div class="text-center" style="margin-top: var(--spacing-md);">
+            <a href="{{ "/pages/chronicles/characters/" | relURL }}" class="btn btn-primary">Tous les personnages</a>
+        </div>
+    </div>
+</section>
+
+<!-- Legends Section -->
+<section id="legends" class="featured-stories">
+    <div class="stories-container">
+        <h2 class="section-title">Légendes & Mythes</h2>
+        <p class="section-description">Les récits fondateurs et mythes qui structurent la cosmologie d'Everos</p>
+        
+        {{ range $chronicles.legends }}
+        <div class="story-card">
+            <div class="story-header">
+                <img src="{{ .image }}" alt="{{ .title }}">
+                <div class="story-overlay">
+                    <h3 class="story-title">{{ .title }}</h3>
+                    <div class="story-meta">
+                        <span class="story-date">{{ .type }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="story-content">
+                <div class="story-excerpt">
+                    <p>{{ .description }}</p>
+                </div>
+                <div class="story-actions">
+                    <div class="story-tags">
+                        {{ range .tags }}
+                        <a href="#" class="story-tag">{{ . }}</a>
+                        {{ end }}
+                    </div>
+                    <a href="{{ .url | relURL }}" class="btn">Lire</a>
+                </div>
+            </div>
+        </div>
+        {{ end }}
+    </div>
+</section>
+
+<!-- Chronicles-specific CSS -->
+<style>
+/* Chronicles Hero */
+.chronicles-hero {
+    height: 50vh;
+    min-height: 400px;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('{{ $chronicles.hero.background_image }}') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-light);
+}
+
+.chronicles-hero-content {
+    max-width: 800px;
+    padding: 0 var(--spacing-md);
+}
+
+.chronicles-hero-content h1 {
+    font-size: 4.8rem;
+    color: var(--text-light);
+    margin-bottom: var(--spacing-sm);
+}
+
+.chronicles-hero-content p {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-md);
+}
+
+/* Chronicles Navigation */
+.chronicles-nav {
+    background-color: var(--primary-light);
+    padding: var(--spacing-sm) 0;
+    position: sticky;
+    top: 0;
+    z-index: 90;
+}
+
+.chronicles-nav-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+}
+
+.chronicles-nav-item {
+    color: var(--text-light);
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: all 0.3s ease;
+    position: relative;
+    text-decoration: none;
+}
+
+.chronicles-nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-gold);
+    transition: width 0.3s ease;
+}
+
+.chronicles-nav-item:hover::after,
+.chronicles-nav-item.active::after {
+    width: 100%;
+}
+
+/* Stories Section */
+.featured-stories {
+    padding: var(--spacing-lg) 0;
+}
+
+.stories-container, .characters-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.story-card {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--spacing-lg);
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.story-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.story-header {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+}
+
+.story-header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.story-card:hover .story-header img {
+    transform: scale(1.05);
+}
+
+.story-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: var(--spacing-md);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: var(--text-light);
+}
+
+.story-title {
+    font-size: 2.8rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.story-meta {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.story-deity {
+    display: flex;
+    align-items: center;
+    margin-right: var(--spacing-sm);
+}
+
+.deity-icon-small {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 5px;
+    background-size: cover;
+    background-position: center;
+}
+
+.story-content {
+    padding: var(--spacing-md);
+}
+
+.story-excerpt {
+    margin-bottom: var(--spacing-md);
+    font-size: 1.6rem;
+    line-height: 1.7;
+}
+
+.story-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.story-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.story-tag {
+    background-color: var(--primary-light);
+    color: var(--text-light);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.story-tag:hover {
+    background-color: var(--accent-gold);
+}
+
+/* Timeline Section */
+.timeline {
+    padding: var(--spacing-lg) 0;
+    background-color: var(--primary-medium);
+    color: var(--text-light);
+}
+
+.timeline-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    position: relative;
+}
+
+.timeline-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 4px;
+    background-color: var(--accent-gold);
+    transform: translateX(-50%);
+}
+
+.timeline-entry {
+    position: relative;
+    margin-bottom: var(--spacing-lg);
+    width: 100%;
+    display: flex;
+}
+
+.timeline-entry:nth-child(odd) {
+    justify-content: flex-start;
+}
+
+.timeline-entry:nth-child(even) {
+    justify-content: flex-end;
+}
+
+.timeline-entry-content {
+    width: 45%;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: var(--spacing-sm);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.timeline-entry:nth-child(odd) .timeline-entry-content::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    right: -15px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent transparent transparent rgba(0, 0, 0, 0.2);
+}
+
+.timeline-entry:nth-child(even) .timeline-entry-content::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: -15px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent rgba(0, 0, 0, 0.2) transparent transparent;
+}
+
+.timeline-dot {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: var(--accent-gold);
+    border-radius: 50%;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.timeline-date {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    color: var(--accent-gold);
+    margin-bottom: var(--spacing-xs);
+}
+
+.timeline-title {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.timeline-description {
+    font-size: 1.4rem;
+}
+
+/* Characters Section */
+.characters-section {
+    padding: var(--spacing-lg) 0;
+}
+
+.characters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.character-filter {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--spacing-md);
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+}
+
+.filter-btn {
+    background-color: transparent;
+    border: 1px solid var(--primary-light);
+    color: var(--primary-light);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background-color: var(--primary-light);
+    color: var(--text-light);
+}
+
+.character-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.character-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.character-portrait {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.character-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.character-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: var(--spacing-sm);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: var(--text-light);
+}
+
+.character-name {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.character-title {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.character-content {
+    padding: var(--spacing-sm);
+}
+
+.character-description {
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.4rem;
+    line-height: 1.6;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .chronicles-nav-container {
+        flex-wrap: wrap;
+    }
+    
+    .chronicles-nav-item {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 1.4rem;
+    }
+    
+    .timeline-line {
+        left: 20px;
+    }
+    
+    .timeline-entry {
+        justify-content: flex-end !important;
+    }
+    
+    .timeline-entry-content {
+        width: calc(100% - 40px);
+    }
+    
+    .timeline-dot {
+        left: 20px;
+    }
+    
+    .timeline-entry:nth-child(odd) .timeline-entry-content::after {
+        content: '';
+        position: absolute;
+        top: 20px;
+        left: -15px;
+        right: auto;
+        border-color: transparent rgba(0, 0, 0, 0.2) transparent transparent;
+    }
+    
+    .story-actions {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .characters-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+</style>
+
+<!-- Chronicles-specific JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gestion des onglets de navigation
+    const navItems = document.querySelectorAll('.chronicles-nav-item');
+    
+    navItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Retirer la classe active de tous les onglets
+            navItems.forEach(navItem => navItem.classList.remove('active'));
+            
+            // Ajouter la classe active à l'onglet cliqué
+            this.classList.add('active');
+            
+            // Naviguer vers l'ancre
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // Filtrage des personnages
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const characterCards = document.querySelectorAll('.character-card');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const filter = this.getAttribute('data-filter');
+            
+            // Mettre à jour les boutons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Filtrer les cartes
+            characterCards.forEach(card => {
+                const cardType = card.getAttribute('data-type');
+                
+                if (filter === 'all' || cardType.includes(filter)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+    
+    // Animation de la chronologie
+    function animateTimeline() {
+        const timelineEntries = document.querySelectorAll('.timeline-entry');
+        
+        timelineEntries.forEach((entry, index) => {
+            const delay = index * 300;
+            
+            setTimeout(() => {
+                entry.style.opacity = '0';
+                entry.style.transform = index % 2 === 0 ? 'translateX(-50px)' : 'translateX(50px)';
+                
+                setTimeout(() => {
+                    entry.style.transition = 'all 1s ease';
+                    entry.style.opacity = '1';
+                    entry.style.transform = 'translateX(0)';
+                }, 100);
+            }, delay);
+        });
+    }
+    
+    // Observer pour animer la chronologie
+    const timelineSection = document.querySelector('.timeline');
+    let timelineAnimated = false;
+    
+    function handleTimelineScroll() {
+        if (!timelineAnimated && isElementInViewport(timelineSection)) {
+            animateTimeline();
+            timelineAnimated = true;
+        }
+    }
+    
+    function isElementInViewport(el) {
+        if (!el) return false;
+        const rect = el.getBoundingClientRect();
+        return (
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.bottom >= 0
+        );
+    }
+    
+    window.addEventListener('scroll', handleTimelineScroll);
+    handleTimelineScroll(); // Vérifier au chargement
+});
+</script>

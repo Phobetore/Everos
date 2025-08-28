@@ -1,0 +1,169 @@
+# Chronicles Data for Everos
+hero:
+  title: "Chroniques d'Everos"
+  description: "Plongez dans les récits qui ont façonné l'univers d'Everos. Des légendes ancestrales aux chroniques contemporaines, explorez les histoires qui donnent vie à ce monde fantastique."
+  background_image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+
+navigation:
+  - name: "Histoires"
+    anchor: "stories"
+    active: true
+  - name: "Personnages" 
+    anchor: "characters"
+    active: false
+  - name: "Chronologie"
+    anchor: "timeline"
+    active: false
+  - name: "Légendes"
+    anchor: "legends"
+    active: false
+
+featured_stories:
+  - title: "Les Lames du Destin"
+    deity: "Obsidienne"
+    deity_icon: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80"
+    status: "En cours"
+    chapters: "12 chapitres"
+    excerpt: 
+      - "Au cœur des terres volcaniques d'Obsidienne, un ancien forgeron découvre les fragments de sept lames légendaires, chacune liée à l'une des divinités d'Everos."
+      - "Sa quête pour reconstituer ces armes divines le mènera à travers tous les continents, révélant des secrets oubliés et défiant l'ordre établi par les dieux eux-mêmes."
+    image: "https://images.unsplash.com/photo-1601662528567-526cd06f6582?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+    tags:
+      - "Épique"
+      - "Aventure"
+      - "Divinités"
+    url: "stories/lames-destin/"
+
+  - title: "Murmures de la Forêt"
+    deity: "Mantha"
+    deity_icon: "https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80"
+    status: "Terminé"
+    chapters: "8 chapitres"
+    excerpt:
+      - "Elissa, jeune druidesse du royaume de Mantha, entend des voix anciennes dans la forêt ancestrale qui semblent l'appeler vers un destin qu'elle ne comprend pas encore."
+      - "Son voyage au cœur des bois révélera une corruption qui menace l'équilibre naturel et nécessitera des sacrifices qu'elle n'est pas certaine d'être prête à faire."
+    image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-1.2.1&auto=format&fit=crop&w=1371&q=80"
+    tags:
+      - "Nature"
+      - "Mystère"
+      - "Spiritualité"
+    url: "stories/murmures-foret/"
+
+  - title: "Profondeurs Abyssales"
+    deity: "Eromnia"
+    deity_icon: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80"
+    status: "Nouvelle"
+    chapters: "1 chapitre"
+    excerpt:
+      - "Le capitaine Soren n'a jamais cru aux mythes des créatures abyssales jusqu'à ce que son navire soit entraîné dans une tempête surnaturelle. Échoué sur une île inconnue au milieu de l'océan d'Eromnia, il découvre un temple sous-marin où un pacte ancestral entre humains et créatures des profondeurs est sur le point d'être rompu."
+    image: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+    tags:
+      - "Aventure"
+      - "Horreur"
+      - "Océan"
+    url: "stories/profondeurs-abyssales/"
+
+timeline:
+  - era: "Ère de la Création"
+    title: "L'Éveil des Sept"
+    description: "Les sept divinités primordiales émergent du chaos originel et commencent à façonner le monde d'Everos selon leur vision."
+    
+  - era: "Ère de la Séparation"
+    title: "Le Grand Schisme"
+    description: "Suite à un conflit divin majeur, le continent primordial se divise en sept parties distinctes, chacune sous l'influence d'une divinité."
+    
+  - era: "Ère des Mortels"
+    title: "L'Avènement des Peuples"
+    description: "Les divinités créent les différentes races mortelles qui peuplent leurs royaumes respectifs."
+    
+  - era: "Ère des Conflits"
+    title: "La Guerre des Flammes Noires"
+    description: "Premier conflit majeur opposant les fidèles d'Obsidienne à ceux d'Elzeryn, laissant des cicatrices visibles sur les deux continents."
+    
+  - era: "Ère de l'Harmonie"
+    title: "Le Concordat des Sept"
+    description: "Après des siècles de conflits intermittents, les divinités établissent un pacte de non-ingérence dans les affaires des autres royaumes."
+    
+  - era: "Ère Présente"
+    title: "L'Âge des Héros"
+    description: "Période actuelle où de nombreux mortels accomplissent des exploits légendaires, influençant le destin d'Everos."
+
+characters:
+  heroes:
+    - name: "Kaelix"
+      title: "Le Forgeur de Destins"
+      deity: "obsidienne"
+      description: "Premier Grand-Prêtre d'Obsidienne et fondateur de la Forge-Cité de Kaelmar."
+      image: "https://images.unsplash.com/photo-1566937169390-7be4c63b8a0e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+      url: "characters/#kaelix"
+      
+    - name: "Elissa"
+      title: "Gardienne des Murmures"
+      deity: "mantha"
+      description: "Druidesse capable de communiquer avec les esprits de la forêt ancestrale."
+      image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+      url: "characters/#elissa"
+      
+    - name: "Capitaine Soren"
+      title: "Navigateur des Abysses"
+      deity: "eromnia"
+      description: "Capitaine de vaisseau qui a exploré les recoins les plus dangereux des océans d'Eromnia."
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+      url: "characters/#soren"
+      
+    - name: "Thorn"
+      title: "Forgeron Renégat"
+      deity: "obsidienne"
+      description: "Ancien disciple d'Obsidienne en quête des sept Lames du Destin."
+      image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+      url: "characters/#thorn"
+      
+    - name: "Lumina"
+      title: "Oracle Céleste"
+      deity: "light"
+      description: "Prophétesse de Light dont les visions guident les mortels dans les moments de crise."
+      image: "https://images.unsplash.com/photo-1488161628813-04466f872be2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+      url: "characters/#lumina"
+
+  villains:
+    - name: "Mordrath"
+      title: "Seigneur des Cendres"
+      deity: "obsidienne"
+      description: "Ancien champion d'Obsidienne corrompu par sa quête de pouvoir sans limites."
+      image: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+      url: "characters/#mordrath"
+      
+    - name: "Némésia"
+      title: "Reine des Abysses"
+      deity: "eromnia"
+      description: "Créature mi-humaine mi-marine qui règne sur un royaume sous-marin rebelle à Eromnia."
+      image: "https://images.unsplash.com/photo-1569076879128-111fcc4e2925?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+      url: "characters/#nemesia"
+      
+    - name: "Vyrael"
+      title: "Ange Déchu"
+      deity: "light"
+      description: "Ancien serviteur de Light banni pour avoir tenté d'usurper son pouvoir divin."
+      image: "https://images.unsplash.com/photo-1613174900678-f870989d6836?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+      url: "characters/#vyrael"
+
+legends:
+  - title: "La Création d'Everos"
+    type: "Mythe fondateur"
+    description: "Au commencement était le Vide, et du Vide émergea la Conscience. Cette Conscience, cherchant à se comprendre elle-même, se divisa en sept aspects distincts qui devinrent les divinités primordiales. Chacune façonna une partie du monde selon sa nature, créant ainsi les sept continents d'Everos."
+    image: "https://images.unsplash.com/photo-1502637827712-8609aac535b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+    tags:
+      - "Création"
+      - "Divinités"
+      - "Cosmologie"
+    url: "legends/creation-everos/"
+    
+  - title: "Le Grand Schisme"
+    type: "Mythe de séparation"
+    description: "Cette légende raconte comment l'harmonie initiale entre les divinités fut brisée par un conflit sur la nature de la création. Le continent originel unique fut déchiré en sept parties lors d'un cataclysme divin, créant les royaumes séparés que nous connaissons aujourd'hui."
+    image: "https://images.unsplash.com/photo-1538370965046-79c0d6907d47?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+    tags:
+      - "Conflit"
+      - "Cataclysme"
+      - "Géographie"
+    url: "legends/grand-schisme/"
