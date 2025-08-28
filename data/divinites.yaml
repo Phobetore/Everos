@@ -41,13 +41,6 @@
       - name: "Désert de Cendre"
         description: "Vastes plaines de cendres volcaniques aux reflets d'obsidienne."
         image: "https://images.unsplash.com/photo-1533756972958-d6f38a9761e3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-    culture:
-      population: "Le peuple d'Urganis est principalement composé de forgerons, d'artisans et de guerriers qui vénèrent l'art de la création par le feu."
-      social_organization: "La société est organisée autour des guildes d'artisans, avec les Maîtres Forgerons au sommet de la hiérarchie."
-      beliefs_traditions: "Les habitants croient en la destruction créatrice - l'idée que pour créer quelque chose de nouveau, l'ancien doit parfois être détruit."
-      quotes:
-        - text: "Ici une citation stylé du lore"
-          author: "Ici le mec qui l'a dit"
   domain: "Feu, Forge, Destruction créatrice"
   symbols:
     - icon: "fas fa-hammer"
