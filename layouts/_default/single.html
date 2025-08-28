@@ -4,19 +4,743 @@
     {{ if gt (len $deities) 0 }}
         {{ $deity := index $deities 0 }}
         {{ if $deity }}
-            <h1>Debug: {{ $deity.name }}</h1>
-            <p>Title: {{ $deity.title }}</p>
-            <p>Domain: {{ $deity.domain }}</p>
-            {{ if $deity.continent }}
-                <h2>Continent exists!</h2>
-                {{ $continent := $deity.continent }}
-                {{ if $continent.name }}
-                    <p>Continent name: {{ $continent.name }}</p>
+
+    <!-- Page-specific CSS with deity colors -->
+    <style>
+        /* Palette spécifique pour {{ $deity.name }} */
+        :root {
+            --deity-primary: {{ $deity.colors.primary }};
+            --deity-secondary: {{ $deity.colors.secondary }};
+            --deity-accent: {{ $deity.colors.accent }};
+            --deity-text: {{ $deity.colors.text }};
+            --deity-light: {{ $deity.colors.light }};
+        }
+        
+        body {
+            background-color: var(--deity-primary);
+            background-image: url('https://www.transparenttextures.com/patterns/black-felt.png');
+            color: var(--deity-text);
+        }
+        
+        .deity-header {
+            height: 80vh;
+            min-height: 600px;
+            position: relative;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('{{ $deity.image }}') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        
+        .deity-header-content {
+            margin-left: 10%;
+            max-width: 600px;
+        }
+        
+        .deity-title {
+            font-size: 6rem;
+            margin-bottom: var(--spacing-xs);
+            color: var(--deity-text);
+        }
+        
+        .deity-subtitle {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-sm);
+            font-family: var(--font-body);
+            font-style: italic;
+        }
+        
+        .deity-script {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            letter-spacing: 0.2em;
+            margin-bottom: var(--spacing-md);
+            color: var(--deity-accent);
+        }
+        
+        .deity-symbols {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        .deity-symbol {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--deity-accent);
+        }
+        
+        .main-content {
+            background-color: var(--deity-primary);
+            color: var(--deity-text);
+        }
+        
+        .continent-section {
+            padding: var(--spacing-lg) 0;
+        }
+        
+        .continent-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .section-title {
+            color: var(--deity-accent);
+            border-bottom: 1px solid var(--deity-accent);
+            padding-bottom: var(--spacing-sm);
+        }
+        
+        .continent-map {
+            margin: var(--spacing-md) 0;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .continent-map img {
+            width: 100%;
+            display: block;
+        }
+        
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, var(--deity-primary), transparent 70%);
+        }
+        
+        .map-marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--deity-accent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        
+        .map-marker:hover {
+            transform: translate(-50%, -50%) scale(1.2);
+            box-shadow: 0 0 10px var(--deity-accent);
+        }
+        
+        .map-marker::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--deity-accent) transparent transparent transparent;
+        }
+        
+        .map-tooltip {
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            min-width: 150px;
+            background-color: var(--deity-secondary);
+            padding: var(--spacing-xs);
+            border-radius: 4px;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 3;
+        }
+        
+        .map-marker:hover .map-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+        
+        .geography-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .geography-card {
+            background-color: var(--deity-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .geography-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .geography-card-content {
+            padding: var(--spacing-sm);
+        }
+        
+        .geography-card h3 {
+            color: var(--deity-text);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .subsection-title {
+            color: var(--deity-accent);
+            font-size: 2.4rem;
+            margin: var(--spacing-lg) 0 var(--spacing-md) 0;
+        }
+        
+        .cultures-section {
+            margin-top: var(--spacing-lg);
+        }
+        
+        .cultures-section h4 {
+            color: var(--deity-light);
+            margin: var(--spacing-md) 0 var(--spacing-sm) 0;
+        }
+        
+        .lore-quote {
+            font-style: italic;
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            border-left: 3px solid var(--deity-accent);
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .lore-quote cite {
+            display: block;
+            margin-top: var(--spacing-sm);
+            font-style: normal;
+            font-weight: bold;
+            text-align: right;
+        }
+        
+        .lore-section {
+            padding: var(--spacing-lg) 0;
+            background-color: var(--deity-secondary);
+        }
+        
+        .lore-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .lore-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--deity-accent);
+        }
+        
+        .lore-tab {
+            padding: var(--spacing-sm) var(--spacing-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--deity-text);
+            opacity: 0.7;
+        }
+        
+        .lore-tab.active {
+            opacity: 1;
+            border-bottom: 3px solid var(--deity-accent);
+            margin-bottom: -2px;
+        }
+        
+        .lore-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .lore-content.active {
+            display: block;
+        }
+        
+        .lore-content p {
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.8;
+        }
+        
+        .characters-section {
+            padding: var(--spacing-lg) 0;
+        }
+        
+        .characters-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .character-card {
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: var(--deity-secondary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .character-portrait {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .character-portrait img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .character-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: var(--spacing-sm);
+            color: white;
+        }
+        
+        .character-name {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+        
+        .character-title {
+            font-size: 1.4rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+        
+        .character-content {
+            padding: var(--spacing-sm);
+        }
+        
+        .character-description {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            background-color: var(--deity-accent);
+            color: var(--deity-text);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--deity-light);
+        }
+        
+        .btn-small {
+            font-size: 1.2rem;
+            padding: var(--spacing-xs);
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .sidebar-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--deity-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            color: var(--deity-text);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+        }
+        
+        .sidebar-icon:hover {
+            background-color: var(--deity-accent);
+            transform: scale(1.1);
+        }
+        
+        .sidebar-tooltip {
+            position: absolute;
+            right: 70px;
+            background-color: var(--deity-primary);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 4px;
+            font-size: 1.4rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-icon:hover .sidebar-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .deity-title {
+                font-size: 4rem;
+            }
+            
+            .deity-header-content {
+                margin-left: 5%;
+            }
+            
+            .geography-grid,
+            .characters-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+                transform: none;
+                flex-direction: row;
+                justify-content: center;
+                padding: var(--spacing-md) 0;
+            }
+            
+            .sidebar-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 2rem;
+            }
+            
+            .sidebar-tooltip {
+                display: none;
+            }
+        }
+    </style>
+
+    <article class="deity-page">
+        <!-- Deity Header -->
+        <header class="deity-header">
+            <div class="deity-header-content">
+                <h1 class="deity-title">{{ $deity.name }}</h1>
+                <p class="deity-subtitle">{{ $deity.title }}</p>
+                <div class="deity-script">{{ $deity.domain }}</div>
+                
+                {{ if $deity.symbols }}
+                <div class="deity-symbols">
+                    {{ range $deity.symbols }}
+                    <div class="deity-symbol" title="{{ .name }}">
+                        <i class="{{ .icon }}"></i>
+                    </div>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+        </header>
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <a href="#continent" class="sidebar-icon">
+                <i class="fas fa-map"></i>
+                <span class="sidebar-tooltip">Continent</span>
+            </a>
+            <a href="#lore" class="sidebar-icon">
+                <i class="fas fa-book"></i>
+                <span class="sidebar-tooltip">Lore Divin</span>
+            </a>
+            <a href="#characters" class="sidebar-icon">
+                <i class="fas fa-users"></i>
+                <span class="sidebar-tooltip">Personnages</span>
+            </a>
+            <a href="/pages/deities/" class="sidebar-icon">
+                <i class="fas fa-cloud"></i>
+                <span class="sidebar-tooltip">Autres Divinités</span>
+            </a>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            
+            {{ if .Content }}
+            <!-- Default content section -->
+            <section class="deity-description continent-section">
+                <div class="continent-container">
+                    <h2 class="section-title">Description</h2>
+                    <p>{{ $deity.description }}</p>
+                    {{ .Content }}
+                </div>
+            </section>
+            {{ end }}
+            
+            <!-- Continent Section - Check if it's a complex object or simple string -->
+            {{ $continentType := printf "%T" $deity.continent }}
+            {{ if ne $continentType "string" }}
+                {{ if $deity.continent }}
+                {{ with $deity.continent }}
+                <section id="continent" class="continent-section">
+                    <div class="continent-container">
+                        <h2 class="section-title">{{ .name | default "Continent" }}</h2>
+                        <p class="section-description">{{ .description | default "" }}</p>
+                        
+                        {{ if .map_image }}
+                        <div class="continent-map">
+                            <img src="{{ .map_image }}" alt="Carte de {{ .name | default "Continent" }}">
+                            <div class="map-overlay"></div>
+                            
+                            <!-- Points d'intérêt sur la carte -->
+                            {{ range .locations }}
+                            <div class="map-marker" style="top: {{ .position.top }}; left: {{ .position.left }};">
+                                <div class="map-tooltip">
+                                    <h4>{{ .name }}</h4>
+                                    <p>{{ .description }}</p>
+                                </div>
+                            </div>
+                            {{ end }}
+                        </div>
+                        {{ end }}
+                        
+                        {{ if .regions }}
+                        <div class="geography-grid">
+                            {{ range .regions }}
+                            <div class="geography-card">
+                                <img src="{{ .image }}" alt="{{ .name }}">
+                                <div class="geography-card-content">
+                                    <h3>{{ .name }}</h3>
+                                    <p>{{ .description }}</p>
+                                </div>
+                            </div>
+                            {{ end }}
+                        </div>
+                        {{ end }}
+                        
+                        {{ if .culture }}
+                        {{ with .culture }}
+                        <div class="cultures-section">
+                            <h3 class="subsection-title">La population</h3>
+                            <p>{{ .population }}</p>
+                            
+                            <h4>Organisation Sociale</h4>
+                            <p>{{ .social_organization }}</p>
+                            
+                            <h4>Croyances et Traditions</h4>
+                            <p>{{ .beliefs_traditions }}</p>
+                            
+                            {{ range .quotes }}
+                            <div class="lore-quote">
+                                <p>"{{ .text }}"</p>
+                                <cite>— {{ .author }}</cite>
+                            </div>
+                            {{ end }}
+                        </div>
+                        {{ end }}
+                        {{ end }}
+                    </div>
+                </section>
+                {{ end }}
                 {{ end }}
             {{ end }}
+
+            <!-- Lore Section -->
+            {{ if $deity.lore }}
+            <section id="lore" class="lore-section">
+                <div class="lore-container">
+                    <h2 class="section-title">Lore Divin</h2>
+                    
+                    <div class="lore-tabs">
+                        {{ $first := true }}
+                        {{ range $key, $loreSection := $deity.lore }}
+                        <div class="lore-tab{{ if $first }} active{{ end }}" data-tab="{{ $key }}">
+                            {{ $loreSection.title }}
+                        </div>
+                        {{ $first = false }}
+                        {{ end }}
+                    </div>
+                    
+                    {{ $first := true }}
+                    {{ range $key, $loreSection := $deity.lore }}
+                    <div class="lore-content{{ if $first }} active{{ end }}" id="{{ $key }}">
+                        {{ $loreSection.content | markdownify }}
+                        
+                        {{ range $loreSection.quotes }}
+                        <div class="lore-quote">
+                            <p>"{{ .text }}"</p>
+                            <cite>— {{ .author }}</cite>
+                        </div>
+                        {{ end }}
+                    </div>
+                    {{ $first = false }}
+                    {{ end }}
+                </div>
+            </section>
+            {{ end }}
+
+            <!-- Characters Section -->
+            {{ if $deity.characters }}
+            <section id="characters" class="characters-section">
+                <div class="characters-container">
+                    <h2 class="section-title">Personnages Notables</h2>
+                    <p class="section-description">Héros, champions et figures légendaires liés à {{ $deity.name }}.</p>
+                    
+                    <div class="characters-grid">
+                        {{ range $deity.characters }}
+                        <div class="character-card">
+                            <div class="character-portrait">
+                                <img src="{{ .image }}" alt="{{ .name }}">
+                                <div class="character-info">
+                                    <h3 class="character-name">{{ .name }}</h3>
+                                    <div class="character-title">{{ .title }}</div>
+                                </div>
+                            </div>
+                            <div class="character-content">
+                                <div class="character-description">
+                                    <p>{{ .description }}</p>
+                                </div>
+                                <a href="{{ .link }}" class="btn btn-small">Profil Complet</a>
+                            </div>
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+            </section>
+            {{ end }}
+        </div>
+    </article>
+
+    <!-- JavaScript for tabs and animations -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Gestion des onglets de lore
+        const tabs = document.querySelectorAll('.lore-tab');
+        const contents = document.querySelectorAll('.lore-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Retirer la classe active de tous les onglets et contenus
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                
+                // Ajouter la classe active à l'onglet cliqué
+                this.classList.add('active');
+                
+                // Afficher le contenu correspondant
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Animation pour les éléments de la carte
+        function animateMapMarkers() {
+            const markers = document.querySelectorAll('.map-marker');
+            
+            markers.forEach((marker, index) => {
+                const delay = index * 200;
+                
+                setTimeout(() => {
+                    marker.style.opacity = '0';
+                    marker.style.transform = 'translate(-50%, -50%) scale(0)';
+                    
+                    setTimeout(() => {
+                        marker.style.transition = 'all 0.5s ease';
+                        marker.style.opacity = '1';
+                        marker.style.transform = 'translate(-50%, -50%) scale(1)';
+                    }, 100);
+                }, delay);
+            });
+        }
+        
+        // Animation au chargement de la page
+        animateMapMarkers();
+        
+        // Animation des sections au défilement
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.bottom >= 0
+            );
+        }
+        
+        function handleScroll() {
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                if (isElementInViewport(section) && !section.classList.contains('animated')) {
+                    section.classList.add('animated');
+                    section.style.animation = 'fadeIn 1s ease forwards';
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Vérifier au chargement
+        
+        // Défilement doux pour les liens d'ancrage
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    });
+    </script>
+
         {{ end }}
     {{ end }}
 {{ else }}
-    <h1>Default page</h1>
+    {{/* Default single page template */}}
+    <article class="single-page">
+        <div class="container">
+            <header class="page-header">
+                <h1 class="page-title">{{ .Title }}</h1>
+                {{ if .Params.subtitle }}
+                <p class="page-subtitle">{{ .Params.subtitle }}</p>
+                {{ end }}
+            </header>
+            
+            <div class="page-content">
+                {{ .Content }}
+            </div>
+        </div>
+    </article>
 {{ end }}
 {{ end }}
