@@ -7,6 +7,10 @@
 {{ else if in .RelPermalink "/universe/" }}
   {{/* Include the universe-specific layout */}}
   {{ partial "universe-layout.html" . }}
+{{/* Check if this is the chronicles section */}}
+{{ else if in .RelPermalink "/chronicles/" }}
+  {{/* Include the chronicles-specific layout */}}
+  {{ partial "chronicles-layout.html" . }}
 {{/* Check if this is the game-systems section */}}
 {{ else if in .RelPermalink "/game-systems/" }}
   {{/* Include the game-systems-specific layout */}}
