@@ -1,0 +1,34 @@
+# Detailed content for Hisangarde
+# This file contains all the detailed content specific to Hisangarde
+
+continent:
+  name: "Altanis"
+  slug: "montagnes-celestes"
+  description: "Les montagnes célestes d'Altanis où Hisangarde domine les plus hauts sommets"
+  map_image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+
+culture:
+  population: "Montagnards, guides et chercheurs de vérité qui vénèrent les sommets sacrés."
+  social_organization: "Société organisée en ordres monastiques et guildes d'alpinistes."
+  beliefs_traditions: "Quête spirituelle vers les hauteurs, méditation dans l'air pur des cimes."
+
+lore:
+  origins:
+    title: "Protecteur des Cimes"
+    content: "Hisangarde s'éleva vers les premiers sommets, établissant les montagnes comme piliers du monde."
+  powers:
+    title: "Maîtrise de l'Air et de la Pierre"
+    content: "Contrôle des vents, des avalanches et de la stabilité terrestre."
+  relationships:
+    title: "Gardien de la Pureté"
+    content: "Maintient l'équilibre entre terre et ciel."
+  worship:
+    title: "Culte des Hauteurs"
+    content: "Vénération pratiquée sur les sommets et dans les temples de montagne."
+
+characters:
+  - name: "Maître Kaelen"
+    title: "Guide des Cimes Sacrées"
+    description: "Moine-montagnard qui a atteint l'illumination sur les plus hauts sommets."
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+    link: "../chronicles/characters.html#kaelen"

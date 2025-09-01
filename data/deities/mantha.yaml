@@ -1,0 +1,121 @@
+# Detailed content for Mantha
+# This file contains all the detailed content specific to Mantha
+# Separated from the main divinites.yaml for better organization
+
+continent:
+  name: "Sylvandis"
+  slug: "forets-eternelles"
+  description: "Les forêts éternelles de Sylvandis où le temps semble suspendu et la magie naturelle coule comme une rivière éternelle"
+  map_image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+  locations:
+    - name: "L'Arbre-Monde"
+      description: "Le gigantesque chêne au cœur des domaines de Mantha"
+      position:
+        top: "40%"
+        left: "50%"
+    - name: "Clairière des Esprits"
+      description: "Lieu de rassemblement des dryades et esprits forestiers"
+      position:
+        top: "60%"
+        left: "30%"
+    - name: "Rivière de Lumière"
+      description: "Cours d'eau magique qui illumine la forêt"
+      position:
+        top: "20%"
+        left: "70%"
+  regions:
+    - name: "L'Arbre-Monde"
+      description: "Un chêne gigantesque dont les racines touchent le centre d'Everos et dont la canopée effleure les étoiles."
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+    - name: "Forêt des Murmures"
+      description: "Bois anciens où les arbres gardent la mémoire du monde."
+      image: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+    - name: "Vallée des Sources"
+      description: "Vallée verdoyante où naissent les rivières magiques."
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+
+culture:
+  population: "Les habitants de Sylvandis vivent en harmonie avec la nature, incluant druides, rangers, et gardiens forestiers."
+  social_organization: "La société est organisée en cercles druidiques qui veillent sur différents aspects de la nature."
+  beliefs_traditions: "Les habitants croient en l'interconnexion de toute vie et pratiquent la protection de l'équilibre naturel."
+  quotes:
+    - text: "Comme les racines sous la terre, nous sommes tous connectés. Ce qui affecte l'un affecte tous les autres."
+      author: "Enseignement de Mantha"
+
+lore:
+  origins:
+    title: "La Naissance de la Gardienne"
+    content: |
+      Mantha émergea quand la première graine germa dans le chaos primordial, apportant la vie et la croissance au monde naissant.
+      
+      ## La Création de l'Arbre-Monde
+      
+      Son premier acte fut de planter l'Arbre-Monde, ancrant la stabilité et la continuité de la vie sur Everos.
+      
+      ## Le Pacte avec la Nature
+      
+      Mantha établit les lois naturelles qui gouvernent la croissance, la mort et la renaissance de toute vie.
+    quotes:
+      - text: "De la première graine grandit l'espoir, de l'espoir grandit la vie, de la vie grandit l'éternité."
+        author: "Chroniques de la Genèse Verte"
+  powers:
+    title: "Maîtrise de la Nature"
+    content: |
+      Mantha commande à tous les aspects de la nature vivante, de la plus petite fleur aux forêts les plus vastes.
+      
+      ## Pouvoirs Naturels
+      
+      - **Contrôle de la Croissance** — Peut accélérer ou ralentir la croissance de toute plante
+      - **Communication avec la Nature** — Parle avec tous les êtres vivants
+      - **Guérison Naturelle** — Capacité de guérison par l'énergie vitale
+    quotes:
+      - text: "La nature ne connaît pas la haine, seulement l'équilibre. Apprends d'elle."
+        author: "Conseil de Mantha à ses fidèles"
+  relationships:
+    title: "Gardienne de l'Équilibre"
+    content: |
+      Mantha joue le rôle de médiatrice entre les autres divinités, cherchant toujours l'harmonie et l'équilibre.
+      
+      ## Alliances Naturelles
+      
+      - **Light** — Partage la volonté de protéger et nourrir la vie
+      - **Labir** — Coopération dans les cycles naturels
+      
+      ## Tensions
+      
+      - **Obsidienne** — Désaccords sur la destruction créatrice
+      - **Elzeryn** — Méfiance envers la magie artificielle
+    quotes:
+      - text: "Mantha voit dans chaque conflit une opportunité de restaurer l'harmonie."
+        author: "Observation d'un sage elfe"
+  worship:
+    title: "Le Culte de l'Harmonie Verte"
+    content: |
+      Le culte de Mantha est pratiqué dans les clairières sacrées et autour de l'Arbre-Monde.
+      
+      ## Hiérarchie Druidique
+      
+      - **Les Semences** — Novices qui apprennent les bases
+      - **Les Branches** — Druides confirmés
+      - **Les Racines** — Anciens gardiens de la sagesse
+      - **Le Cœur de l'Arbre** — Chef spirituel suprême
+    quotes:
+      - text: "Croître avec sagesse, protéger avec amour, guider avec patience."
+        author: "Devise des druides de Mantha"
+
+characters:
+  - name: "Lysandra"
+    title: "Grande Druidesse de l'Arbre-Monde"
+    description: "Gardienne suprême des forêts éternelles et voix de Mantha parmi les mortels."
+    image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+    link: "../chronicles/characters.html#lysandra"
+  - name: "Thorin Cœur-de-Chêne"
+    title: "Ranger Légendaire"
+    description: "Protecteur des créatures forestières et guide des voyageurs perdus."
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+    link: "../chronicles/characters.html#thorin"
+  - name: "Aria"
+    title: "Dryade Ancienne"
+    description: "Esprit de l'arbre le plus ancien de la forêt, dépositaire de millénaires de sagesse."
+    image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+    link: "../chronicles/characters.html#aria"

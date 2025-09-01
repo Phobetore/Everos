@@ -1,0 +1,34 @@
+# Detailed content for Elzeryn
+# This file contains all the detailed content specific to Elzeryn
+
+continent:
+  name: "Arcanum"
+  slug: "terres-arcanes"
+  description: "Les terres arcanes d'Arcanum où Elzeryn veille sur les mystères magiques et les savoirs anciens"
+  map_image: "https://images.unsplash.com/photo-1462927114214-6956d2fddd4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+
+culture:
+  population: "Mages, érudits et chercheurs qui explorent les mystères de la magie pure."
+  social_organization: "Société organisée en académies magiques et cercles d'études arcanes."
+  beliefs_traditions: "Quête de la connaissance magique ultime, préservation des savoirs anciens."
+
+lore:
+  origins:
+    title: "Maître des Arcanes"
+    content: "Elzeryn canalisa les premières énergies magiques et établit les lois de la magie."
+  powers:
+    title: "Maîtrise de la Magie Pure"
+    content: "Contrôle de toutes les énergies magiques et des mystères arcanes."
+  relationships:
+    title: "Gardien des Secrets"
+    content: "Détient les clés des mystères les plus profonds d'Everos."
+  worship:
+    title: "Culte des Mystères Arcanes"
+    content: "Vénération pratiquée dans les tours de magie et les bibliothèques anciennes."
+
+characters:
+  - name: "Archimage Vaelin"
+    title: "Gardien des Savoirs Perdus"
+    description: "Maître des arcanes qui préserve la connaissance magique ancienne."
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+    link: "../chronicles/characters.html#vaelin"
