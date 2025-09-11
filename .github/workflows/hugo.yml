@@ -47,7 +47,12 @@ jobs:
           HUGO_ENV: production
           TZ: Europe/Paris
         run: |
+          echo "🏗️  Building Hugo site..."
           hugo --gc --minify --baseURL "/"
+          echo "✅ Hugo build completed successfully"
+          echo "📊 Build summary:"
+          find ./public -type f | wc -l | xargs echo "   Total files:"
+          du -sh ./public | cut -f1 | xargs echo "   Total size:"
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -66,7 +71,56 @@ jobs:
           name: hugo-public
           path: ./public
 
-      - name: Deploy via SFTP 
+      - name: Verify downloaded files
+        run: |
+          echo "📁 Verifying downloaded files..."
+          ls -la ./public/
+          echo "📊 Total files: $(find ./public -type f | wc -l)"
+          echo "📊 Total size: $(du -sh ./public/)"
+
+      - name: Test SFTP connectivity
+        run: |
+          echo "🔍 Testing SFTP server connectivity..."
+          # Install sshpass if not available
+          sudo apt-get update && sudo apt-get install -y sshpass
+          
+          # Test basic connectivity
+          echo "Testing connection to SFTP server..."
+          if [ -z "${{ secrets.SFTP_SERVER }}" ]; then
+            echo "❌ SFTP_SERVER secret is not set"
+            exit 1
+          fi
+          
+          if [ -z "${{ secrets.SFTP_USERNAME }}" ]; then
+            echo "❌ SFTP_USERNAME secret is not set"
+            exit 1
+          fi
+          
+          if [ -z "${{ secrets.SFTP_PASSWORD }}" ]; then
+            echo "❌ SFTP_PASSWORD secret is not set"
+            exit 1
+          fi
+          
+          echo "✅ All required secrets are configured"
+          
+          # Test SFTP connection with timeout
+          timeout 30 sshpass -p "${{ secrets.SFTP_PASSWORD }}" sftp -o StrictHostKeyChecking=no -o ConnectTimeout=10 "${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_SERVER }}" <<EOF || {
+            echo "❌ SFTP connection test failed"
+            echo "💡 Please verify:"
+            echo "   - SFTP server address is correct"
+            echo "   - Username and password are valid"
+            echo "   - Server is accessible from GitHub Actions"
+            echo "   - No firewall blocking the connection"
+            exit 1
+          }
+          pwd
+          ls -la
+          quit
+          EOF
+          
+          echo "✅ SFTP connection test successful"
+
+      - name: Deploy via SFTP
         uses: wlixcc/SFTP-Deploy-Action@v1.2.6
         with:
           server: ${{ secrets.SFTP_SERVER }}
@@ -75,3 +129,29 @@ jobs:
           password: ${{ secrets.SFTP_PASSWORD }}
           local_path: './public/*'
           remote_path: './axarathe/'
+          delete_remote_files: false
+          sftp_only: true
+        continue-on-error: true
+        id: sftp_deploy
+
+      - name: Check deployment result
+        run: |
+          if [ "${{ steps.sftp_deploy.outcome }}" == "failure" ]; then
+            echo "❌ SFTP deployment failed"
+            echo "💡 Troubleshooting steps:"
+            echo "   1. Verify all GitHub secrets are correctly set:"
+            echo "      - SFTP_SERVER (server hostname/IP)"
+            echo "      - SFTP_USERNAME (your server username)"
+            echo "      - SFTP_PASSWORD (your server password)"
+            echo "   2. Check if the remote directory './axarathe/' exists"
+            echo "   3. Verify server permissions allow file uploads"
+            echo "   4. Ensure the server accepts SFTP connections"
+            echo ""
+            echo "🔧 To configure secrets:"
+            echo "   Go to: Settings > Secrets and variables > Actions"
+            echo "   Add the required secrets with correct values"
+            exit 1
+          else
+            echo "✅ Deployment completed successfully!"
+            echo "🌐 Site should be available at: https://axarathe.com/"
+          fi
