@@ -55,18 +55,18 @@ jobs:
           name: hugo-public
           path: ./public
 
-
   deploy:
-    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
         with:
           name: hugo-public
           path: ./public
 
-      - name: Deploy via SFTP
+      - name: Deploy via SFTP 
         uses: wlixcc/SFTP-Deploy-Action@v1.2.6
         with:
           server: ${{ secrets.SFTP_SERVER }}
@@ -75,4 +75,3 @@ jobs:
           password: ${{ secrets.SFTP_PASSWORD }}
           local_path: './public/*'
           remote_path: './axarathe/'
-          sftp_only: true
