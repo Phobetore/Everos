@@ -17,6 +17,7 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+/tmp/hugo-test-verify
 
 # Node modules (if used for preprocessing)
 node_modules/
