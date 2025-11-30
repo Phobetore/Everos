@@ -128,7 +128,7 @@ jobs:
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           local_path: './public/*'
-          remote_path: './axarathe/'
+          remote_path: './everos/'
           delete_remote_files: false
           sftp_only: true
         continue-on-error: true
@@ -143,7 +143,7 @@ jobs:
             echo "      - SFTP_SERVER (server hostname/IP)"
             echo "      - SFTP_USERNAME (your server username)"
             echo "      - SFTP_PASSWORD (your server password)"
-            echo "   2. Check if the remote directory './axarathe/' exists"
+            echo "   2. Check if the remote directory './everos/' exists"
             echo "   3. Verify server permissions allow file uploads"
             echo "   4. Ensure the server accepts SFTP connections"
             echo ""
@@ -153,5 +153,5 @@ jobs:
             exit 1
           else
             echo "✅ Deployment completed successfully!"
-            echo "🌐 Site should be available at: https://axarathe.com/"
+            echo "🌐 Site should be available at: https://everos.com/"
           fi
