@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVEROS - Site en Construction</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* === Variables CSS === */
+        :root {
+            --primary-dark: #0c131b;
+            --primary-medium: #1e2a3a;
+            --primary-light: #344966;
+            --accent-gold: #c9a96e;
+            --accent-red: #8b2635;
+            --accent-blue: #3282b8;
+            --accent-green: #4a6c6f;
+            --text-light: #f0f4f8;
+            --text-medium: #b8c4d0;
+            --text-dark: #2c3e50;
+            
+            --font-display: 'Cinzel', serif;
+            --font-body: 'Spectral', serif;
+            
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+        }
+
+        /* === Reset et Base === */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 62.5%;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 1.6rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        a {
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* === Header Principal === */
+        .main-header {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .hero-banner {
+            height: 100%;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            background: url('https://images.unsplash.com/photo-1536152470836-b943b246224c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-banner .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--text-light);
+            padding: 0 var(--spacing-md);
+            max-width: 800px;
+        }
+
+        .main-title {
+            font-family: var(--font-display);
+            font-size: 8rem;
+            font-weight: 900;
+            margin-bottom: var(--spacing-sm);
+            letter-spacing: 0.2em;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            color: var(--text-light);
+        }
+
+        .tagline {
+            font-size: 2.4rem;
+            font-weight: 300;
+            margin-bottom: var(--spacing-md);
+        }
+
+        /* === Navigation === */
+        .main-nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm) 5%;
+        }
+
+        .logo-container {
+            z-index: 101;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo:hover {
+            color: var(--accent-gold);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 2.4rem;
+            color: var(--text-light);
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        .nav-menu {
+            display: flex;
+        }
+
+        .nav-menu li {
+            position: relative;
+            margin-left: var(--spacing-md);
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: var(--spacing-xs) 0;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-gold);
+        }
+
+        /* === Tooltip "En cours de construction" === */
+        .construction-tooltip {
+            position: absolute;
+            top: calc(100% + 15px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 100%);
+            border: 1px solid var(--accent-gold);
+            padding: 1rem 1.5rem;
+            border-radius: 4px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .construction-tooltip::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 8px;
+            border-style: solid;
+            border-color: transparent transparent var(--accent-gold) transparent;
+        }
+
+        .construction-tooltip i {
+            color: var(--accent-gold);
+            margin-right: 0.8rem;
+            font-size: 1.4rem;
+        }
+
+        .construction-tooltip span {
+            color: var(--text-light);
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-menu li:hover .construction-tooltip {
+            opacity: 1;
+            visibility: visible;
+            top: calc(100% + 10px);
+        }
+
+        /* === Badge "Site en construction" === */
+        .construction-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 100%);
+            border: 1px solid var(--accent-gold);
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .construction-badge i {
+            color: var(--accent-gold);
+            font-size: 1.4rem;
+            animation: pulse 2s infinite;
+        }
+
+        .construction-badge span {
+            color: var(--text-light);
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* === Responsive Design === */
+        @media screen and (max-width: 1024px) {
+            html {
+                font-size: 58%;
+            }
+            
+            .main-title {
+                font-size: 6rem;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            html {
+                font-size: 55%;
+            }
+            
+            .main-title {
+                font-size: 5rem;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background-color: var(--primary-dark);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.5s ease;
+                z-index: 100;
+            }
+            
+            .nav-menu.active {
+                right: 0;
+            }
+            
+            .nav-menu li {
+                margin: var(--spacing-sm) 0;
+            }
+
+            .construction-tooltip {
+                display: none;
+            }
+
+            .construction-badge {
+                bottom: 10px;
+                right: 10px;
+                padding: 0.6rem 1rem;
+            }
+
+            .construction-badge span {
+                font-size: 1rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            html {
+                font-size: 50%;
+            }
+            
+            .main-title {
+                font-size: 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="hero-banner">
+            <div class="overlay"></div>
+            <div class="hero-content">
+                <h1 class="main-title">EVEROS</h1>
+                <p class="tagline">Un Univers de Royaumes Divins et d'Histoires Infinies</p>
+            </div>
+        </div>
+        
+        <nav class="main-nav">
+            <div class="nav-container">
+                <div class="logo-container">
+                    <a href="#" class="logo">EVEROS</a>
+                </div>
+                <div class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-menu" id="navMenu">
+                    <li>
+                        <a href="#" class="nav-link">Explorer</a>
+                        <div class="construction-tooltip">
+                            <i class="fas fa-tools"></i>
+                            <span>En cours de construction</span>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">Divinités & Royaumes</a>
+                        <div class="construction-tooltip">
+                            <i class="fas fa-tools"></i>
+                            <span>En cours de construction</span>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">Chroniques</a>
+                        <div class="construction-tooltip">
+                            <i class="fas fa-tools"></i>
+                            <span>En cours de construction</span>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">Systèmes de Jeu</a>
+                        <div class="construction-tooltip">
+                            <i class="fas fa-tools"></i>
+                            <span>En cours de construction</span>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">Galerie</a>
+                        <div class="construction-tooltip">
+                            <i class="fas fa-tools"></i>
+                            <span>En cours de construction</span>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">Le Collectif</a>
+                        <div class="construction-tooltip">
+                            <i class="fas fa-tools"></i>
+                            <span>En cours de construction</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Badge "Site en construction" -->
+    <div class="construction-badge">
+        <i class="fas fa-hard-hat"></i>
+        <span>Site en cours de construction</span>
+    </div>
+
+    <!-- Script pour le menu mobile -->
+    <script>
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('navMenu').classList.toggle('active');
+            // Change l'icône du menu
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+    </script>
+</body>
+</html>
